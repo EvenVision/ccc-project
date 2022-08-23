@@ -1,0 +1,29 @@
+uuid: dc24234b-12cc-447b-bf4c-852bc13f622a
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.invoice.field_estimatealtid
+    - field.field.node.invoice.field_totalamt
+    - field.field.node.invoice.field_totalamt_body
+    - field.field.node.invoice.field_totalhours_body
+    - node.type.invoice
+  module:
+    - user
+id: node.invoice.teaser
+targetEntityType: node
+bundle: invoice
+mode: teaser
+content:
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_estimatealtid: true
+  field_totalamt: true
+  field_totalamt_body: true
+  field_totalhours_body: true
+  langcode: true

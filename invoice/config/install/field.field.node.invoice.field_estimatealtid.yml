@@ -1,0 +1,23 @@
+uuid: eb45b8d2-6558-497b-b5f3-63c884ac8767
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_estimatealtid
+    - node.type.invoice
+id: node.invoice.field_estimatealtid
+field_name: field_estimatealtid
+entity_type: node
+bundle: invoice
+label: EstimateAltID
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

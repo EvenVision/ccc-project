@@ -1,0 +1,20 @@
+uuid: 35a163f0-e34f-4064-b186-daf6ee6e12b1
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_estimatealtid
+field_name: field_estimatealtid
+entity_type: node
+type: integer
+settings:
+  unsigned: false
+  size: normal
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

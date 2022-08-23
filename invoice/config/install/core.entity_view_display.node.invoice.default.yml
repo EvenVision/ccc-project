@@ -1,0 +1,66 @@
+uuid: 25e73437-279e-41e9-b8ab-218d195c9180
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.invoice.field_estimatealtid
+    - field.field.node.invoice.field_totalamt
+    - field.field.node.invoice.field_totalamt_body
+    - field.field.node.invoice.field_totalhours_body
+    - node.type.invoice
+  module:
+    - user
+id: node.invoice.default
+targetEntityType: node
+bundle: invoice
+mode: default
+content:
+  field_estimatealtid:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  field_totalamt:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 103
+    region: content
+  field_totalamt_body:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 105
+    region: content
+  field_totalhours_body:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 104
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  langcode: true

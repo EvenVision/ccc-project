@@ -18,7 +18,7 @@ third_party_settings:
       label: 'Sales Collision'
       region: content
       parent_name: ''
-      weight: 1
+      weight: 2
       format_type: fieldset
       format_settings:
         classes: ''
@@ -33,7 +33,7 @@ third_party_settings:
       label: 'Sales Labor'
       region: content
       parent_name: ''
-      weight: 2
+      weight: 3
       format_type: fieldset
       format_settings:
         classes: ''
@@ -42,7 +42,7 @@ third_party_settings:
         description: ''
         required_fields: true
 _core:
-  default_config_hash: 1miV1h9u6IOs7enqotBpZQwLUObyRhRSkmSKLh6PlsE
+  default_config_hash: eUN3BZ5z_hI_T6iNsStX05tNiI64zufsGop2h6cRgP4
 id: node.invoice.default
 targetEntityType: node
 bundle: invoice
@@ -50,7 +50,7 @@ mode: default
 content:
   field_estimatealtid:
     type: number
-    weight: 0
+    weight: 1
     region: content
     settings:
       placeholder: ''
@@ -76,11 +76,18 @@ content:
     settings:
       placeholder: ''
     third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
 hidden:
   created: true
   path: true
   promote: true
   status: true
   sticky: true
-  title: true
   uid: true

@@ -1,5 +1,5 @@
-invoice.hello:
-  path: '/invoice/webhook'
+invoice.webhook:
+  path: '/invoice'
   defaults:
-    _controller: '\Drupal\invoice\Controller\InvoiceController::hello'
+    _controller: '\Drupal\invoice\Controller\InvoiceController::webhook'
     _title: 'Invoice'

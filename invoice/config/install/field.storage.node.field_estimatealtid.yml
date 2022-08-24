@@ -1,4 +1,4 @@
-uuid: 35a163f0-e34f-4064-b186-daf6ee6e12b1
+uuid: f238c113-1b9d-411b-9dea-95a6c440497f
 langcode: en
 status: true
 dependencies:
@@ -7,10 +7,11 @@ dependencies:
 id: node.field_estimatealtid
 field_name: field_estimatealtid
 entity_type: node
-type: integer
+type: string
 settings:
-  unsigned: false
-  size: normal
+  max_length: 255
+  case_sensitive: false
+  is_ascii: false
 module: core
 locked: false
 cardinality: 1

@@ -1,0 +1,28 @@
+<?php
+
+/**
+ * Implements hook_unistall().
+ */
+function invoice_uninstall(){
+  $type_name = 'invoice';
+
+  $storage_handler = \Drupal::entityTypeManager()->getStorage("node");
+  $entities = $storage_handler->loadByProperties(["type" => $type_name]);
+  $storage_handler->delete($entities);
+
+  $content_type = \Drupal::entityTypeManager()->getStorage('node_type')->load($type_name);
+  $content_type->delete();
+}
+
+if (!function_exists('getallheaders')) {
+  function getallheaders() {
+    global $_SERVER;
+    $headers = [];
+    foreach ($_SERVER as $name => $value) {
+      if (substr($name, 0, 5) == 'HTTP_') {
+        $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
+      }
+    }
+    return $headers;
+  }
+}

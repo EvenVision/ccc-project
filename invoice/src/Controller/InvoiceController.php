@@ -24,53 +24,45 @@ class InvoiceController extends ControllerBase {
    *   Markup.
    */
   public function webhook() {
-
     // get header
     header('X-SecureShare-Signature: *');
 
-    if (!function_exists('getallheaders')) {
-      $this->getallheaders();
-    }
-
     // get data
-    //$postdata = file_get_contents('response.xml');
     $postdata = file_get_contents("php://input");
 
     // parse xml
+    $message = 'Ok';
     if (!empty($postdata)){
-      $result = $this->parseXML($postdata);
-      $node = Node::create([
-        'type'        => 'invoice',
-        'title'       => 'Invoice',
-        'field_estimatealtid' => ['value' => $result['EstimateAltID']],
-        'field_totalamt' => ['value' => $result['TotalAmt1']],
-        'field_totalamt_body' => ['value' => $result['TotalAmt2']],
-        'field_totalhours_body' => ['value' => $result['TotalHours']],
-      ]);
+      try {
+        $result = $this->parseXML($postdata);
+        $node = Node::create([
+          'type'                  => 'invoice',
+          'title'                 => 'Invoice',
+          'field_estimatealtid'   => ['value' => $result['EstimateAltID']],
+          'field_totalamt'        => ['value' => $result['TotalAmt1']],
+          'field_totalamt_body'   => ['value' => $result['TotalAmt2']],
+          'field_totalhours_body' => ['value' => $result['TotalHours']],
+        ]);
 
-      $node->save();
-
-    }
-
-    // save to xml
-    $domxml = new \DOMDocument('1.0');
-    $domxml->preserveWhiteSpace = false;
-    $domxml->formatOutput = true;
-    $domxml->loadXML($postdata);
-    $time = time();
-    $domxml->save("modules/custom/invoice/xml/estimate{$time}.xml");
-
-    return ['#markup' => $this->t("Invoice")];
-  }
-
-  protected function getallheaders() {
-    $headers = [];
-    foreach ($_SERVER as $name => $value) {
-      if (substr($name, 0, 5) == 'HTTP_') {
-        $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
+        $node->save();
+        // save to xml
+        $domxml = new \DOMDocument('1.0');
+        $domxml->preserveWhiteSpace = false;
+        $domxml->formatOutput = true;
+        $domxml->loadXML($postdata);
+        $time = time();
+        $path = realpath(__DIR__.'/../../');
+        $domxml->save($path."/xml/estimate{$time}.xml");
+        $message = $this->t($message);
+      } catch (\Throwable $e){
+        \Drupal::logger('php')->error('Invoice Error: ' . $e->getMessage());
+        $message = $e->getMessage();
       }
+    } else {
+      $message = "Empty data";
     }
-    return $headers;
+
+    return ['#markup' => $message];
   }
 
   protected function parseXML($postdata){

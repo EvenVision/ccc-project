@@ -1,5 +1,7 @@
 invoice.webhook:
-  path: '/invoice'
+  path: '/estimate'
   defaults:
     _controller: '\Drupal\invoice\Controller\InvoiceController::webhook'
     _title: 'Invoice'
+  requirements:
+    _access: 'TRUE'

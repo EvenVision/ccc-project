@@ -1,0 +1,23 @@
+uuid: cc0e3477-d630-4eae-8f87-d44b04515fbf
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_roclosed
+    - node.type.estimate
+id: node.estimate.field_roclosed
+field_name: field_roclosed
+entity_type: node
+bundle: estimate
+label: ROClosed
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

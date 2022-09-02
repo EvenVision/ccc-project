@@ -1,0 +1,7 @@
+name: Collision Dashboard
+description: Collision Dashboard module Drupal 9.
+package: Collision Dashboard
+type: module
+core_version_requirement: ^8.9 || ^9
+dependencies:
+  - field_group:field_group

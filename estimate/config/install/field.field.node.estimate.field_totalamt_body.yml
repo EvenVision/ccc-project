@@ -1,0 +1,23 @@
+uuid: bc2a10b3-62f9-42fd-9e80-43139f1c4ad0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_totalamt_body
+    - node.type.estimate
+id: node.estimate.field_totalamt_body
+field_name: field_totalamt_body
+entity_type: node
+bundle: estimate
+label: 'TotalAmt Body'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

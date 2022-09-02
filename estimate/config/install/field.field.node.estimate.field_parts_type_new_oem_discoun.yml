@@ -1,0 +1,23 @@
+uuid: f6119eb9-0c34-45c7-a7eb-ad90c7fe6af6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_parts_type_new_oem_discoun
+    - node.type.estimate
+id: node.estimate.field_parts_type_new_oem_discoun
+field_name: field_parts_type_new_oem_discoun
+entity_type: node
+bundle: estimate
+label: 'Parts Type New OEM discounted'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

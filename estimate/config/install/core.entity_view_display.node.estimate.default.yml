@@ -1,0 +1,387 @@
+uuid: 25e73437-279e-41e9-b8ab-218d195c9180
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.estimate.field_actualpickupdatetime
+    - field.field.node.estimate.field_arrival_date_time
+    - field.field.node.estimate.field_company_name
+    - field.field.node.estimate.field_estimatealtid
+    - field.field.node.estimate.field_estimator_first_name
+    - field.field.node.estimate.field_estimator_id
+    - field.field.node.estimate.field_estimator_last_name
+    - field.field.node.estimate.field_estimator_name
+    - field.field.node.estimate.field_insurance_company
+    - field.field.node.estimate.field_insurance_company_id
+    - field.field.node.estimate.field_parts_type_aftermarket
+    - field.field.node.estimate.field_parts_type_glass
+    - field.field.node.estimate.field_parts_type_new_oem
+    - field.field.node.estimate.field_parts_type_new_oem_discoun
+    - field.field.node.estimate.field_parts_type_new_partial
+    - field.field.node.estimate.field_parts_type_other
+    - field.field.node.estimate.field_parts_type_re_cored
+    - field.field.node.estimate.field_parts_type_recycled_oe
+    - field.field.node.estimate.field_parts_type_remanufactured
+    - field.field.node.estimate.field_parts_type_sublet
+    - field.field.node.estimate.field_roclosed
+    - field.field.node.estimate.field_sales_other_hazardous_wast
+    - field.field.node.estimate.field_sales_other_paint_material
+    - field.field.node.estimate.field_sales_other_shop_materials
+    - field.field.node.estimate.field_sales_other_storage
+    - field.field.node.estimate.field_sales_other_towing
+    - field.field.node.estimate.field_sales_other_user_defined_1
+    - field.field.node.estimate.field_sales_other_user_defined_2
+    - field.field.node.estimate.field_sales_other_user_defined_3
+    - field.field.node.estimate.field_sales_other_user_defined_4
+    - field.field.node.estimate.field_totalamt
+    - field.field.node.estimate.field_totalamt_body
+    - field.field.node.estimate.field_totalhours_body
+    - node.type.estimate
+  module:
+    - user
+_core:
+  default_config_hash: TdR-VItuo_6HcRU4-OJ2UyxrXIdiUegY8kuvq2maPDs
+id: node.estimate.default
+targetEntityType: node
+bundle: estimate
+mode: default
+content:
+  field_actualpickupdatetime:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 106
+    region: content
+  field_arrival_date_time:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 115
+    region: content
+  field_company_name:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 108
+    region: content
+  field_estimatealtid:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  field_estimator_first_name:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 112
+    region: content
+  field_estimator_id:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 114
+    region: content
+  field_estimator_last_name:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 113
+    region: content
+  field_estimator_name:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 111
+    region: content
+  field_insurance_company:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 109
+    region: content
+  field_insurance_company_id:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 110
+    region: content
+  field_parts_type_aftermarket:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 116
+    region: content
+  field_parts_type_glass:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 117
+    region: content
+  field_parts_type_new_oem:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 120
+    region: content
+  field_parts_type_new_oem_discoun:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 121
+    region: content
+  field_parts_type_new_partial:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 123
+    region: content
+  field_parts_type_other:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 122
+    region: content
+  field_parts_type_re_cored:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 124
+    region: content
+  field_parts_type_recycled_oe:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 118
+    region: content
+  field_parts_type_remanufactured:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 119
+    region: content
+  field_parts_type_sublet:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 125
+    region: content
+  field_roclosed:
+    type: boolean
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 107
+    region: content
+  field_sales_other_hazardous_wast:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 126
+    region: content
+  field_sales_other_paint_material:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 127
+    region: content
+  field_sales_other_shop_materials:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 128
+    region: content
+  field_sales_other_storage:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 133
+    region: content
+  field_sales_other_towing:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 134
+    region: content
+  field_sales_other_user_defined_1:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 129
+    region: content
+  field_sales_other_user_defined_2:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 130
+    region: content
+  field_sales_other_user_defined_3:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 131
+    region: content
+  field_sales_other_user_defined_4:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 132
+    region: content
+  field_totalamt:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 103
+    region: content
+  field_totalamt_body:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 105
+    region: content
+  field_totalhours_body:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 104
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden: {  }

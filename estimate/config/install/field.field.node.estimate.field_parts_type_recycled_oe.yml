@@ -1,0 +1,23 @@
+uuid: 8482c6d7-542a-4b64-9b50-59f4d147b4f2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_parts_type_recycled_oe
+    - node.type.estimate
+id: node.estimate.field_parts_type_recycled_oe
+field_name: field_parts_type_recycled_oe
+entity_type: node
+bundle: estimate
+label: 'Parts Type Recycled OE'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

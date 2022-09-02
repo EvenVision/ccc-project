@@ -1,7 +1,0 @@
-name: Invoice
-description: Invoice module Drupal 9.
-package: Invoice
-type: module
-core_version_requirement: ^8.9 || ^9
-dependencies:
-  - field_group:field_group

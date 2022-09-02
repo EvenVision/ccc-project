@@ -1,0 +1,88 @@
+uuid: dc24234b-12cc-447b-bf4c-852bc13f622a
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.estimate.field_actualpickupdatetime
+    - field.field.node.estimate.field_arrival_date_time
+    - field.field.node.estimate.field_company_name
+    - field.field.node.estimate.field_estimatealtid
+    - field.field.node.estimate.field_estimator_first_name
+    - field.field.node.estimate.field_estimator_id
+    - field.field.node.estimate.field_estimator_last_name
+    - field.field.node.estimate.field_estimator_name
+    - field.field.node.estimate.field_insurance_company
+    - field.field.node.estimate.field_insurance_company_id
+    - field.field.node.estimate.field_parts_type_aftermarket
+    - field.field.node.estimate.field_parts_type_glass
+    - field.field.node.estimate.field_parts_type_new_oem
+    - field.field.node.estimate.field_parts_type_new_oem_discoun
+    - field.field.node.estimate.field_parts_type_new_partial
+    - field.field.node.estimate.field_parts_type_other
+    - field.field.node.estimate.field_parts_type_re_cored
+    - field.field.node.estimate.field_parts_type_recycled_oe
+    - field.field.node.estimate.field_parts_type_remanufactured
+    - field.field.node.estimate.field_parts_type_sublet
+    - field.field.node.estimate.field_roclosed
+    - field.field.node.estimate.field_sales_other_hazardous_wast
+    - field.field.node.estimate.field_sales_other_paint_material
+    - field.field.node.estimate.field_sales_other_shop_materials
+    - field.field.node.estimate.field_sales_other_storage
+    - field.field.node.estimate.field_sales_other_towing
+    - field.field.node.estimate.field_sales_other_user_defined_1
+    - field.field.node.estimate.field_sales_other_user_defined_2
+    - field.field.node.estimate.field_sales_other_user_defined_3
+    - field.field.node.estimate.field_sales_other_user_defined_4
+    - field.field.node.estimate.field_totalamt
+    - field.field.node.estimate.field_totalamt_body
+    - field.field.node.estimate.field_totalhours_body
+    - node.type.estimate
+  module:
+    - user
+_core:
+  default_config_hash: Y6xq7i1mO9_SqxN-IBUQGGBkh0JwiylqJJPMWa8tquI
+id: node.estimate.teaser
+targetEntityType: node
+bundle: estimate
+mode: teaser
+content:
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_actualpickupdatetime: true
+  field_arrival_date_time: true
+  field_company_name: true
+  field_estimatealtid: true
+  field_estimator_first_name: true
+  field_estimator_id: true
+  field_estimator_last_name: true
+  field_estimator_name: true
+  field_insurance_company: true
+  field_insurance_company_id: true
+  field_parts_type_aftermarket: true
+  field_parts_type_glass: true
+  field_parts_type_new_oem: true
+  field_parts_type_new_oem_discoun: true
+  field_parts_type_new_partial: true
+  field_parts_type_other: true
+  field_parts_type_re_cored: true
+  field_parts_type_recycled_oe: true
+  field_parts_type_remanufactured: true
+  field_parts_type_sublet: true
+  field_roclosed: true
+  field_sales_other_hazardous_wast: true
+  field_sales_other_paint_material: true
+  field_sales_other_shop_materials: true
+  field_sales_other_storage: true
+  field_sales_other_towing: true
+  field_sales_other_user_defined_1: true
+  field_sales_other_user_defined_2: true
+  field_sales_other_user_defined_3: true
+  field_sales_other_user_defined_4: true
+  field_totalamt: true
+  field_totalamt_body: true
+  field_totalhours_body: true

@@ -1,0 +1,23 @@
+uuid: 8efebfd6-2908-446c-b214-6bd594c3a1ce
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_sales_other_user_defined_3
+    - node.type.estimate
+id: node.estimate.field_sales_other_user_defined_3
+field_name: field_sales_other_user_defined_3
+entity_type: node
+bundle: estimate
+label: "Sales Other\_User Defined 3"
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

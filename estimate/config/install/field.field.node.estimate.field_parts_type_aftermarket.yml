@@ -1,0 +1,23 @@
+uuid: 55a1ae04-0583-44ff-bc0e-b92218b37468
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_parts_type_aftermarket
+    - node.type.estimate
+id: node.estimate.field_parts_type_aftermarket
+field_name: field_parts_type_aftermarket
+entity_type: node
+bundle: estimate
+label: 'Parts Type Aftermarket'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

@@ -1,0 +1,23 @@
+uuid: 49e542e4-39ff-4f57-ab96-a1f926cf53cd
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_parts_type_remanufactured
+    - node.type.estimate
+id: node.estimate.field_parts_type_remanufactured
+field_name: field_parts_type_remanufactured
+entity_type: node
+bundle: estimate
+label: 'Parts Type Remanufactured'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

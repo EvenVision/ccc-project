@@ -1,0 +1,18 @@
+uuid: bffc52cb-a8b2-41ee-8825-8b590cf6fa68
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_labor_type_pdr_amount
+field_name: field_labor_type_pdr_amount
+entity_type: node
+type: float
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

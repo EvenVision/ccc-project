@@ -1,0 +1,23 @@
+uuid: 969b665f-75f0-4937-9deb-4eebb4ce6464
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_labor_type_alignmentamount
+    - node.type.estimate
+id: node.estimate.field_labor_type_alignmentamount
+field_name: field_labor_type_alignmentamount
+entity_type: node
+bundle: estimate
+label: 'Labor Type Alignment Amount'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

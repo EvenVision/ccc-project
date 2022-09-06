@@ -13,6 +13,28 @@ dependencies:
     - field.field.node.estimate.field_estimator_name
     - field.field.node.estimate.field_insurance_company
     - field.field.node.estimate.field_insurance_company_id
+    - field.field.node.estimate.field_labor_type_alignmentamount
+    - field.field.node.estimate.field_labor_type_alignmenthours
+    - field.field.node.estimate.field_labor_type_blank_amount
+    - field.field.node.estimate.field_labor_type_blank_hours
+    - field.field.node.estimate.field_labor_type_blend_amount
+    - field.field.node.estimate.field_labor_type_blend_hours
+    - field.field.node.estimate.field_labor_type_overhaul_amount
+    - field.field.node.estimate.field_labor_type_overhaul_hours
+    - field.field.node.estimate.field_labor_type_pdr_amount
+    - field.field.node.estimate.field_labor_type_pdr_hours
+    - field.field.node.estimate.field_labor_type_refinish_amount
+    - field.field.node.estimate.field_labor_type_refinish_hours
+    - field.field.node.estimate.field_labor_type_rem_inst_amt
+    - field.field.node.estimate.field_labor_type_rem_inst_hours
+    - field.field.node.estimate.field_labor_type_rem_rep_amt
+    - field.field.node.estimate.field_labor_type_rem_rep_hours
+    - field.field.node.estimate.field_labor_type_rep_par_amt
+    - field.field.node.estimate.field_labor_type_rep_par_hours
+    - field.field.node.estimate.field_labor_type_repair_amount
+    - field.field.node.estimate.field_labor_type_repair_hours
+    - field.field.node.estimate.field_labor_type_sublet_amount
+    - field.field.node.estimate.field_labor_type_sublet_hours
     - field.field.node.estimate.field_parts_type_aftermarket
     - field.field.node.estimate.field_parts_type_glass
     - field.field.node.estimate.field_parts_type_new_oem
@@ -71,7 +93,7 @@ third_party_settings:
         description: ''
         required_fields: true
 _core:
-  default_config_hash: Mo5w65KpwoyuR5ZugfqffBTcuNv3eK3yA61jWVOrs94
+  default_config_hash: S3p5y3sTb3CCWufEc3V04OV7lAUqzkmN8TtLdCTl78Y
 id: node.estimate.default
 targetEntityType: node
 bundle: estimate
@@ -154,6 +176,160 @@ content:
     region: content
     settings:
       size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_labor_type_alignmentamount:
+    type: number
+    weight: 59
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_labor_type_alignmenthours:
+    type: number
+    weight: 60
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_labor_type_blank_amount:
+    type: number
+    weight: 55
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_labor_type_blank_hours:
+    type: number
+    weight: 56
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_labor_type_blend_amount:
+    type: number
+    weight: 71
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_labor_type_blend_hours:
+    type: number
+    weight: 72
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_labor_type_overhaul_amount:
+    type: number
+    weight: 61
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_labor_type_overhaul_hours:
+    type: number
+    weight: 62
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_labor_type_pdr_amount:
+    type: number
+    weight: 75
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_labor_type_pdr_hours:
+    type: number
+    weight: 76
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_labor_type_refinish_amount:
+    type: number
+    weight: 63
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_labor_type_refinish_hours:
+    type: number
+    weight: 64
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_labor_type_rem_inst_amt:
+    type: number
+    weight: 57
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_labor_type_rem_inst_hours:
+    type: number
+    weight: 58
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_labor_type_rem_rep_amt:
+    type: number
+    weight: 69
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_labor_type_rem_rep_hours:
+    type: number
+    weight: 70
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_labor_type_rep_par_amt:
+    type: number
+    weight: 67
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_labor_type_rep_par_hours:
+    type: number
+    weight: 68
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_labor_type_repair_amount:
+    type: number
+    weight: 65
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_labor_type_repair_hours:
+    type: number
+    weight: 66
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_labor_type_sublet_amount:
+    type: number
+    weight: 73
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_labor_type_sublet_hours:
+    type: number
+    weight: 74
+    region: content
+    settings:
       placeholder: ''
     third_party_settings: {  }
   field_parts_type_aftermarket:

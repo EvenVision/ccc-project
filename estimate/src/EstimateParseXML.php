@@ -4,157 +4,185 @@ namespace Drupal\estimate;
 
 class EstimateParseXML {
 
+  const SALES_PARTS = array(
+    'PAA'   => true,
+    'PAG'   => true,
+    'PAL'   => true,
+    'PAM'   => true,
+    'PAN'   => true,
+    'PAND'  => true,
+    'PAO'   => true,
+    'PAP'   => true,
+    'PAR'   => true,
+    'PAS'   => true
+  );
+
+  const SALES_OTHER = array(
+    'MAHW'  => true,
+    'MAPA'  => true,
+    'MASH'  => true,
+    'OT1'   => true,
+    'OT2'   => true,
+    'OT3'   => true,
+    'OT4'   => true,
+    'OTST'  => true,
+    'OTTW'  => true
+  );
+
+  const SALES_LABOR = array(
+    'OP0'  => true,
+    'OP2'  => true,
+    'OP4'  => true,
+    'OP5'  => true,
+    'OP6'  => true,
+    'OP9'  => true,
+    'OP10' => true,
+    'OP11' => true,
+    'OP15' => true,
+    'OP16' => true,
+    'OP26' => true
+  );
+
+  protected $xml;
+  protected $result;
+
+  public function __construct($xml,$result)
+  {
+    $this->xml = $xml;
+    $this->result = $result;
+  }
+
   public function parseXML($postdata){
-    $result = [];
-    $xml = new \SimpleXMLElement($postdata);
-    if($xml->DocumentInfo && $xml->DocumentInfo->ReferenceInfo && $xml->DocumentInfo->ReferenceInfo->OtherReferenceInfo){
-      $other_info = $xml->DocumentInfo->ReferenceInfo->OtherReferenceInfo;
+
+    $this->xml = new \SimpleXMLElement($postdata);
+    if($this->xml->DocumentInfo && $this->xml->DocumentInfo->ReferenceInfo && $this->xml->DocumentInfo->ReferenceInfo->OtherReferenceInfo){
+      $other_info = $this->xml->DocumentInfo->ReferenceInfo->OtherReferenceInfo;
       foreach ($other_info as $info){
         if($info->OtherReferenceName == 'EstimateAltID'){
-          $result['EstimateAltID'] = (string) $info->OtherRefNum;
+          $this->result['EstimateAltID'] = (string) $info->OtherRefNum;
           break;
         }
       }
     }
 
-    if($xml->RepairTotalsInfo && $xml->RepairTotalsInfo->SummaryTotalsInfo){
-      $other_info = $xml->RepairTotalsInfo->SummaryTotalsInfo;
+    if($this->xml->RepairTotalsInfo && $this->xml->RepairTotalsInfo->SummaryTotalsInfo){
+      $other_info = $this->xml->RepairTotalsInfo->SummaryTotalsInfo;
       foreach ($other_info as $info){
         if($info->TotalSubType == 'T2'){
-          $result['TotalAmt1'] = (float) $info->TotalAmt;
+          $this->result['TotalAmt1'] = (float) $info->TotalAmt;
           break;
         }
       }
     }
 
-    if($xml->RepairTotalsInfo && $xml->RepairTotalsInfo->LaborTotalsInfo){
-      $other_info = $xml->RepairTotalsInfo->LaborTotalsInfo;
+    if($this->xml->RepairTotalsInfo && $this->xml->RepairTotalsInfo->LaborTotalsInfo){
+      $other_info = $this->xml->RepairTotalsInfo->LaborTotalsInfo;
       foreach ($other_info as $info){
         if($info->TotalType == 'LAB'){
-          $result['TotalHours'] = (float) $info->TotalHours;
-          $result['TotalAmt2'] = (float) $info->TotalAmt;
+          $this->result['TotalHours'] = (float) $info->TotalHours;
+          $this->result['TotalAmt2'] = (float) $info->TotalAmt;
           break;
         }
       }
     }
 
     // More fields
-    if($xml->AdminInfo && $xml->AdminInfo->RepairFacility && $xml->AdminInfo->RepairFacility->Party->OrgInfo){
-      $other_info = $xml->AdminInfo->RepairFacility->Party->OrgInfo;
-      $result['CompanyName'] = $this->searchFieldXML($other_info,'CompanyName');
-    }
-
-    if($xml->EventInfo && $xml->EventInfo->RepairEvent){
-      $other_info = $xml->EventInfo->RepairEvent;
-      $result['ActualPickUpDateTime'] = $this->searchFieldXML($other_info,'ActualPickUpDateTime');
-      $result['ROClosed'] = !empty($result['ActualPickUpDateTime']);
-    }
+    $this->_fieldGroupMorefields();
 
     // Field Group: Insurance
-    if($xml->AdminInfo && $xml->AdminInfo->InsuranceCompany && $xml->AdminInfo->InsuranceCompany->Party->OrgInfo) {
-      $other_info = $xml->AdminInfo->InsuranceCompany->Party->OrgInfo;
-      $result['InsuranceCompany'] = $this->searchFieldXML($other_info, 'CompanyName');
-      $result['InsuranceCompanyID'] = $this->searchFieldXML($other_info->IDInfo,'IDNum');
+    $this->_fieldGroupInsurance();
 
-    }
     // Field Group: Estimator
-    if($xml->EstimatorIDs && $xml->EstimatorIDs->CurrentEstimatorID){
-      $other_info = $xml->EstimatorIDs;
-      $result['EstimatorName'] = $this->searchFieldXML($other_info, 'CurrentEstimatorID');
-    }
-
-    if($xml->AdminInfo && $xml->AdminInfo->Estimator && $xml->AdminInfo->Estimator->Party->PersonInfo->PersonName && $xml->AdminInfo->Estimator->Party->PersonInfo->IDInfo){
-      $other_info = $xml->AdminInfo->Estimator->Party->PersonInfo;
-      $result['EstimatorFirstName'] = $this->searchFieldXML($other_info->PersonName, 'FirstName');
-      $result['EstimatorLastName'] = $this->searchFieldXML($other_info->PersonName, 'LastName');
-      $result['EstimatorID'] = $this->searchFieldXML($other_info->IDInfo,'IDNum');
-    }
+    $this->_fieldGroupEstimator();
 
     // Field Group: Cycle Time
-    if($xml->EventInfo && $xml->EventInfo->RepairEvent){
-      $other_info = $xml->EventInfo->RepairEvent;
-      $result['ArrivalDateTime'] = $this->searchFieldXML($other_info,'ArrivalDateTime');
-    }
+    $this->_fieldGroupCycleTime();
 
     // Field Group: Sales Parts
-    if($xml->RepairTotalsInfo && $xml->RepairTotalsInfo->PartsTotalsInfo){
-      $other_info = $xml->RepairTotalsInfo->PartsTotalsInfo;
-      foreach ($other_info as $info){
-        switch ($info->TotalType) {
-          case "PAA":
-            $result['PAA_TotalAmt'] = (float) $info->TotalAmt;
-            break;
-          case "PAG":
-            $result['PAG_TotalAmt'] = (float) $info->TotalAmt;
-            break;
-          case "PAL":
-            $result['PAL_TotalAmt'] = (float) $info->TotalAmt;
-            break;
-          case "PAM":
-            $result['PAM_TotalAmt'] = (float) $info->TotalAmt;
-            break;
-          case "PAN":
-            $result['PAN_TotalAmt'] = (float) $info->TotalAmt;
-            break;
-          case "PAND":
-            $result['PAND_TotalAmt'] = (float) $info->TotalAmt;
-            break;
-          case "PAO":
-            $result['PAO_TotalAmt'] = (float) $info->TotalAmt;
-            break;
-          case "PAP":
-            $result['PAP_TotalAmt'] = (float) $info->TotalAmt;
-            break;
-          case "PAR":
-            $result['PAR_TotalAmt'] = (float) $info->TotalAmt;
-            break;
-          case "PAS":
-            $result['PAS_TotalAmt'] = (float) $info->TotalAmt;
-            break;
-        }
-      }
-    }
+    $this->_fieldGroupSalesParts();
 
     // Field Group: Sales Other
-    if($xml->RepairTotalsInfo && $xml->RepairTotalsInfo->OtherChargesTotalsInfo){
-      $other_info = $xml->RepairTotalsInfo->OtherChargesTotalsInfo;
-      foreach ($other_info as $info){
-        switch ($info->TotalType) {
-          case "MAHW":
-            $result['MAHW_TotalAmt'] = (float) $info->TotalAmt;
-            break;
-          case "MAPA":
-            $result['MAPA_TotalAmt'] = (float) $info->TotalAmt;
-            break;
-          case "MASH":
-            $result['MASH_TotalAmt'] = (float) $info->TotalAmt;
-            break;
-          case "OT1":
-            $result['OT1_TotalAmt'] = (float) $info->TotalAmt;
-            break;
-          case "OT2":
-            $result['OT2_TotalAmt'] = (float) $info->TotalAmt;
-            break;
-          case "OT3":
-            $result['OT3_TotalAmt'] = (float) $info->TotalAmt;
-            break;
-          case "OT4":
-            $result['OT4_TotalAmt'] = (float) $info->TotalAmt;
-            break;
-          case "OTST":
-            $result['OTST_TotalAmt'] = (float) $info->TotalAmt;
-            break;
-          case "OTTW":
-            $result['OTTW_TotalAmt'] = (float) $info->TotalAmt;
-            break;
+    $this->_fieldGroupSalesOther();
+
+    // Field Group: Sales Labor
+    $this->_calcAmtHours();
+
+    return $this->result;
+  }
+
+  protected function _fieldGroupMorefields()
+  {
+    if($this->xml->AdminInfo && $this->xml->AdminInfo->RepairFacility && $this->xml->AdminInfo->RepairFacility->Party->OrgInfo){
+      $other_info = $this->xml->AdminInfo->RepairFacility->Party->OrgInfo;
+      $this->result['CompanyName'] = $this->_searchFieldXML($other_info,'CompanyName');
+    }
+
+    if($this->xml->EventInfo && $this->xml->EventInfo->RepairEvent){
+      $other_info = $this->xml->EventInfo->RepairEvent;
+      $this->result['ActualPickUpDateTime'] = $this->_searchFieldXML($other_info,'ActualPickUpDateTime');
+      $this->result['ROClosed'] = !empty($this->result['ActualPickUpDateTime']);
+    }
+  }
+
+  protected function _fieldGroupInsurance()
+  {
+    if($this->xml->AdminInfo && $this->xml->AdminInfo->InsuranceCompany && $this->xml->AdminInfo->InsuranceCompany->Party->OrgInfo) {
+      $other_info = $this->xml->AdminInfo->InsuranceCompany->Party->OrgInfo;
+      $this->result['InsuranceCompany'] = $this->_searchFieldXML($other_info, 'CompanyName');
+      $this->result['InsuranceCompanyID'] = $this->_searchFieldXML($other_info->IDInfo,'IDNum');
+    }
+  }
+
+  protected function _fieldGroupEstimator()
+  {
+    if($this->xml->EstimatorIDs && $this->xml->EstimatorIDs->CurrentEstimatorID){
+      $other_info = $this->xml->EstimatorIDs;
+      $this->result['EstimatorName'] = $this->_searchFieldXML($other_info, 'CurrentEstimatorID');
+    }
+
+    if($this->xml->AdminInfo && $this->xml->AdminInfo->Estimator && $this->xml->AdminInfo->Estimator->Party->PersonInfo->PersonName && $this->xml->AdminInfo->Estimator->Party->PersonInfo->IDInfo){
+      $other_info = $this->xml->AdminInfo->Estimator->Party->PersonInfo;
+      $this->result['EstimatorFirstName'] = $this->_searchFieldXML($other_info->PersonName, 'FirstName');
+      $this->result['EstimatorLastName'] = $this->_searchFieldXML($other_info->PersonName, 'LastName');
+      $this->result['EstimatorID'] = $this->_searchFieldXML($other_info->IDInfo,'IDNum');
+    }
+  }
+
+  protected function _fieldGroupCycleTime()
+  {
+    if($this->xml->EventInfo && $this->xml->EventInfo->RepairEvent){
+      $other_info = $this->xml->EventInfo->RepairEvent;
+      $this->result['ArrivalDateTime'] = $this->_searchFieldXML($other_info,'ArrivalDateTime');
+    }
+  }
+
+  protected function _fieldGroupSalesParts()
+  {
+    if($this->xml->RepairTotalsInfo && $this->xml->RepairTotalsInfo->PartsTotalsInfo){
+      $other_info = (array) $this->xml->RepairTotalsInfo;
+      foreach ($other_info['PartsTotalsInfo'] as $PartsTotalsInfo => $info){
+        $type = (string) $info->TotalType;
+        if (!empty(static::SALES_PARTS[$type])){
+          $this->result[$info->TotalType . '_TotalAmt'] = (float) $info->TotalAmt;
         }
       }
     }
-
-    return $result;
   }
 
-  protected function searchFieldXML($other_info, $infoName)
+  protected function _fieldGroupSalesOther()
+  {
+    if($this->xml->RepairTotalsInfo && $this->xml->RepairTotalsInfo->OtherChargesTotalsInfo){
+      $other_info = (array) $this->xml->RepairTotalsInfo;
+      foreach ($other_info['OtherChargesTotalsInfo'] as $OtherChargesTotalsInfo => $info){
+        $type = (string) $info->TotalType;
+        if (!empty(static::SALES_OTHER[$type])){
+          $this->result[$info->TotalType . '_TotalAmt'] = (float) $info->TotalAmt;
+        }
+      }
+    }
+  }
+
+  protected function _searchFieldXML($other_info, $infoName)
   {
     $result = "";
     $data = (array)$other_info;
@@ -164,6 +192,22 @@ class EstimateParseXML {
     }
 
     return $result;
+  }
+
+  protected function _calcAmtHours()
+  {
+    if (!empty($this->xml->DamageLineInfo)){
+      foreach ($this->xml->DamageLineInfo as $elements => $DamageLineInfo){
+        foreach ($DamageLineInfo as $elementInfo) {
+          $type = (string)$elementInfo->LaborOperation;
+          if (!empty(static::SALES_LABOR[$type])) {
+            $this->result[$elementInfo->LaborOperation . '_TotalAmt'] = $this->result[$elementInfo->LaborOperation . '_TotalAmt'] + $elementInfo->LaborAmt;
+            $this->result[$elementInfo->LaborOperation . '_TotalHours'] = $this->result[$elementInfo->LaborOperation . '_TotalHours'] + $elementInfo->LaborHours;
+            break;
+          }
+        }
+      }
+    }
   }
 }
 

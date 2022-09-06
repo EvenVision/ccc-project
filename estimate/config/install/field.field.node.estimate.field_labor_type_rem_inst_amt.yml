@@ -1,0 +1,23 @@
+uuid: 88a4172c-1cef-4927-865f-217794f1e4c4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_labor_type_rem_inst_amt
+    - node.type.estimate
+id: node.estimate.field_labor_type_rem_inst_amt
+field_name: field_labor_type_rem_inst_amt
+entity_type: node
+bundle: estimate
+label: 'Labor Type Remove/Install Amount'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

@@ -1,0 +1,18 @@
+uuid: 0b12646b-e09f-41b5-bd2c-37b0db82c8c3
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_labor_type_repair_amount
+field_name: field_labor_type_repair_amount
+entity_type: node
+type: float
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

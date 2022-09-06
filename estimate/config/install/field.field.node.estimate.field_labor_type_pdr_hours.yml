@@ -1,0 +1,23 @@
+uuid: aa7fe21c-eb7f-47f7-b566-e80874e32ed3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_labor_type_pdr_hours
+    - node.type.estimate
+id: node.estimate.field_labor_type_pdr_hours
+field_name: field_labor_type_pdr_hours
+entity_type: node
+bundle: estimate
+label: 'Labor Type Paintless Dent Repair Hours'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

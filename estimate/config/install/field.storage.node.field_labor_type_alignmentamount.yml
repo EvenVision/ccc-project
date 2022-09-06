@@ -1,0 +1,18 @@
+uuid: fe88a2e1-5355-4b8d-af68-2fe9314e4644
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_labor_type_alignmentamount
+field_name: field_labor_type_alignmentamount
+entity_type: node
+type: float
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

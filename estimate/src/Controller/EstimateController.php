@@ -34,7 +34,8 @@ class EstimateController extends ControllerBase {
     $message = 'Ok';
     if (!empty($postdata)){
       try {
-        $result = new EstimateParseXML();
+        $result = [];
+        $result = new EstimateParseXML($postdata, $result);
         $result = $result->parseXML($postdata);
           $node = Node::create([
           'type'                                => 'estimate',
@@ -74,6 +75,29 @@ class EstimateController extends ControllerBase {
           'field_sales_other_user_defined_4'    => ['value' => $result['OT4_TotalAmt']],
           'field_sales_other_storage'           => ['value' => $result['OTST_TotalAmt']],
           'field_sales_other_towing'            => ['value' => $result['OTTW_TotalAmt']],
+
+          'field_labor_type_blank_amount'       => ['value' => $result['OP0_TotalAmt']],
+          'field_labor_type_blank_hours'        => ['value' => $result['OP0_TotalHours']],
+          'field_labor_type_rem_inst_amt'       => ['value' => $result['OP2_TotalAmt']],
+          'field_labor_type_rem_inst_hours'     => ['value' => $result['OP2_TotalHours']],
+          'field_labor_type_alignmentamount'    => ['value' => $result['OP4_TotalAmt']],
+          'field_labor_type_alignmenthours'     => ['value' => $result['OP4_TotalHours']],
+          'field_labor_type_overhaul_amount'    => ['value' => $result['OP5_TotalAmt']],
+          'field_labor_type_overhaul_hours'     => ['value' => $result['OP5_TotalHours']],
+          'field_labor_type_refinish_amount'    => ['value' => $result['OP6_TotalAmt']],
+          'field_labor_type_refinish_hours'     => ['value' => $result['OP6_TotalHours']],
+          'field_labor_type_repair_amount'      => ['value' => $result['OP9_TotalAmt']],
+          'field_labor_type_repair_hours'       => ['value' => $result['OP9_TotalHours']],
+          'field_labor_type_rep_par_amt'        => ['value' => $result['OP10_TotalAmt']],
+          'field_labor_type_rep_par_hours'      => ['value' => $result['OP10_TotalHours']],
+          'field_labor_type_rem_rep_amt'        => ['value' => $result['OP11_TotalAmt']],
+          'field_labor_type_rem_rep_hours'      => ['value' => $result['OP11_TotalHours']],
+          'field_labor_type_blend_amount'       => ['value' => $result['OP15_TotalAmt']],
+          'field_labor_type_blend_hours'        => ['value' => $result['OP15_TotalHours']],
+          'field_labor_type_sublet_amount'      => ['value' => $result['OP16_TotalAmt']],
+          'field_labor_type_sublet_hours'       => ['value' => $result['OP16_TotalHours']],
+          'field_labor_type_pdr_amount'         => ['value' => $result['OP26_TotalAmt']],
+          'field_labor_type_pdr_hours'          => ['value' => $result['OP26_TotalHours']],
         ]);
 
         $node->save();

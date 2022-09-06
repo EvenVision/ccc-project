@@ -1,0 +1,23 @@
+uuid: 645c7fd5-9940-4cd0-a8d0-6a73dae1be6a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_labor_type_rep_par_hours
+    - node.type.estimate
+id: node.estimate.field_labor_type_rep_par_hours
+field_name: field_labor_type_rep_par_hours
+entity_type: node
+bundle: estimate
+label: 'Labor Type Repair, Partial Hours'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

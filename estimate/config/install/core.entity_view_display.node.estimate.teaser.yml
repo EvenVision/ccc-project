@@ -14,6 +14,28 @@ dependencies:
     - field.field.node.estimate.field_estimator_name
     - field.field.node.estimate.field_insurance_company
     - field.field.node.estimate.field_insurance_company_id
+    - field.field.node.estimate.field_labor_type_alignmentamount
+    - field.field.node.estimate.field_labor_type_alignmenthours
+    - field.field.node.estimate.field_labor_type_blank_amount
+    - field.field.node.estimate.field_labor_type_blank_hours
+    - field.field.node.estimate.field_labor_type_blend_amount
+    - field.field.node.estimate.field_labor_type_blend_hours
+    - field.field.node.estimate.field_labor_type_overhaul_amount
+    - field.field.node.estimate.field_labor_type_overhaul_hours
+    - field.field.node.estimate.field_labor_type_pdr_amount
+    - field.field.node.estimate.field_labor_type_pdr_hours
+    - field.field.node.estimate.field_labor_type_refinish_amount
+    - field.field.node.estimate.field_labor_type_refinish_hours
+    - field.field.node.estimate.field_labor_type_rem_inst_amt
+    - field.field.node.estimate.field_labor_type_rem_inst_hours
+    - field.field.node.estimate.field_labor_type_rem_rep_amt
+    - field.field.node.estimate.field_labor_type_rem_rep_hours
+    - field.field.node.estimate.field_labor_type_rep_par_amt
+    - field.field.node.estimate.field_labor_type_rep_par_hours
+    - field.field.node.estimate.field_labor_type_repair_amount
+    - field.field.node.estimate.field_labor_type_repair_hours
+    - field.field.node.estimate.field_labor_type_sublet_amount
+    - field.field.node.estimate.field_labor_type_sublet_hours
     - field.field.node.estimate.field_parts_type_aftermarket
     - field.field.node.estimate.field_parts_type_glass
     - field.field.node.estimate.field_parts_type_new_oem
@@ -41,7 +63,7 @@ dependencies:
   module:
     - user
 _core:
-  default_config_hash: Y6xq7i1mO9_SqxN-IBUQGGBkh0JwiylqJJPMWa8tquI
+  default_config_hash: MalJxetmra3-WakM1S_CUq6dHR5ZrgnnkDipEZGvF3U
 id: node.estimate.teaser
 targetEntityType: node
 bundle: estimate
@@ -63,6 +85,28 @@ hidden:
   field_estimator_name: true
   field_insurance_company: true
   field_insurance_company_id: true
+  field_labor_type_alignmentamount: true
+  field_labor_type_alignmenthours: true
+  field_labor_type_blank_amount: true
+  field_labor_type_blank_hours: true
+  field_labor_type_blend_amount: true
+  field_labor_type_blend_hours: true
+  field_labor_type_overhaul_amount: true
+  field_labor_type_overhaul_hours: true
+  field_labor_type_pdr_amount: true
+  field_labor_type_pdr_hours: true
+  field_labor_type_refinish_amount: true
+  field_labor_type_refinish_hours: true
+  field_labor_type_rem_inst_amt: true
+  field_labor_type_rem_inst_hours: true
+  field_labor_type_rem_rep_amt: true
+  field_labor_type_rem_rep_hours: true
+  field_labor_type_rep_par_amt: true
+  field_labor_type_rep_par_hours: true
+  field_labor_type_repair_amount: true
+  field_labor_type_repair_hours: true
+  field_labor_type_sublet_amount: true
+  field_labor_type_sublet_hours: true
   field_parts_type_aftermarket: true
   field_parts_type_glass: true
   field_parts_type_new_oem: true

@@ -10,7 +10,7 @@ third_party_settings:
       - main
     parent: 'main:'
 _core:
-  default_config_hash: Fj4sEHwqBOwSAThS4ETZwDjgrWxKGNQwH54TJMKvq-U
+  default_config_hash: dRDOmwSzNPFI7NwOawfzamKJiiJBko-0PO5yuYRltmM
 name: estimate
 type: estimate
 description: 'Custom estimate content type'

@@ -46,45 +46,20 @@ class EstimateParseXML {
   protected $xml;
   protected $result;
 
-  public function __construct($xml,$result)
+  public function __construct($xml,$result  = [])
   {
     $this->xml = $xml;
     $this->result = $result;
   }
 
-  public function parseXML($postdata){
+  public function parseXML(){
+    $this->xml = new \SimpleXMLElement($this->xml);
 
-    $this->xml = new \SimpleXMLElement($postdata);
-    if($this->xml->DocumentInfo && $this->xml->DocumentInfo->ReferenceInfo && $this->xml->DocumentInfo->ReferenceInfo->OtherReferenceInfo){
-      $other_info = $this->xml->DocumentInfo->ReferenceInfo->OtherReferenceInfo;
-      foreach ($other_info as $info){
-        if($info->OtherReferenceName == 'EstimateAltID'){
-          $this->result['EstimateAltID'] = (string) $info->OtherRefNum;
-          break;
-        }
-      }
-    }
+    // Field Group: Document Info
+    $this->_fieldGroupDocumentInfo();
 
-    if($this->xml->RepairTotalsInfo && $this->xml->RepairTotalsInfo->SummaryTotalsInfo){
-      $other_info = $this->xml->RepairTotalsInfo->SummaryTotalsInfo;
-      foreach ($other_info as $info){
-        if($info->TotalSubType == 'T2'){
-          $this->result['TotalAmt1'] = (float) $info->TotalAmt;
-          break;
-        }
-      }
-    }
-
-    if($this->xml->RepairTotalsInfo && $this->xml->RepairTotalsInfo->LaborTotalsInfo){
-      $other_info = $this->xml->RepairTotalsInfo->LaborTotalsInfo;
-      foreach ($other_info as $info){
-        if($info->TotalType == 'LAB'){
-          $this->result['TotalHours'] = (float) $info->TotalHours;
-          $this->result['TotalAmt2'] = (float) $info->TotalAmt;
-          break;
-        }
-      }
-    }
+    // Field Group: Repair Totals Info
+    $this->_fieldGroupRepairTotalsInfo();
 
     // More fields
     $this->_fieldGroupMorefields();
@@ -105,9 +80,46 @@ class EstimateParseXML {
     $this->_fieldGroupSalesOther();
 
     // Field Group: Sales Labor
-    $this->_calcAmtHours();
+    $this->_fieldGroupSalesLabor();
 
     return $this->result;
+  }
+
+  protected function _fieldGroupDocumentInfo()
+  {
+    if($this->xml->DocumentInfo && $this->xml->DocumentInfo->ReferenceInfo && $this->xml->DocumentInfo->ReferenceInfo->OtherReferenceInfo){
+      $other_info = $this->xml->DocumentInfo->ReferenceInfo->OtherReferenceInfo;
+      foreach ($other_info as $info){
+        if($info->OtherReferenceName == 'EstimateAltID'){
+          $this->result['EstimateAltID'] = (string) $info->OtherRefNum;
+          break;
+        }
+      }
+    }
+  }
+
+  protected function _fieldGroupRepairTotalsInfo()
+  {
+    if($this->xml->RepairTotalsInfo && $this->xml->RepairTotalsInfo->SummaryTotalsInfo){
+      $other_info = $this->xml->RepairTotalsInfo->SummaryTotalsInfo;
+      foreach ($other_info as $info){
+        if($info->TotalSubType == 'T2'){
+          $this->result['TotalAmt1'] = (float) $info->TotalAmt;
+          break;
+        }
+      }
+    }
+
+    if($this->xml->RepairTotalsInfo && $this->xml->RepairTotalsInfo->LaborTotalsInfo){
+      $other_info = $this->xml->RepairTotalsInfo->LaborTotalsInfo;
+      foreach ($other_info as $info){
+        if($info->TotalType == 'LAB'){
+          $this->result['TotalHours'] = (float) $info->TotalHours;
+          $this->result['TotalAmt2'] = (float) $info->TotalAmt;
+          break;
+        }
+      }
+    }
   }
 
   protected function _fieldGroupMorefields()
@@ -122,6 +134,15 @@ class EstimateParseXML {
       $this->result['ActualPickUpDateTime'] = $this->_searchFieldXML($other_info,'ActualPickUpDateTime');
       $this->result['ROClosed'] = !empty($this->result['ActualPickUpDateTime']);
     }
+
+    if($this->xml->DocumentInfo && $this->xml->DocumentInfo->CreateDateTime){
+      $other_info = $this->xml->DocumentInfo;
+      $this->result['CreationDateTime'] = $this->_searchFieldXML($other_info,'CreateDateTime');
+    }
+    if($this->xml->AdminInfo && $this->xml->AdminInfo->RepairFacility && $this->xml->AdminInfo->RepairFacility->Party->OrgInfo) {
+      $other_info = $this->xml->AdminInfo->RepairFacility->Party->OrgInfo;
+      $this->result['CompanyID'] = $this->_searchFieldXML($other_info->IDInfo, 'IDQualifierCode');
+    }
   }
 
   protected function _fieldGroupInsurance()
@@ -129,7 +150,7 @@ class EstimateParseXML {
     if($this->xml->AdminInfo && $this->xml->AdminInfo->InsuranceCompany && $this->xml->AdminInfo->InsuranceCompany->Party->OrgInfo) {
       $other_info = $this->xml->AdminInfo->InsuranceCompany->Party->OrgInfo;
       $this->result['InsuranceCompany'] = $this->_searchFieldXML($other_info, 'CompanyName');
-      $this->result['InsuranceCompanyID'] = $this->_searchFieldXML($other_info->IDInfo,'IDNum');
+      $this->result['InsuranceCompanyIDNum'] = $this->_searchFieldXML($other_info->IDInfo,'IDNum');
     }
   }
 
@@ -159,8 +180,11 @@ class EstimateParseXML {
   protected function _fieldGroupSalesParts()
   {
     if($this->xml->RepairTotalsInfo && $this->xml->RepairTotalsInfo->PartsTotalsInfo){
+      // casting a SimpleXML object to an array for correct foreach work
       $other_info = (array) $this->xml->RepairTotalsInfo;
-      foreach ($other_info['PartsTotalsInfo'] as $PartsTotalsInfo => $info){
+      foreach ($other_info['PartsTotalsInfo'] as $info){
+        if (empty($info->TotalType)) continue;
+
         $type = (string) $info->TotalType;
         if (!empty(static::SALES_PARTS[$type])){
           $this->result[$info->TotalType . '_TotalAmt'] = (float) $info->TotalAmt;
@@ -172,9 +196,12 @@ class EstimateParseXML {
   protected function _fieldGroupSalesOther()
   {
     if($this->xml->RepairTotalsInfo && $this->xml->RepairTotalsInfo->OtherChargesTotalsInfo){
+      // casting a SimpleXML object to an array for correct foreach work
       $other_info = (array) $this->xml->RepairTotalsInfo;
-      foreach ($other_info['OtherChargesTotalsInfo'] as $OtherChargesTotalsInfo => $info){
-        $type = (string) $info->TotalType;
+      foreach ($other_info['OtherChargesTotalsInfo'] as $info){
+        if (empty($info->TotalType)) continue;
+
+        $type = (string)$info->TotalType;
         if (!empty(static::SALES_OTHER[$type])){
           $this->result[$info->TotalType . '_TotalAmt'] = (float) $info->TotalAmt;
         }
@@ -185,6 +212,7 @@ class EstimateParseXML {
   protected function _searchFieldXML($other_info, $infoName)
   {
     $result = "";
+    // casting a SimpleXML object to an array for correct isset work
     $data = (array)$other_info;
 
     if (isset($data[$infoName])) {
@@ -194,17 +222,18 @@ class EstimateParseXML {
     return $result;
   }
 
-  protected function _calcAmtHours()
+  protected function _fieldGroupSalesLabor()
   {
-    if (!empty($this->xml->DamageLineInfo)){
-      foreach ($this->xml->DamageLineInfo as $elements => $DamageLineInfo){
-        foreach ($DamageLineInfo as $elementInfo) {
-          $type = (string)$elementInfo->LaborOperation;
-          if (!empty(static::SALES_LABOR[$type])) {
-            $this->result[$elementInfo->LaborOperation . '_TotalAmt'] = $this->result[$elementInfo->LaborOperation . '_TotalAmt'] + $elementInfo->LaborAmt;
-            $this->result[$elementInfo->LaborOperation . '_TotalHours'] = $this->result[$elementInfo->LaborOperation . '_TotalHours'] + $elementInfo->LaborHours;
-            break;
-          }
+    // xml->DamageLineInfo is array
+    if (empty($this->xml->DamageLineInfo)) return;
+    foreach ($this->xml->DamageLineInfo as $DamageLineInfo){
+      foreach ($DamageLineInfo as $elementInfo) {
+        // $elementInfo is SimpleXMLElement
+        $type = (string)$elementInfo->LaborOperation;
+        if (!empty(static::SALES_LABOR[$type])) {
+          $this->result[$elementInfo->LaborOperation . '_TotalAmt'] = $this->result[$elementInfo->LaborOperation . '_TotalAmt'] + $elementInfo->LaborAmt;
+          $this->result[$elementInfo->LaborOperation . '_TotalHours'] = $this->result[$elementInfo->LaborOperation . '_TotalHours'] + $elementInfo->LaborHours;
+          break;
         }
       }
     }

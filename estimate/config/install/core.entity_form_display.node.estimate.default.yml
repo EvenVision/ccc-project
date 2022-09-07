@@ -5,14 +5,16 @@ dependencies:
   config:
     - field.field.node.estimate.field_actualpickupdatetime
     - field.field.node.estimate.field_arrival_date_time
+    - field.field.node.estimate.field_company_id
     - field.field.node.estimate.field_company_name
+    - field.field.node.estimate.field_creationdatetime
     - field.field.node.estimate.field_estimatealtid
     - field.field.node.estimate.field_estimator_first_name
     - field.field.node.estimate.field_estimator_id
     - field.field.node.estimate.field_estimator_last_name
     - field.field.node.estimate.field_estimator_name
     - field.field.node.estimate.field_insurance_company
-    - field.field.node.estimate.field_insurance_company_id
+    - field.field.node.estimate.field_insurance_company_idnum
     - field.field.node.estimate.field_labor_type_alignmentamount
     - field.field.node.estimate.field_labor_type_alignmenthours
     - field.field.node.estimate.field_labor_type_blank_amount
@@ -93,7 +95,7 @@ third_party_settings:
         description: ''
         required_fields: true
 _core:
-  default_config_hash: S3p5y3sTb3CCWufEc3V04OV7lAUqzkmN8TtLdCTl78Y
+  default_config_hash: X5CrnDF00Atmz8kSVQ4Ja69EFfW9EqgkMiyYr5Wqpdg
 id: node.estimate.default
 targetEntityType: node
 bundle: estimate
@@ -115,9 +117,25 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+  field_company_id:
+    type: string_textfield
+    weight: 78
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
   field_company_name:
     type: string_textfield
     weight: 28
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_creationdatetime:
+    type: string_textfield
+    weight: 79
     region: content
     settings:
       size: 60
@@ -170,9 +188,9 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-  field_insurance_company_id:
+  field_insurance_company_idnum:
     type: string_textfield
-    weight: 30
+    weight: 77
     region: content
     settings:
       size: 60

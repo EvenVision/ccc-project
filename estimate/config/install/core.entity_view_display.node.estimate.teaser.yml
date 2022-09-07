@@ -6,14 +6,16 @@ dependencies:
     - core.entity_view_mode.node.teaser
     - field.field.node.estimate.field_actualpickupdatetime
     - field.field.node.estimate.field_arrival_date_time
+    - field.field.node.estimate.field_company_id
     - field.field.node.estimate.field_company_name
+    - field.field.node.estimate.field_creationdatetime
     - field.field.node.estimate.field_estimatealtid
     - field.field.node.estimate.field_estimator_first_name
     - field.field.node.estimate.field_estimator_id
     - field.field.node.estimate.field_estimator_last_name
     - field.field.node.estimate.field_estimator_name
     - field.field.node.estimate.field_insurance_company
-    - field.field.node.estimate.field_insurance_company_id
+    - field.field.node.estimate.field_insurance_company_idnum
     - field.field.node.estimate.field_labor_type_alignmentamount
     - field.field.node.estimate.field_labor_type_alignmenthours
     - field.field.node.estimate.field_labor_type_blank_amount
@@ -63,7 +65,7 @@ dependencies:
   module:
     - user
 _core:
-  default_config_hash: MalJxetmra3-WakM1S_CUq6dHR5ZrgnnkDipEZGvF3U
+  default_config_hash: N7sJ5C5uYl6ghPgyqQ-TSO0yQBGrGzyCvg9sDkqOTjI
 id: node.estimate.teaser
 targetEntityType: node
 bundle: estimate
@@ -77,14 +79,16 @@ content:
 hidden:
   field_actualpickupdatetime: true
   field_arrival_date_time: true
+  field_company_id: true
   field_company_name: true
+  field_creationdatetime: true
   field_estimatealtid: true
   field_estimator_first_name: true
   field_estimator_id: true
   field_estimator_last_name: true
   field_estimator_name: true
   field_insurance_company: true
-  field_insurance_company_id: true
+  field_insurance_company_idnum: true
   field_labor_type_alignmentamount: true
   field_labor_type_alignmenthours: true
   field_labor_type_blank_amount: true

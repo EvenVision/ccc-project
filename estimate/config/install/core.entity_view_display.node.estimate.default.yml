@@ -5,14 +5,16 @@ dependencies:
   config:
     - field.field.node.estimate.field_actualpickupdatetime
     - field.field.node.estimate.field_arrival_date_time
+    - field.field.node.estimate.field_company_id
     - field.field.node.estimate.field_company_name
+    - field.field.node.estimate.field_creationdatetime
     - field.field.node.estimate.field_estimatealtid
     - field.field.node.estimate.field_estimator_first_name
     - field.field.node.estimate.field_estimator_id
     - field.field.node.estimate.field_estimator_last_name
     - field.field.node.estimate.field_estimator_name
     - field.field.node.estimate.field_insurance_company
-    - field.field.node.estimate.field_insurance_company_id
+    - field.field.node.estimate.field_insurance_company_idnum
     - field.field.node.estimate.field_labor_type_alignmentamount
     - field.field.node.estimate.field_labor_type_alignmenthours
     - field.field.node.estimate.field_labor_type_blank_amount
@@ -62,7 +64,7 @@ dependencies:
   module:
     - user
 _core:
-  default_config_hash: aGvp-Qf3KVWiVCtCkfUIlkRjvI7bN2_KG-xRb3wV60E
+  default_config_hash: Y1VLaieYX2qqPeyPioUtqZEHtuwf-nxZgp0IVQQH9Z8
 id: node.estimate.default
 targetEntityType: node
 bundle: estimate
@@ -84,6 +86,14 @@ content:
     third_party_settings: {  }
     weight: 115
     region: content
+  field_company_id:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 158
+    region: content
   field_company_name:
     type: string
     label: above
@@ -91,6 +101,14 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     weight: 108
+    region: content
+  field_creationdatetime:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 159
     region: content
   field_estimatealtid:
     type: number_integer
@@ -141,13 +159,13 @@ content:
     third_party_settings: {  }
     weight: 109
     region: content
-  field_insurance_company_id:
+  field_insurance_company_idnum:
     type: string
     label: above
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 110
+    weight: 157
     region: content
   field_labor_type_alignmentamount:
     type: number_decimal

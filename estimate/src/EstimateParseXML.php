@@ -111,12 +111,12 @@ class EstimateParseXML {
     }
 
     if($this->xml->RepairTotalsInfo && $this->xml->RepairTotalsInfo->LaborTotalsInfo){
-      $other_info = $this->xml->RepairTotalsInfo->LaborTotalsInfo;
-      foreach ($other_info as $info){
-        if($info->TotalType == 'LAB'){
-          $this->result['TotalHours'] = (float) $info->TotalHours;
-          $this->result['TotalAmt2'] = (float) $info->TotalAmt;
-          break;
+      // casting a SimpleXML object to an array for correct foreach work
+      $other_info = (array) $this->xml->RepairTotalsInfo;
+      foreach ($other_info['LaborTotalsInfo'] as $info){
+        if($info->TotalType == 'LAB' or $info->TotalType == 'LAR'){
+          $this->result[$info->TotalType.'TotalHours'] = (float) $info->TotalHours;
+          $this->result[$info->TotalType.'TotalAmt2'] = (float) $info->TotalAmt;
         }
       }
     }

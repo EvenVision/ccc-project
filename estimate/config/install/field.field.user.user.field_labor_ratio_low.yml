@@ -1,0 +1,26 @@
+uuid: dc4d4f93-fdcc-4a6e-b0dc-4806ccca44d3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_labor_ratio_low
+  module:
+    - user
+id: user.user.field_labor_ratio_low
+field_name: field_labor_ratio_low
+entity_type: user
+bundle: user
+label: 'Labor Ratio Low'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0.3
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

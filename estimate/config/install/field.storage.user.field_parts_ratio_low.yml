@@ -1,0 +1,18 @@
+uuid: cd43d1b2-13ec-40b6-97c1-fa64c8390460
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+id: user.field_parts_ratio_low
+field_name: field_parts_ratio_low
+entity_type: user
+type: float
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

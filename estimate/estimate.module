@@ -1,8 +1,42 @@
 <?php
 
+use Drupal\field\Entity\FieldStorageConfig;
+
 /**
  * Implements hook_unistall().
  */
+
+const CUSTOM_USER_FIELDS = array(
+  'field_throughput_low',
+  'field_throughput_high',
+  'field_sublet_ratio_low',
+  'field_sublet_ratio_high',
+  'field_square_footage',
+  'field_square_foot_efficiency_low',
+  'field_square_foot_efficiency_hig',
+  'field_severity_low',
+  'field_severity_high',
+  'field_repair_replace_ratio_low',
+  'field_repair_replace_ratio_high',
+  'field_parts_ratio_low',
+  'field_parts_ratio_high',
+  'field_paint_hours_ro_low',
+  'field_paint_hours_ro_high',
+  'field_labor_ratio_low',
+  'field_labor_ratio_high',
+  'field_labor_hours_ro_low',
+  'field_labor_hours_ro_high',
+  'field_estimator_last_name',
+  'field_estimator_id',
+  'field_estimator_first_name',
+  'field_cycle_time_low',
+  'field_cycle_time_high',
+  'field_company_name',
+  'field_company_id',
+  'field_body_hours_ro_low',
+  'field_body_hours_ro_high',
+);
+
 function estimate_uninstall(){
   $type_name = 'estimate';
 
@@ -12,6 +46,13 @@ function estimate_uninstall(){
 
   $content_type = \Drupal::entityTypeManager()->getStorage('node_type')->load($type_name);
   $content_type->delete();
+
+  foreach (\CUSTOM_USER_FIELDS as $key){
+    FieldStorageConfig::loadByName('user', $key)->delete();
+    if ($field_storage = FieldStorageConfig::loadByName('user', $key)){
+      $field_storage->delete();
+    }
+  }
 }
 
 if (!function_exists('getallheaders')) {
@@ -24,5 +65,15 @@ if (!function_exists('getallheaders')) {
       }
     }
     return $headers;
+  }
+}
+
+function estimate_form_user_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id){
+  $current_user = \Drupal::currentUser();
+  $roles = $current_user->getRoles();
+  if (!in_array('administrator', $roles)){
+    foreach (\CUSTOM_USER_FIELDS as $fied){
+      $form[$fied]['#access'] = false;
+    }
   }
 }

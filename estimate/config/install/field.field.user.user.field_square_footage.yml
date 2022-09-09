@@ -1,0 +1,20 @@
+uuid: 5c828e87-af45-4c52-85d0-690f5cc3b8db
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_square_footage
+  module:
+    - user
+id: user.user.field_square_footage
+field_name: field_square_footage
+entity_type: user
+bundle: user
+label: 'Square Footage'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,26 @@
+uuid: 5c662a10-3bed-4ab7-afcc-003fd2ce80a3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_throughput_low
+  module:
+    - user
+id: user.user.field_throughput_low
+field_name: field_throughput_low
+entity_type: user
+bundle: user
+label: 'Throughput Low'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: !!float 5
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

@@ -1,0 +1,26 @@
+uuid: de2bcc41-c8c8-48fd-b056-22fd5041b3f3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_square_foot_efficiency_hig
+  module:
+    - user
+id: user.user.field_square_foot_efficiency_hig
+field_name: field_square_foot_efficiency_hig
+entity_type: user
+bundle: user
+label: 'Square Foot Efficiency High'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: !!float 100
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

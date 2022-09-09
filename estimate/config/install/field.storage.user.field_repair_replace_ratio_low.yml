@@ -1,0 +1,18 @@
+uuid: 977199dd-d72d-4fc6-863a-eafa455fbe7d
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+id: user.field_repair_replace_ratio_low
+field_name: field_repair_replace_ratio_low
+entity_type: user
+type: float
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -59,12 +59,14 @@ dependencies:
     - field.field.node.estimate.field_sales_other_user_defined_4
     - field.field.node.estimate.field_totalamt
     - field.field.node.estimate.field_totalamt_body
+    - field.field.node.estimate.field_totalamt_paint
     - field.field.node.estimate.field_totalhours_body
+    - field.field.node.estimate.field_totalhours_paint
     - node.type.estimate
   module:
     - user
 _core:
-  default_config_hash: Y1VLaieYX2qqPeyPioUtqZEHtuwf-nxZgp0IVQQH9Z8
+  default_config_hash: nj83H-vA4-h4kAIpgKG0N2n5k-sIMWav0Uhmbw7Jmqo
 id: node.estimate.default
 targetEntityType: node
 bundle: estimate
@@ -650,6 +652,17 @@ content:
     third_party_settings: {  }
     weight: 105
     region: content
+  field_totalamt_paint:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 161
+    region: content
   field_totalhours_body:
     type: number_decimal
     label: above
@@ -660,6 +673,17 @@ content:
       prefix_suffix: true
     third_party_settings: {  }
     weight: 104
+    region: content
+  field_totalhours_paint:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 160
     region: content
   links:
     settings: {  }

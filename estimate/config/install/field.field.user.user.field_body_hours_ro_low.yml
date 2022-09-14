@@ -1,0 +1,26 @@
+uuid: 7d714848-7c6b-4504-bbc6-635e8380c8db
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_body_hours_ro_low
+  module:
+    - user
+id: user.user.field_body_hours_ro_low
+field_name: field_body_hours_ro_low
+entity_type: user
+bundle: user
+label: 'Body Hours / RO Low'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: !!float 5
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

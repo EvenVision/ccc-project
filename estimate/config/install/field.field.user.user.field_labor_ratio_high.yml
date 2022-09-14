@@ -1,0 +1,26 @@
+uuid: 8f768b22-40c4-4fb2-b5df-6aba6348cc9e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_labor_ratio_high
+  module:
+    - user
+id: user.user.field_labor_ratio_high
+field_name: field_labor_ratio_high
+entity_type: user
+bundle: user
+label: 'Labor Ratio High'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0.7
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

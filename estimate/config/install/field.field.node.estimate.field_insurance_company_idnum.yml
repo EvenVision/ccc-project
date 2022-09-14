@@ -1,0 +1,19 @@
+uuid: 5f3e1557-2a86-4767-951e-b007f425b3c4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_insurance_company_idnum
+    - node.type.estimate
+id: node.estimate.field_insurance_company_idnum
+field_name: field_insurance_company_idnum
+entity_type: node
+bundle: estimate
+label: 'Insurance Company ID'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,26 @@
+uuid: dd7f98ae-9cda-4e8f-a084-5910f00f75fb
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_parts_ratio_low
+  module:
+    - user
+id: user.user.field_parts_ratio_low
+field_name: field_parts_ratio_low
+entity_type: user
+bundle: user
+label: 'Parts Ratio Low'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0.1
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

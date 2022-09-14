@@ -1,0 +1,26 @@
+uuid: 4df8c176-f595-4928-99a5-80b74b98f457
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_parts_ratio_high
+  module:
+    - user
+id: user.user.field_parts_ratio_high
+field_name: field_parts_ratio_high
+entity_type: user
+bundle: user
+label: 'Parts Ratio High'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0.4
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

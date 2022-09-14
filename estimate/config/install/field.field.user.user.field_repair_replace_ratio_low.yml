@@ -1,0 +1,26 @@
+uuid: f077a692-797f-438f-845a-5295d8b1d892
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_repair_replace_ratio_low
+  module:
+    - user
+id: user.user.field_repair_replace_ratio_low
+field_name: field_repair_replace_ratio_low
+entity_type: user
+bundle: user
+label: 'Repair / Replace Ratio Low'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0.01
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

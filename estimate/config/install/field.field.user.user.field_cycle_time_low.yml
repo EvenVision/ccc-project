@@ -1,0 +1,26 @@
+uuid: 5adaeffe-1120-4c52-9934-ebd1fa4a9024
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_cycle_time_low
+  module:
+    - user
+id: user.user.field_cycle_time_low
+field_name: field_cycle_time_low
+entity_type: user
+bundle: user
+label: 'Cycle Time Low'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: !!float 24
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

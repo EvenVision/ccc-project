@@ -1,0 +1,18 @@
+uuid: 5b5415f8-6dff-4014-a624-6aee70d81145
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+id: user.field_labor_hours_ro_high
+field_name: field_labor_hours_ro_high
+entity_type: user
+type: float
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

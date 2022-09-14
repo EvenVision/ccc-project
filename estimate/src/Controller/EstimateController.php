@@ -34,21 +34,24 @@ class EstimateController extends ControllerBase {
     $message = 'Ok';
     if (!empty($postdata)){
       try {
-        $result = [];
-        $result = new EstimateParseXML($postdata, $result);
-        $result = $result->parseXML($postdata);
+        $result = new EstimateParseXML($postdata);
+        $result = $result->parseXML();
           $node = Node::create([
           'type'                                => 'estimate',
           'title'                               => 'Estimate',
           'field_estimatealtid'                 => ['value' => $result['EstimateAltID']],
           'field_totalamt'                      => ['value' => $result['TotalAmt1']],
-          'field_totalamt_body'                 => ['value' => $result['TotalAmt2']],
-          'field_totalhours_body'               => ['value' => $result['TotalHours']],
+          'field_totalamt_body'                 => ['value' => $result['LABTotalAmt2']],
+          'field_totalhours_body'               => ['value' => $result['LABTotalHours']],
+          'field_totalhours_paint'              => ['value' => $result['LARTotalHours']],
+          'field_totalamt_paint'                => ['value' => $result['LARTotalAmt2']],
           'field_company_name'                  => ['value' => $result['CompanyName']],
           'field_actualpickupdatetime'          => ['value' => $result['ActualPickUpDateTime']],
           'field_roclosed'                      => ['value' => $result['ROClosed']],
           'field_insurance_company'             => ['value' => $result['InsuranceCompany']],
-          'field_insurance_company_id'          => ['value' => $result['InsuranceCompanyID']],
+          'field_insurance_company_idnum'       => ['value' => $result['InsuranceCompanyIDNum']],
+          'field_company_id'                    => ['value' => $result['CompanyID']],
+          'field_creationdatetime'              => ['value' => $result['CreationDateTime']],
           'field_estimator_name'                => ['value' => $result['EstimatorName']],
           'field_estimator_first_name'          => ['value' => $result['EstimatorFirstName']],
           'field_estimator_last_name'           => ['value' => $result['EstimatorLastName']],

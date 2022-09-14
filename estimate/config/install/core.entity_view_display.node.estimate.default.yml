@@ -5,14 +5,16 @@ dependencies:
   config:
     - field.field.node.estimate.field_actualpickupdatetime
     - field.field.node.estimate.field_arrival_date_time
+    - field.field.node.estimate.field_company_id
     - field.field.node.estimate.field_company_name
+    - field.field.node.estimate.field_creationdatetime
     - field.field.node.estimate.field_estimatealtid
     - field.field.node.estimate.field_estimator_first_name
     - field.field.node.estimate.field_estimator_id
     - field.field.node.estimate.field_estimator_last_name
     - field.field.node.estimate.field_estimator_name
     - field.field.node.estimate.field_insurance_company
-    - field.field.node.estimate.field_insurance_company_id
+    - field.field.node.estimate.field_insurance_company_idnum
     - field.field.node.estimate.field_labor_type_alignmentamount
     - field.field.node.estimate.field_labor_type_alignmenthours
     - field.field.node.estimate.field_labor_type_blank_amount
@@ -57,12 +59,14 @@ dependencies:
     - field.field.node.estimate.field_sales_other_user_defined_4
     - field.field.node.estimate.field_totalamt
     - field.field.node.estimate.field_totalamt_body
+    - field.field.node.estimate.field_totalamt_paint
     - field.field.node.estimate.field_totalhours_body
+    - field.field.node.estimate.field_totalhours_paint
     - node.type.estimate
   module:
     - user
 _core:
-  default_config_hash: aGvp-Qf3KVWiVCtCkfUIlkRjvI7bN2_KG-xRb3wV60E
+  default_config_hash: nj83H-vA4-h4kAIpgKG0N2n5k-sIMWav0Uhmbw7Jmqo
 id: node.estimate.default
 targetEntityType: node
 bundle: estimate
@@ -84,6 +88,14 @@ content:
     third_party_settings: {  }
     weight: 115
     region: content
+  field_company_id:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 158
+    region: content
   field_company_name:
     type: string
     label: above
@@ -91,6 +103,14 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     weight: 108
+    region: content
+  field_creationdatetime:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 159
     region: content
   field_estimatealtid:
     type: number_integer
@@ -141,13 +161,13 @@ content:
     third_party_settings: {  }
     weight: 109
     region: content
-  field_insurance_company_id:
+  field_insurance_company_idnum:
     type: string
     label: above
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 110
+    weight: 157
     region: content
   field_labor_type_alignmentamount:
     type: number_decimal
@@ -632,6 +652,17 @@ content:
     third_party_settings: {  }
     weight: 105
     region: content
+  field_totalamt_paint:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 161
+    region: content
   field_totalhours_body:
     type: number_decimal
     label: above
@@ -642,6 +673,17 @@ content:
       prefix_suffix: true
     third_party_settings: {  }
     weight: 104
+    region: content
+  field_totalhours_paint:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 160
     region: content
   links:
     settings: {  }

@@ -1,0 +1,18 @@
+uuid: f31da3e0-c05c-48c9-b6e1-f8770b1ee638
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+id: user.field_sublet_ratio_low
+field_name: field_sublet_ratio_low
+entity_type: user
+type: float
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

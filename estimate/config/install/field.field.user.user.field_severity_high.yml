@@ -1,0 +1,26 @@
+uuid: f80a9b89-5bbe-4ba8-afe6-2bbf30e08f1a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_severity_high
+  module:
+    - user
+id: user.user.field_severity_high
+field_name: field_severity_high
+entity_type: user
+bundle: user
+label: 'Severity High'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: !!float 15000
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

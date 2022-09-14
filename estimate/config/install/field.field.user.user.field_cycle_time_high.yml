@@ -1,0 +1,26 @@
+uuid: 64c1e749-5480-4867-8a7b-ee0a3af6e198
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_cycle_time_high
+  module:
+    - user
+id: user.user.field_cycle_time_high
+field_name: field_cycle_time_high
+entity_type: user
+bundle: user
+label: 'Cycle Time High'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: !!float 72
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

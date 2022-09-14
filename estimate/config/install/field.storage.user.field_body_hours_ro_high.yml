@@ -1,0 +1,18 @@
+uuid: 031ef13b-13c2-433f-a772-64233068cf8b
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+id: user.field_body_hours_ro_high
+field_name: field_body_hours_ro_high
+entity_type: user
+type: float
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

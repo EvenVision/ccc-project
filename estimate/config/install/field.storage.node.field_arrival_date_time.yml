@@ -1,18 +1,17 @@
-uuid: dcbc6482-f5df-4635-9895-b12be42948d9
+uuid: 5e46bd04-0178-4f05-8121-1cf086201e46
 langcode: en
 status: true
 dependencies:
   module:
+    - datetime
     - node
 id: node.field_arrival_date_time
 field_name: field_arrival_date_time
 entity_type: node
-type: string
+type: datetime
 settings:
-  max_length: 255
-  case_sensitive: false
-  is_ascii: false
-module: core
+  datetime_type: datetime
+module: datetime
 locked: false
 cardinality: 1
 translatable: true

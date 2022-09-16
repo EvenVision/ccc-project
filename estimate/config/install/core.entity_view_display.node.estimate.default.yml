@@ -64,29 +64,185 @@ dependencies:
     - field.field.node.estimate.field_totalhours_paint
     - node.type.estimate
   module:
+    - datetime
+    - field_group
     - user
+third_party_settings:
+  field_group:
+    group_more_fields:
+      children:
+        - field_company_name
+        - field_roclosed
+        - field_actualpickupdatetime
+      label: 'More fields'
+      parent_name: ''
+      region: content
+      weight: 2
+      format_type: fieldset
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        description: ''
+    group_insurance:
+      children:
+        - field_company_id
+        - field_insurance_company
+        - field_insurance_company_idnum
+        - field_creationdatetime
+      label: Insurance
+      parent_name: ''
+      region: content
+      weight: 3
+      format_type: fieldset
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        description: ''
+    group_cycle_time:
+      children:
+        - field_arrival_date_time
+      label: 'Cycle Time'
+      parent_name: ''
+      region: content
+      weight: 4
+      format_type: fieldset
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        description: ''
+    group_sales_collision:
+      children:
+        - field_totalamt
+      label: 'Sales Collision'
+      parent_name: ''
+      region: content
+      weight: 5
+      format_type: fieldset
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        description: ''
+    group_sales_parts:
+      children:
+        - field_parts_type_aftermarket
+        - field_parts_type_glass
+        - field_parts_type_recycled_oe
+        - field_parts_type_remanufactured
+        - field_parts_type_new_oem
+        - field_parts_type_new_oem_discoun
+        - field_parts_type_other
+        - field_parts_type_new_partial
+        - field_parts_type_re_cored
+        - field_parts_type_sublet
+      label: 'Sales Parts'
+      parent_name: ''
+      region: content
+      weight: 11
+      format_type: fieldset
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        description: ''
+    group_sales_other:
+      children:
+        - field_sales_other_hazardous_wast
+        - field_sales_other_paint_material
+        - field_sales_other_shop_materials
+        - field_sales_other_user_defined_1
+        - field_sales_other_user_defined_2
+        - field_sales_other_user_defined_3
+        - field_sales_other_user_defined_4
+        - field_sales_other_storage
+        - field_sales_other_towing
+      label: 'Sales Other'
+      parent_name: ''
+      region: content
+      weight: 12
+      format_type: fieldset
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        description: ''
+    group_sales_labor:
+      children:
+        - field_labor_type_blank_amount
+        - field_labor_type_blank_hours
+        - field_labor_type_rem_inst_amt
+        - field_labor_type_rem_inst_hours
+        - field_labor_type_alignmentamount
+        - field_labor_type_alignmenthours
+        - field_labor_type_overhaul_amount
+        - field_labor_type_overhaul_hours
+        - field_labor_type_refinish_amount
+        - field_labor_type_refinish_hours
+        - field_labor_type_repair_amount
+        - field_labor_type_repair_hours
+        - field_labor_type_rep_par_amt
+        - field_labor_type_rep_par_hours
+        - field_labor_type_rem_rep_amt
+        - field_labor_type_rem_rep_hours
+        - field_labor_type_blend_amount
+        - field_labor_type_blend_hours
+        - field_labor_type_sublet_amount
+        - field_labor_type_sublet_hours
+        - field_labor_type_pdr_amount
+        - field_labor_type_pdr_hours
+      label: 'Sales Labor'
+      parent_name: ''
+      region: content
+      weight: 13
+      format_type: fieldset
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        description: ''
+    group_estimator:
+      children:
+        - field_estimator_id
+        - field_estimator_name
+        - field_estimator_first_name
+        - field_estimator_last_name
+      label: Estimator
+      parent_name: ''
+      region: content
+      weight: 6
+      format_type: fieldset
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        description: ''
 _core:
-  default_config_hash: nj83H-vA4-h4kAIpgKG0N2n5k-sIMWav0Uhmbw7Jmqo
+  default_config_hash: '-rMIKhIAlfnsVFW80hjiDU8fE94xBNvjveK-2pB8INY'
 id: node.estimate.default
 targetEntityType: node
 bundle: estimate
 mode: default
 content:
   field_actualpickupdatetime:
-    type: string
+    type: datetime_default
     label: above
     settings:
-      link_to_entity: false
+      timezone_override: ''
+      format_type: medium
     third_party_settings: {  }
-    weight: 106
+    weight: 9
     region: content
   field_arrival_date_time:
-    type: string
+    type: datetime_default
     label: above
     settings:
-      link_to_entity: false
+      timezone_override: ''
+      format_type: medium
     third_party_settings: {  }
-    weight: 115
+    weight: 55
     region: content
   field_company_id:
     type: string
@@ -94,7 +250,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 158
+    weight: 54
     region: content
   field_company_name:
     type: string
@@ -102,24 +258,32 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 108
+    weight: 7
     region: content
   field_creationdatetime:
+    type: datetime_default
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
+    weight: 57
+    region: content
+  field_cycle_time:
     type: string
     label: above
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 159
+    weight: 162
     region: content
   field_estimatealtid:
-    type: number_integer
+    type: string
     label: above
     settings:
-      thousand_separator: ''
-      prefix_suffix: true
+      link_to_entity: false
     third_party_settings: {  }
-    weight: 102
+    weight: 1
     region: content
   field_estimator_first_name:
     type: string
@@ -127,7 +291,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 112
+    weight: 12
     region: content
   field_estimator_id:
     type: string
@@ -135,7 +299,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 114
+    weight: 10
     region: content
   field_estimator_last_name:
     type: string
@@ -143,7 +307,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 113
+    weight: 13
     region: content
   field_estimator_name:
     type: string
@@ -151,7 +315,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 111
+    weight: 11
     region: content
   field_insurance_company:
     type: string
@@ -159,7 +323,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 109
+    weight: 55
     region: content
   field_insurance_company_idnum:
     type: string
@@ -167,7 +331,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 157
+    weight: 56
     region: content
   field_labor_type_alignmentamount:
     type: number_decimal
@@ -178,7 +342,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 139
+    weight: 19
     region: content
   field_labor_type_alignmenthours:
     type: number_decimal
@@ -189,7 +353,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 140
+    weight: 20
     region: content
   field_labor_type_blank_amount:
     type: number_decimal
@@ -200,7 +364,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 135
+    weight: 15
     region: content
   field_labor_type_blank_hours:
     type: number_decimal
@@ -211,7 +375,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 136
+    weight: 16
     region: content
   field_labor_type_blend_amount:
     type: number_decimal
@@ -222,7 +386,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 151
+    weight: 31
     region: content
   field_labor_type_blend_hours:
     type: number_decimal
@@ -233,7 +397,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 152
+    weight: 32
     region: content
   field_labor_type_overhaul_amount:
     type: number_decimal
@@ -244,7 +408,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 141
+    weight: 21
     region: content
   field_labor_type_overhaul_hours:
     type: number_decimal
@@ -255,7 +419,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 142
+    weight: 22
     region: content
   field_labor_type_pdr_amount:
     type: number_decimal
@@ -266,7 +430,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 155
+    weight: 35
     region: content
   field_labor_type_pdr_hours:
     type: number_decimal
@@ -277,7 +441,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 156
+    weight: 36
     region: content
   field_labor_type_refinish_amount:
     type: number_decimal
@@ -288,7 +452,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 143
+    weight: 23
     region: content
   field_labor_type_refinish_hours:
     type: number_decimal
@@ -299,7 +463,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 144
+    weight: 24
     region: content
   field_labor_type_rem_inst_amt:
     type: number_decimal
@@ -310,7 +474,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 137
+    weight: 17
     region: content
   field_labor_type_rem_inst_hours:
     type: number_decimal
@@ -321,7 +485,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 138
+    weight: 18
     region: content
   field_labor_type_rem_rep_amt:
     type: number_decimal
@@ -332,7 +496,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 149
+    weight: 29
     region: content
   field_labor_type_rem_rep_hours:
     type: number_decimal
@@ -343,7 +507,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 150
+    weight: 30
     region: content
   field_labor_type_rep_par_amt:
     type: number_decimal
@@ -354,7 +518,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 147
+    weight: 27
     region: content
   field_labor_type_rep_par_hours:
     type: number_decimal
@@ -365,7 +529,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 148
+    weight: 28
     region: content
   field_labor_type_repair_amount:
     type: number_decimal
@@ -376,7 +540,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 145
+    weight: 25
     region: content
   field_labor_type_repair_hours:
     type: number_decimal
@@ -387,7 +551,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 146
+    weight: 26
     region: content
   field_labor_type_sublet_amount:
     type: number_decimal
@@ -398,7 +562,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 153
+    weight: 33
     region: content
   field_labor_type_sublet_hours:
     type: number_decimal
@@ -409,7 +573,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 154
+    weight: 34
     region: content
   field_parts_type_aftermarket:
     type: number_decimal
@@ -420,7 +584,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 116
+    weight: 13
     region: content
   field_parts_type_glass:
     type: number_decimal
@@ -431,7 +595,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 117
+    weight: 14
     region: content
   field_parts_type_new_oem:
     type: number_decimal
@@ -442,7 +606,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 120
+    weight: 17
     region: content
   field_parts_type_new_oem_discoun:
     type: number_decimal
@@ -453,7 +617,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 121
+    weight: 18
     region: content
   field_parts_type_new_partial:
     type: number_decimal
@@ -464,7 +628,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 123
+    weight: 20
     region: content
   field_parts_type_other:
     type: number_decimal
@@ -475,7 +639,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 122
+    weight: 19
     region: content
   field_parts_type_re_cored:
     type: number_decimal
@@ -486,7 +650,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 124
+    weight: 21
     region: content
   field_parts_type_recycled_oe:
     type: number_decimal
@@ -497,7 +661,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 118
+    weight: 15
     region: content
   field_parts_type_remanufactured:
     type: number_decimal
@@ -508,7 +672,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 119
+    weight: 16
     region: content
   field_parts_type_sublet:
     type: number_decimal
@@ -519,7 +683,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 125
+    weight: 22
     region: content
   field_roclosed:
     type: boolean
@@ -529,7 +693,7 @@ content:
       format_custom_false: ''
       format_custom_true: ''
     third_party_settings: {  }
-    weight: 107
+    weight: 8
     region: content
   field_sales_other_hazardous_wast:
     type: number_decimal
@@ -540,7 +704,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 126
+    weight: 14
     region: content
   field_sales_other_paint_material:
     type: number_decimal
@@ -551,7 +715,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 127
+    weight: 15
     region: content
   field_sales_other_shop_materials:
     type: number_decimal
@@ -562,7 +726,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 128
+    weight: 16
     region: content
   field_sales_other_storage:
     type: number_decimal
@@ -573,7 +737,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 133
+    weight: 21
     region: content
   field_sales_other_towing:
     type: number_decimal
@@ -584,7 +748,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 134
+    weight: 22
     region: content
   field_sales_other_user_defined_1:
     type: number_decimal
@@ -595,7 +759,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 129
+    weight: 17
     region: content
   field_sales_other_user_defined_2:
     type: number_decimal
@@ -606,7 +770,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 130
+    weight: 18
     region: content
   field_sales_other_user_defined_3:
     type: number_decimal
@@ -617,7 +781,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 131
+    weight: 19
     region: content
   field_sales_other_user_defined_4:
     type: number_decimal
@@ -628,7 +792,15 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 132
+    weight: 20
+    region: content
+  field_square_foot_efficiency:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 164
     region: content
   field_totalamt:
     type: number_decimal
@@ -639,7 +811,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 103
+    weight: 6
     region: content
   field_totalamt_body:
     type: number_decimal
@@ -650,7 +822,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 105
+    weight: 17
     region: content
   field_totalamt_paint:
     type: number_decimal
@@ -661,7 +833,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 161
+    weight: 15
     region: content
   field_totalhours_body:
     type: number_decimal
@@ -672,7 +844,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 104
+    weight: 16
     region: content
   field_totalhours_paint:
     type: number_decimal
@@ -683,11 +855,11 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 160
+    weight: 14
     region: content
   links:
     settings: {  }
     third_party_settings: {  }
-    weight: 100
+    weight: 0
     region: content
 hidden: {  }

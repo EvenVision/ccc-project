@@ -2,6 +2,8 @@
 
 namespace Drupal\estimate;
 
+use Drupal\Core\Datetime\DrupalDateTime;
+
 class EstimateParseXML {
 
   const SALES_PARTS = array(
@@ -114,7 +116,7 @@ class EstimateParseXML {
       // casting a SimpleXML object to an array for correct foreach work
       $other_info = (array) $this->xml->RepairTotalsInfo;
       foreach ($other_info['LaborTotalsInfo'] as $info){
-        if($info->TotalType == 'LAB' or $info->TotalType == 'LAR'){
+        if($info->TotalType == 'LAB' || $info->TotalType == 'LAR'){
           $this->result[$info->TotalType.'TotalHours'] = (float) $info->TotalHours;
           $this->result[$info->TotalType.'TotalAmt2'] = (float) $info->TotalAmt;
         }
@@ -131,13 +133,13 @@ class EstimateParseXML {
 
     if($this->xml->EventInfo && $this->xml->EventInfo->RepairEvent){
       $other_info = $this->xml->EventInfo->RepairEvent;
-      $this->result['ActualPickUpDateTime'] = $this->_searchFieldXML($other_info,'ActualPickUpDateTime');
+      $this->result['ActualPickUpDateTime'] = $this->_convertDateTime($this->_searchFieldXML($other_info,'ActualPickUpDateTime'));
       $this->result['ROClosed'] = !empty($this->result['ActualPickUpDateTime']);
     }
 
     if($this->xml->DocumentInfo && $this->xml->DocumentInfo->CreateDateTime){
       $other_info = $this->xml->DocumentInfo;
-      $this->result['CreationDateTime'] = $this->_searchFieldXML($other_info,'CreateDateTime');
+      $this->result['CreationDateTime'] = $this->_convertDateTime($this->_searchFieldXML($other_info,'CreateDateTime'));
     }
     if($this->xml->AdminInfo && $this->xml->AdminInfo->RepairFacility && $this->xml->AdminInfo->RepairFacility->Party->OrgInfo) {
       $other_info = $this->xml->AdminInfo->RepairFacility->Party->OrgInfo;
@@ -173,7 +175,7 @@ class EstimateParseXML {
   {
     if($this->xml->EventInfo && $this->xml->EventInfo->RepairEvent){
       $other_info = $this->xml->EventInfo->RepairEvent;
-      $this->result['ArrivalDateTime'] = $this->_searchFieldXML($other_info,'ArrivalDateTime');
+      $this->result['ArrivalDateTime'] = $this->_convertDateTime($this->_searchFieldXML($other_info,'ArrivalDateTime'));
     }
   }
 
@@ -238,6 +240,16 @@ class EstimateParseXML {
       }
     }
   }
+
+  protected function _convertDateTime($date_value)
+  {
+      $date_formatter = \Drupal::service('date.formatter');
+      $date_time = new DrupalDateTime($date_value, new \DateTimeZone('UTC'));
+      $timestamp = $date_time->getTimestamp();
+      $format = 'Y-m-d\\TH:i:s';
+      return $date_formatter->format($timestamp, null, $format, null, null);
+  }
+
 }
 
 

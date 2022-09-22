@@ -1,0 +1,23 @@
+uuid: 703bd704-0266-4231-ac0c-82eaddd1ced9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_totalhours_p
+    - node.type.estimate
+id: node.estimate.field_totalhours_p
+field_name: field_totalhours_p
+entity_type: node
+bundle: estimate
+label: 'TotalHours Paint'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

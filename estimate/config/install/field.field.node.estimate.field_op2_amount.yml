@@ -1,0 +1,23 @@
+uuid: e748bae3-f4d7-4ddc-b105-734dcee4f32b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_op2_amount
+    - node.type.estimate
+id: node.estimate.field_op2_amount
+field_name: field_op2_amount
+entity_type: node
+bundle: estimate
+label: 'Labor Type Remove/Install Amount'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

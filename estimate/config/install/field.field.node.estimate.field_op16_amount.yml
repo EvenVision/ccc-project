@@ -1,0 +1,23 @@
+uuid: 61561f89-0c0b-4139-a73b-47918e0108d7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_op16_amount
+    - node.type.estimate
+id: node.estimate.field_op16_amount
+field_name: field_op16_amount
+entity_type: node
+bundle: estimate
+label: 'Labor Type Sublet Amount'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

@@ -1,0 +1,18 @@
+uuid: 21c245cf-af21-4e99-9022-eba4b3a67191
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+id: user.field_bhro_low
+field_name: field_bhro_low
+entity_type: user
+type: float
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

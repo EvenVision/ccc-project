@@ -1,0 +1,23 @@
+uuid: 0282d760-082b-4626-a4a8-b7e2316d652c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_totalhours_b
+    - node.type.estimate
+id: node.estimate.field_totalhours_b
+field_name: field_totalhours_b
+entity_type: node
+bundle: estimate
+label: 'TotalHours Body'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

@@ -1,0 +1,23 @@
+uuid: a53a761d-843c-4a30-b9c9-56ce924b60f3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_op0_hours
+    - node.type.estimate
+id: node.estimate.field_op0_hours
+field_name: field_op0_hours
+entity_type: node
+bundle: estimate
+label: 'Labor Type Blank Hours'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

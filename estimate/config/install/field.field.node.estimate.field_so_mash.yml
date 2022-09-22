@@ -1,0 +1,23 @@
+uuid: 3e939be0-391a-4da2-84aa-5716e9a15bbc
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_so_mash
+    - node.type.estimate
+id: node.estimate.field_so_mash
+field_name: field_so_mash
+entity_type: node
+bundle: estimate
+label: 'Sales Other Shop Materials '
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

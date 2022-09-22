@@ -1,0 +1,23 @@
+uuid: 7448b001-d1a2-43eb-96d7-a3eae82da524
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_op10_amount
+    - node.type.estimate
+id: node.estimate.field_op10_amount
+field_name: field_op10_amount
+entity_type: node
+bundle: estimate
+label: 'Labor Type Repair, Partial Amount'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

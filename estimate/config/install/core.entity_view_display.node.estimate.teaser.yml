@@ -67,7 +67,7 @@ dependencies:
   module:
     - user
 _core:
-  default_config_hash: nNA_Q0MH3Bec01DFXeDQOdBuH8IEbsEpszrSsU4fpkc
+  default_config_hash: vdNYs0KYRBkp2dndUlqqiAMExHSLCcNQmuX1uNiWFCA
 id: node.estimate.teaser
 targetEntityType: node
 bundle: estimate
@@ -84,6 +84,7 @@ hidden:
   field_company_id: true
   field_company_name: true
   field_creationdatetime: true
+  field_cycle_time: true
   field_estimatealtid: true
   field_estimator_first_name: true
   field_estimator_id: true
@@ -133,6 +134,7 @@ hidden:
   field_sales_other_user_defined_2: true
   field_sales_other_user_defined_3: true
   field_sales_other_user_defined_4: true
+  field_square_foot_efficiency: true
   field_totalamt: true
   field_totalamt_body: true
   field_totalamt_paint: true

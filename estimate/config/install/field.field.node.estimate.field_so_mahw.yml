@@ -1,0 +1,23 @@
+uuid: e0570002-095b-4f1e-957e-44ded5d9d790
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_so_mahw
+    - node.type.estimate
+id: node.estimate.field_so_mahw
+field_name: field_so_mahw
+entity_type: node
+bundle: estimate
+label: 'Sales Other Hazardous Wastes Removal '
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

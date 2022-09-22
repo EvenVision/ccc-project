@@ -1,0 +1,23 @@
+uuid: 1b3dee3d-9333-4bf9-b25e-3ccfb0f6d6ed
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_so_mapa
+    - node.type.estimate
+id: node.estimate.field_so_mapa
+field_name: field_so_mapa
+entity_type: node
+bundle: estimate
+label: 'Sales Other Paint Materials '
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

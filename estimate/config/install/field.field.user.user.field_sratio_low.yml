@@ -1,0 +1,26 @@
+uuid: 635c7ba8-e638-413b-9d89-2cff33825836
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_sratio_low
+  module:
+    - user
+id: user.user.field_sratio_low
+field_name: field_sratio_low
+entity_type: user
+bundle: user
+label: 'Sublet Ratio Low'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0.1
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

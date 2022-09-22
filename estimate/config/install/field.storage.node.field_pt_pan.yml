@@ -1,0 +1,18 @@
+uuid: 451c345c-6ea2-48f3-9493-1b381ba281f4
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_pt_pan
+field_name: field_pt_pan
+entity_type: node
+type: float
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

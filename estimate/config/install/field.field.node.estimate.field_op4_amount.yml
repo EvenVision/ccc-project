@@ -1,0 +1,23 @@
+uuid: ce58ae3b-3b61-4f3c-b162-a1597950685d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_op4_amount
+    - node.type.estimate
+id: node.estimate.field_op4_amount
+field_name: field_op4_amount
+entity_type: node
+bundle: estimate
+label: 'Labor Type Alignment Amount'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

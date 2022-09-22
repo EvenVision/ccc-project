@@ -1,0 +1,23 @@
+uuid: ad53498e-7a4e-419f-81e9-9a4300d85e84
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_pt_pao
+    - node.type.estimate
+id: node.estimate.field_pt_pao
+field_name: field_pt_pao
+entity_type: node
+bundle: estimate
+label: 'Parts Type Other'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

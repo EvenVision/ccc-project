@@ -1,0 +1,37 @@
+uuid: 5e3353a1-3d11-4f60-a5fc-4e86fcb91f68
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.company.field_com_id_com
+    - field.field.node.company.field_com_name_com
+    - node.type.company
+  module:
+    - user
+id: node.company.default
+targetEntityType: node
+bundle: company
+mode: default
+content:
+  field_com_id_com:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  field_com_name_com:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden: {  }

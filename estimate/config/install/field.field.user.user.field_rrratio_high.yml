@@ -1,0 +1,26 @@
+uuid: 4fb4a754-bf8f-468e-9eb7-8570ce4db9df
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_rrratio_high
+  module:
+    - user
+id: user.user.field_rrratio_high
+field_name: field_rrratio_high
+entity_type: user
+bundle: user
+label: 'Repair / Replace Ratio High'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0.2
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

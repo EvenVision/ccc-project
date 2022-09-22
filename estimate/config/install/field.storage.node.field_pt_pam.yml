@@ -1,0 +1,18 @@
+uuid: e5c93e07-a964-4cfd-9b20-c01d4d279d8e
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_pt_pam
+field_name: field_pt_pam
+entity_type: node
+type: float
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

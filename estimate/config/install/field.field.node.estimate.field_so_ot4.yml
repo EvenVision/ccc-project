@@ -1,0 +1,23 @@
+uuid: 2d171452-89eb-4d09-965e-881bee524bf3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_so_ot4
+    - node.type.estimate
+id: node.estimate.field_so_ot4
+field_name: field_so_ot4
+entity_type: node
+bundle: estimate
+label: 'Sales Other User Defined 4'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

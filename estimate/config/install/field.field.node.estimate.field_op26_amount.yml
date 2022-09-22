@@ -1,0 +1,23 @@
+uuid: 6997e605-45ab-4591-876f-7d90dba13f46
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_op26_amount
+    - node.type.estimate
+id: node.estimate.field_op26_amount
+field_name: field_op26_amount
+entity_type: node
+bundle: estimate
+label: "Labor Type Paintless Dent Repair Amount\t"
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

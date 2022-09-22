@@ -1,79 +1,113 @@
-uuid: bfd687da-980c-4214-8ce8-253f48b32276
+uuid: 68587c2e-f418-4f56-86e2-eb3805e7d5b6
 langcode: en
 status: true
 dependencies:
   config:
-    - field.field.node.estimate.field_actualpickupdatetime
-    - field.field.node.estimate.field_arrival_date_time
-    - field.field.node.estimate.field_company_id
-    - field.field.node.estimate.field_company_name
-    - field.field.node.estimate.field_creationdatetime
-    - field.field.node.estimate.field_estimatealtid
-    - field.field.node.estimate.field_estimator_first_name
-    - field.field.node.estimate.field_estimator_id
-    - field.field.node.estimate.field_estimator_last_name
-    - field.field.node.estimate.field_estimator_name
-    - field.field.node.estimate.field_insurance_company
-    - field.field.node.estimate.field_insurance_company_idnum
-    - field.field.node.estimate.field_labor_type_alignmentamount
-    - field.field.node.estimate.field_labor_type_alignmenthours
-    - field.field.node.estimate.field_labor_type_blank_amount
-    - field.field.node.estimate.field_labor_type_blank_hours
-    - field.field.node.estimate.field_labor_type_blend_amount
-    - field.field.node.estimate.field_labor_type_blend_hours
-    - field.field.node.estimate.field_labor_type_overhaul_amount
-    - field.field.node.estimate.field_labor_type_overhaul_hours
-    - field.field.node.estimate.field_labor_type_pdr_amount
-    - field.field.node.estimate.field_labor_type_pdr_hours
-    - field.field.node.estimate.field_labor_type_refinish_amount
-    - field.field.node.estimate.field_labor_type_refinish_hours
-    - field.field.node.estimate.field_labor_type_rem_inst_amt
-    - field.field.node.estimate.field_labor_type_rem_inst_hours
-    - field.field.node.estimate.field_labor_type_rem_rep_amt
-    - field.field.node.estimate.field_labor_type_rem_rep_hours
-    - field.field.node.estimate.field_labor_type_rep_par_amt
-    - field.field.node.estimate.field_labor_type_rep_par_hours
-    - field.field.node.estimate.field_labor_type_repair_amount
-    - field.field.node.estimate.field_labor_type_repair_hours
-    - field.field.node.estimate.field_labor_type_sublet_amount
-    - field.field.node.estimate.field_labor_type_sublet_hours
-    - field.field.node.estimate.field_parts_type_aftermarket
-    - field.field.node.estimate.field_parts_type_glass
-    - field.field.node.estimate.field_parts_type_new_oem
-    - field.field.node.estimate.field_parts_type_new_oem_discoun
-    - field.field.node.estimate.field_parts_type_new_partial
-    - field.field.node.estimate.field_parts_type_other
-    - field.field.node.estimate.field_parts_type_re_cored
-    - field.field.node.estimate.field_parts_type_recycled_oe
-    - field.field.node.estimate.field_parts_type_remanufactured
-    - field.field.node.estimate.field_parts_type_sublet
+    - field.field.node.estimate.field_arrival_dt
+    - field.field.node.estimate.field_com_id_es
+    - field.field.node.estimate.field_com_name_es
+    - field.field.node.estimate.field_creationdt
+    - field.field.node.estimate.field_es_f_name
+    - field.field.node.estimate.field_es_id
+    - field.field.node.estimate.field_es_l_name
+    - field.field.node.estimate.field_es_name
+    - field.field.node.estimate.field_esaltid
+    - field.field.node.estimate.field_ins_com
+    - field.field.node.estimate.field_ins_com_id
+    - field.field.node.estimate.field_op0_amount
+    - field.field.node.estimate.field_op0_hours
+    - field.field.node.estimate.field_op10_amount
+    - field.field.node.estimate.field_op10_hours
+    - field.field.node.estimate.field_op11_amount
+    - field.field.node.estimate.field_op11_hours
+    - field.field.node.estimate.field_op15_amount
+    - field.field.node.estimate.field_op15_hours
+    - field.field.node.estimate.field_op16_amount
+    - field.field.node.estimate.field_op16_hours
+    - field.field.node.estimate.field_op26_amount
+    - field.field.node.estimate.field_op26_hours
+    - field.field.node.estimate.field_op2_amount
+    - field.field.node.estimate.field_op2_hours
+    - field.field.node.estimate.field_op4_amount
+    - field.field.node.estimate.field_op4_hours
+    - field.field.node.estimate.field_op5_amount
+    - field.field.node.estimate.field_op5_hours
+    - field.field.node.estimate.field_op6_amount
+    - field.field.node.estimate.field_op6_hours
+    - field.field.node.estimate.field_op9_amount
+    - field.field.node.estimate.field_op9_hours
+    - field.field.node.estimate.field_pickup_dt
+    - field.field.node.estimate.field_pt_paa
+    - field.field.node.estimate.field_pt_pag
+    - field.field.node.estimate.field_pt_pal
+    - field.field.node.estimate.field_pt_pam
+    - field.field.node.estimate.field_pt_pan
+    - field.field.node.estimate.field_pt_pand
+    - field.field.node.estimate.field_pt_pao
+    - field.field.node.estimate.field_pt_pap
+    - field.field.node.estimate.field_pt_par
+    - field.field.node.estimate.field_pt_pas
     - field.field.node.estimate.field_roclosed
-    - field.field.node.estimate.field_sales_other_hazardous_wast
-    - field.field.node.estimate.field_sales_other_paint_material
-    - field.field.node.estimate.field_sales_other_shop_materials
-    - field.field.node.estimate.field_sales_other_storage
-    - field.field.node.estimate.field_sales_other_towing
-    - field.field.node.estimate.field_sales_other_user_defined_1
-    - field.field.node.estimate.field_sales_other_user_defined_2
-    - field.field.node.estimate.field_sales_other_user_defined_3
-    - field.field.node.estimate.field_sales_other_user_defined_4
+    - field.field.node.estimate.field_so_mahw
+    - field.field.node.estimate.field_so_mapa
+    - field.field.node.estimate.field_so_mash
+    - field.field.node.estimate.field_so_ot1
+    - field.field.node.estimate.field_so_ot2
+    - field.field.node.estimate.field_so_ot3
+    - field.field.node.estimate.field_so_ot4
+    - field.field.node.estimate.field_so_otst
+    - field.field.node.estimate.field_so_ottw
     - field.field.node.estimate.field_totalamt
-    - field.field.node.estimate.field_totalamt_body
-    - field.field.node.estimate.field_totalamt_paint
-    - field.field.node.estimate.field_totalhours_body
-    - field.field.node.estimate.field_totalhours_paint
+    - field.field.node.estimate.field_totalamt_b
+    - field.field.node.estimate.field_totalamt_p
+    - field.field.node.estimate.field_totalhours_b
+    - field.field.node.estimate.field_totalhours_p
     - node.type.estimate
   module:
     - field_group
+    - path
 third_party_settings:
   field_group:
-    group_sales_collision:
+    group_more_fields:
       children:
-        - field_totalamt
-      label: 'Sales Collision'
+        - field_com_name_es
+        - field_pickup_dt
+        - field_roclosed
+      label: 'More fields'
       region: content
       parent_name: ''
-      weight: 2
+      weight: 10
+      format_type: fieldset
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        description: ''
+        required_fields: true
+    group_cycle_time:
+      children:
+        - field_arrival_dt
+      label: 'Cycle Time'
+      region: content
+      parent_name: ''
+      weight: 11
+      format_type: fieldset
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        description: ''
+        required_fields: true
+    group_estimator:
+      children:
+        - field_es_name
+        - field_es_f_name
+        - field_es_l_name
+        - field_es_id
+      label: Estimator
+      region: content
+      parent_name: ''
+      weight: 13
       format_type: fieldset
       format_settings:
         classes: ''
@@ -83,12 +117,92 @@ third_party_settings:
         required_fields: true
     group_sales_labor:
       children:
-        - field_totalhours_body
-        - field_totalamt_body
+        - field_op4_amount
+        - field_op4_hours
+        - field_op0_amount
+        - field_op0_hours
+        - field_op15_amount
+        - field_op15_hours
+        - field_op5_amount
+        - field_op5_hours
+        - field_op26_hours
+        - field_op26_amount
+        - field_op6_amount
+        - field_op6_hours
+        - field_op2_amount
+        - field_op2_hours
+        - field_op11_amount
+        - field_op11_hours
+        - field_op10_amount
+        - field_op10_hours
+        - field_op9_amount
+        - field_op9_hours
+        - field_op16_amount
+        - field_op16_hours
       label: 'Sales Labor'
       region: content
       parent_name: ''
-      weight: 3
+      weight: 17
+      format_type: fieldset
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        description: ''
+        required_fields: true
+    group_sales_parts:
+      children:
+        - field_pt_paa
+        - field_pt_pag
+        - field_pt_pap
+        - field_pt_pan
+        - field_pt_pand
+        - field_pt_pao
+        - field_pt_par
+        - field_pt_pal
+        - field_pt_pam
+        - field_pt_pas
+      label: 'Sales Parts'
+      region: content
+      parent_name: ''
+      weight: 18
+      format_type: fieldset
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        description: ''
+        required_fields: true
+    group_sales_other:
+      children:
+        - field_so_mahw
+        - field_so_mapa
+        - field_so_mash
+        - field_so_otst
+        - field_so_ottw
+        - field_so_ot1
+        - field_so_ot2
+        - field_so_ot3
+        - field_so_ot4
+      label: 'Sales Other'
+      region: content
+      parent_name: ''
+      weight: 19
+      format_type: fieldset
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        description: ''
+        required_fields: true
+    group_insurance:
+      children:
+        - field_ins_com
+        - field_ins_com_id
+      label: Insurance
+      region: content
+      parent_name: ''
+      weight: 14
       format_type: fieldset
       format_settings:
         classes: ''
@@ -97,435 +211,471 @@ third_party_settings:
         description: ''
         required_fields: true
 _core:
-  default_config_hash: OcApZ3pXfmOX-KA4em6s3J-xtf-acEgP3L5ObRANywo
+  default_config_hash: x96JH7nnpzAwBu9HHJZUcUub8ZqvNySdkZoBgnkHV-A
 id: node.estimate.default
 targetEntityType: node
 bundle: estimate
 mode: default
 content:
-  field_actualpickupdatetime:
+  created:
+    type: datetime_timestamp
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_arrival_dt:
     type: string_textfield
-    weight: 26
+    weight: 12
     region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-  field_arrival_date_time:
+  field_com_id_es:
     type: string_textfield
-    weight: 35
+    weight: 8
     region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-  field_company_id:
+  field_com_name_es:
+    type: entity_reference_autocomplete
+    weight: 10
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_creationdt:
     type: string_textfield
-    weight: 78
+    weight: 9
     region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-  field_company_name:
+  field_es_f_name:
     type: string_textfield
-    weight: 28
+    weight: 18
     region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-  field_creationdatetime:
+  field_es_id:
     type: string_textfield
-    weight: 79
+    weight: 20
     region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-  field_estimatealtid:
+  field_es_l_name:
+    type: string_textfield
+    weight: 19
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_es_name:
+    type: string_textfield
+    weight: 17
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_esaltid:
+    type: string_textfield
+    weight: 7
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_ins_com:
+    type: string_textfield
+    weight: 15
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_ins_com_id:
+    type: string_textfield
+    weight: 16
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_op0_amount:
     type: number
-    weight: 1
+    weight: 19
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
-  field_estimator_first_name:
-    type: string_textfield
-    weight: 32
+  field_op0_hours:
+    type: number
+    weight: 20
     region: content
     settings:
-      size: 60
       placeholder: ''
     third_party_settings: {  }
-  field_estimator_id:
-    type: string_textfield
-    weight: 34
-    region: content
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-  field_estimator_last_name:
-    type: string_textfield
+  field_op10_amount:
+    type: number
     weight: 33
     region: content
     settings:
-      size: 60
       placeholder: ''
     third_party_settings: {  }
-  field_estimator_name:
-    type: string_textfield
+  field_op10_hours:
+    type: number
+    weight: 34
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_op11_amount:
+    type: number
     weight: 31
     region: content
     settings:
-      size: 60
       placeholder: ''
     third_party_settings: {  }
-  field_insurance_company:
-    type: string_textfield
-    weight: 29
-    region: content
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-  field_insurance_company_idnum:
-    type: string_textfield
-    weight: 77
-    region: content
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-  field_labor_type_alignmentamount:
+  field_op11_hours:
     type: number
-    weight: 59
+    weight: 32
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
-  field_labor_type_alignmenthours:
+  field_op15_amount:
     type: number
-    weight: 60
+    weight: 21
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
-  field_labor_type_blank_amount:
+  field_op15_hours:
     type: number
-    weight: 55
+    weight: 22
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
-  field_labor_type_blank_hours:
-    type: number
-    weight: 56
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_labor_type_blend_amount:
-    type: number
-    weight: 71
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_labor_type_blend_hours:
-    type: number
-    weight: 72
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_labor_type_overhaul_amount:
-    type: number
-    weight: 61
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_labor_type_overhaul_hours:
-    type: number
-    weight: 62
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_labor_type_pdr_amount:
-    type: number
-    weight: 75
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_labor_type_pdr_hours:
-    type: number
-    weight: 76
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_labor_type_refinish_amount:
-    type: number
-    weight: 63
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_labor_type_refinish_hours:
-    type: number
-    weight: 64
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_labor_type_rem_inst_amt:
-    type: number
-    weight: 57
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_labor_type_rem_inst_hours:
-    type: number
-    weight: 58
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_labor_type_rem_rep_amt:
-    type: number
-    weight: 69
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_labor_type_rem_rep_hours:
-    type: number
-    weight: 70
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_labor_type_rep_par_amt:
-    type: number
-    weight: 67
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_labor_type_rep_par_hours:
-    type: number
-    weight: 68
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_labor_type_repair_amount:
-    type: number
-    weight: 65
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_labor_type_repair_hours:
-    type: number
-    weight: 66
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_labor_type_sublet_amount:
-    type: number
-    weight: 73
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_labor_type_sublet_hours:
-    type: number
-    weight: 74
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_parts_type_aftermarket:
-    type: number
-    weight: 36
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_parts_type_glass:
+  field_op16_amount:
     type: number
     weight: 37
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
-  field_parts_type_new_oem:
-    type: number
-    weight: 40
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_parts_type_new_oem_discoun:
-    type: number
-    weight: 41
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_parts_type_new_partial:
-    type: number
-    weight: 43
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_parts_type_other:
-    type: number
-    weight: 42
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_parts_type_re_cored:
-    type: number
-    weight: 44
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_parts_type_recycled_oe:
+  field_op16_hours:
     type: number
     weight: 38
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
-  field_parts_type_remanufactured:
+  field_op26_amount:
     type: number
-    weight: 39
+    weight: 26
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
-  field_parts_type_sublet:
+  field_op26_hours:
     type: number
-    weight: 45
+    weight: 25
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_op2_amount:
+    type: number
+    weight: 29
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_op2_hours:
+    type: number
+    weight: 30
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_op4_amount:
+    type: number
+    weight: 17
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_op4_hours:
+    type: number
+    weight: 18
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_op5_amount:
+    type: number
+    weight: 23
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_op5_hours:
+    type: number
+    weight: 24
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_op6_amount:
+    type: number
+    weight: 27
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_op6_hours:
+    type: number
+    weight: 28
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_op9_amount:
+    type: number
+    weight: 35
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_op9_hours:
+    type: number
+    weight: 36
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_pickup_dt:
+    type: string_textfield
+    weight: 11
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_pt_paa:
+    type: number
+    weight: 18
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_pt_pag:
+    type: number
+    weight: 19
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_pt_pal:
+    type: number
+    weight: 25
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_pt_pam:
+    type: number
+    weight: 26
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_pt_pan:
+    type: number
+    weight: 21
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_pt_pand:
+    type: number
+    weight: 22
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_pt_pao:
+    type: number
+    weight: 23
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_pt_pap:
+    type: number
+    weight: 20
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_pt_par:
+    type: number
+    weight: 24
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_pt_pas:
+    type: number
+    weight: 27
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_roclosed:
     type: boolean_checkbox
-    weight: 27
+    weight: 12
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
-  field_sales_other_hazardous_wast:
+  field_so_mahw:
     type: number
-    weight: 46
+    weight: 19
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
-  field_sales_other_paint_material:
+  field_so_mapa:
     type: number
-    weight: 47
+    weight: 20
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
-  field_sales_other_shop_materials:
+  field_so_mash:
     type: number
-    weight: 48
+    weight: 21
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
-  field_sales_other_storage:
+  field_so_ot1:
     type: number
-    weight: 53
+    weight: 24
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
-  field_sales_other_towing:
+  field_so_ot2:
     type: number
-    weight: 54
+    weight: 25
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
-  field_sales_other_user_defined_1:
+  field_so_ot3:
     type: number
-    weight: 49
+    weight: 26
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
-  field_sales_other_user_defined_2:
+  field_so_ot4:
     type: number
-    weight: 50
+    weight: 27
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
-  field_sales_other_user_defined_3:
+  field_so_otst:
     type: number
-    weight: 51
+    weight: 22
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
-  field_sales_other_user_defined_4:
+  field_so_ottw:
     type: number
-    weight: 52
+    weight: 23
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_totalamt:
     type: number
-    weight: 2
+    weight: 20
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
-  field_totalamt_body:
+  field_totalamt_b:
     type: number
-    weight: 4
+    weight: 21
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
-  field_totalamt_paint:
+  field_totalamt_p:
     type: number
-    weight: 81
+    weight: 22
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
-  field_totalhours_body:
+  field_totalhours_b:
     type: number
+    weight: 23
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_totalhours_p:
+    type: number
+    weight: 24
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 5
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  promote:
+    type: boolean_checkbox
     weight: 3
     region: content
     settings:
-      placeholder: ''
+      display_label: true
     third_party_settings: {  }
-  field_totalhours_paint:
-    type: number
-    weight: 80
+  status:
+    type: boolean_checkbox
+    weight: 6
     region: content
     settings:
-      placeholder: ''
+      display_label: true
+    third_party_settings: {  }
+  sticky:
+    type: boolean_checkbox
+    weight: 4
+    region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   title:
     type: string_textfield
@@ -535,10 +685,14 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-hidden:
-  created: true
-  path: true
-  promote: true
-  status: true
-  sticky: true
-  uid: true
+  uid:
+    type: entity_reference_autocomplete
+    weight: 1
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden: {  }

@@ -1,0 +1,19 @@
+uuid: 9094fc59-fa3d-47db-9693-d3044a80476c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_esaltid
+    - node.type.estimate
+id: node.estimate.field_esaltid
+field_name: field_esaltid
+entity_type: node
+bundle: estimate
+label: EstimateAltID
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

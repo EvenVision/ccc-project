@@ -1,0 +1,23 @@
+uuid: ec20ac66-65c1-4427-aef6-7f7893b8f94b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_pt_pam
+    - node.type.estimate
+id: node.estimate.field_pt_pam
+field_name: field_pt_pam
+entity_type: node
+bundle: estimate
+label: 'Parts Type Remanufactured'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

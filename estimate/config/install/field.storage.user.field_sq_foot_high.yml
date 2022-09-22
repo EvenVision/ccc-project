@@ -1,0 +1,18 @@
+uuid: 139e68fe-bae4-4048-8551-6d1a85396937
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+id: user.field_sq_foot_high
+field_name: field_sq_foot_high
+entity_type: user
+type: float
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,23 @@
+uuid: de83c5c1-31c8-4503-af66-2a0e0d39e915
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_op4_hours
+    - node.type.estimate
+id: node.estimate.field_op4_hours
+field_name: field_op4_hours
+entity_type: node
+bundle: estimate
+label: 'Labor Type Alignment Hours'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

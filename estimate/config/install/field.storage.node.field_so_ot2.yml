@@ -1,0 +1,18 @@
+uuid: ee20bb51-3a11-4196-9bd2-5c40759c0a32
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_so_ot2
+field_name: field_so_ot2
+entity_type: node
+type: float
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

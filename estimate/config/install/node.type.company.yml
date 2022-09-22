@@ -1,0 +1,20 @@
+uuid: 2ebc0127-9089-4b2d-9db4-83f5e5c56b3e
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
+_core:
+  default_config_hash: T5G9ZlynY3I9jvH5I8G3PChKK6N_npZxSJxC5aGQ9h4
+name: Company
+type: company
+description: 'Custom company content type'
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: true

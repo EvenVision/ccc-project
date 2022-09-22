@@ -1,4 +1,4 @@
-uuid: 2a35ee41-c886-42bd-a2aa-0ec2b5bd50db
+uuid: c1299e44-06ce-4563-971f-86a8df8fc0a9
 langcode: en
 status: true
 dependencies:
@@ -7,11 +7,8 @@ dependencies:
 id: user.field_square_footage
 field_name: field_square_footage
 entity_type: user
-type: string
-settings:
-  max_length: 255
-  case_sensitive: false
-  is_ascii: false
+type: float
+settings: {  }
 module: core
 locked: false
 cardinality: 1

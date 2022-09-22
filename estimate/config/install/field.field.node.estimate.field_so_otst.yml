@@ -1,0 +1,23 @@
+uuid: fadaaab9-f966-4f9e-acca-bc941604a091
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_so_otst
+    - node.type.estimate
+id: node.estimate.field_so_otst
+field_name: field_so_otst
+entity_type: node
+bundle: estimate
+label: 'Sales Other Storage'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

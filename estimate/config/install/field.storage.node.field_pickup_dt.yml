@@ -1,0 +1,21 @@
+uuid: 875bea6e-d46e-4d82-8929-7355fcf5229f
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_pickup_dt
+field_name: field_pickup_dt
+entity_type: node
+type: string
+settings:
+  max_length: 255
+  case_sensitive: false
+  is_ascii: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,23 @@
+uuid: 050890b6-5ad2-4f64-abb0-2d53750c028c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_pt_pan
+    - node.type.estimate
+id: node.estimate.field_pt_pan
+field_name: field_pt_pan
+entity_type: node
+bundle: estimate
+label: "Parts Type New OEM\t"
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

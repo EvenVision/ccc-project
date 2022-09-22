@@ -1,0 +1,26 @@
+uuid: 166985b3-2d22-46fa-aaa2-91c1c0ee342e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_phro_high
+  module:
+    - user
+id: user.user.field_phro_high
+field_name: field_phro_high
+entity_type: user
+bundle: user
+label: 'Paint Hours / RO High'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: !!float 10
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

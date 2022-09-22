@@ -1,0 +1,18 @@
+uuid: c88f17a5-9531-476d-9c16-334b9de4fbae
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+id: user.field_phro_low
+field_name: field_phro_low
+entity_type: user
+type: float
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

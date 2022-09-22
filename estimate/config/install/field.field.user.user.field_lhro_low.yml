@@ -1,0 +1,26 @@
+uuid: 83d90b01-586e-472d-bc61-13f32bf0f309
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_lhro_low
+  module:
+    - user
+id: user.user.field_lhro_low
+field_name: field_lhro_low
+entity_type: user
+bundle: user
+label: 'Labor Hours / RO Low:'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: !!float 20
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

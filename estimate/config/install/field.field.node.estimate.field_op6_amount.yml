@@ -1,0 +1,23 @@
+uuid: bb984dbb-d4f2-4edf-ba20-e89363fb053b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_op6_amount
+    - node.type.estimate
+id: node.estimate.field_op6_amount
+field_name: field_op6_amount
+entity_type: node
+bundle: estimate
+label: 'Labor Type Refinish Amount'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

@@ -1,0 +1,23 @@
+uuid: 761672e4-6b74-4cdc-8358-629c8c956085
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_op11_amount
+    - node.type.estimate
+id: node.estimate.field_op11_amount
+field_name: field_op11_amount
+entity_type: node
+bundle: estimate
+label: 'Labor Type Remove/Replace Amount'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

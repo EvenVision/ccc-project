@@ -1,0 +1,26 @@
+uuid: 473f837f-db67-44f0-86a1-70c81a9ec3cf
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_bhro_high
+  module:
+    - user
+id: user.user.field_bhro_high
+field_name: field_bhro_high
+entity_type: user
+bundle: user
+label: 'Body Hours / RO High'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: !!float 20
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

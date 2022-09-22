@@ -1,0 +1,26 @@
+uuid: dd808efc-5215-4c87-9894-6775359349b3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_bhro_low
+  module:
+    - user
+id: user.user.field_bhro_low
+field_name: field_bhro_low
+entity_type: user
+bundle: user
+label: 'Body Hours / RO Low'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: !!float 5
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

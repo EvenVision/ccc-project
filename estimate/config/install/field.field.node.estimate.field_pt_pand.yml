@@ -1,0 +1,23 @@
+uuid: f94b332a-6c16-4d18-af26-386a62589258
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_pt_pand
+    - node.type.estimate
+id: node.estimate.field_pt_pand
+field_name: field_pt_pand
+entity_type: node
+bundle: estimate
+label: 'Parts Type New OEM discounted'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

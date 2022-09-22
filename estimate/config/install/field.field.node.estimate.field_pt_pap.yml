@@ -1,0 +1,23 @@
+uuid: 2a5b9533-566c-4264-aeb2-1d9de3ac3d0e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_pt_pap
+    - node.type.estimate
+id: node.estimate.field_pt_pap
+field_name: field_pt_pap
+entity_type: node
+bundle: estimate
+label: 'Parts Type New, partial'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

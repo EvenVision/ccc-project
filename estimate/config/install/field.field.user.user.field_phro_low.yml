@@ -1,0 +1,26 @@
+uuid: 9fa61d6b-70dd-4a85-bd24-979a6fd12e7b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_phro_low
+  module:
+    - user
+id: user.user.field_phro_low
+field_name: field_phro_low
+entity_type: user
+bundle: user
+label: 'Paint Hours / RO Low'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: !!float 5
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

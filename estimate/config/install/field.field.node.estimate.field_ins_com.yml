@@ -1,0 +1,19 @@
+uuid: 0b9917fb-2ccb-490b-a4c3-ce29bbcda231
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ins_com
+    - node.type.estimate
+id: node.estimate.field_ins_com
+field_name: field_ins_com
+entity_type: node
+bundle: estimate
+label: 'Insurance Company'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

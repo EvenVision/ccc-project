@@ -1,4 +1,4 @@
-uuid: d5cd8fb1-454d-4147-85aa-292585b4862e
+uuid: 8ca29e70-f96d-47cc-83ca-4dc2958572ae
 langcode: en
 status: true
 dependencies:
@@ -11,7 +11,7 @@ entity_type: node
 bundle: estimate
 label: TotalAmt
 description: ''
-required: true
+required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''

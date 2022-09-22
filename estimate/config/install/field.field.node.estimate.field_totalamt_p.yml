@@ -1,0 +1,23 @@
+uuid: b1b84293-3992-4e9b-821a-9e40a348cfa5
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_totalamt_p
+    - node.type.estimate
+id: node.estimate.field_totalamt_p
+field_name: field_totalamt_p
+entity_type: node
+bundle: estimate
+label: 'TotalAmt Paint'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

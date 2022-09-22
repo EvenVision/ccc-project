@@ -1,0 +1,26 @@
+uuid: fc419c72-fb4e-45e9-a785-1a89f63f2981
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_lhro_high
+  module:
+    - user
+id: user.user.field_lhro_high
+field_name: field_lhro_high
+entity_type: user
+bundle: user
+label: 'Labor Hours / RO High'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: !!float 40
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

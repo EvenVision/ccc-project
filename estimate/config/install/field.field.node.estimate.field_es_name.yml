@@ -1,0 +1,19 @@
+uuid: b65bd15a-2009-48ec-a84f-67b52fa6b93e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_es_name
+    - node.type.estimate
+id: node.estimate.field_es_name
+field_name: field_es_name
+entity_type: node
+bundle: estimate
+label: 'Estimator Name'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

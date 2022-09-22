@@ -1,0 +1,23 @@
+uuid: b16a596a-3ea9-4f6d-90e7-c561ddf63e62
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_op10_hours
+    - node.type.estimate
+id: node.estimate.field_op10_hours
+field_name: field_op10_hours
+entity_type: node
+bundle: estimate
+label: 'Labor Type Repair, Partial Hours'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

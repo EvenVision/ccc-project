@@ -1,0 +1,18 @@
+uuid: 641b8bd9-60fa-4b1c-b02e-fa2859252a73
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_pt_pao
+field_name: field_pt_pao
+entity_type: node
+type: float
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

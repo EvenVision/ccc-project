@@ -1,0 +1,23 @@
+uuid: 985c3066-4a51-461c-8364-7650a26de895
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_op15_hours
+    - node.type.estimate
+id: node.estimate.field_op15_hours
+field_name: field_op15_hours
+entity_type: node
+bundle: estimate
+label: 'Labor Type Blend Hours'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

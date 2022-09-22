@@ -1,0 +1,23 @@
+uuid: ffe7c069-69fd-4044-b8c2-1d16ee308139
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_so_ottw
+    - node.type.estimate
+id: node.estimate.field_so_ottw
+field_name: field_so_ottw
+entity_type: node
+bundle: estimate
+label: 'Sales Other Towing'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

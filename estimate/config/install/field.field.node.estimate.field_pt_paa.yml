@@ -1,0 +1,23 @@
+uuid: 0f86d98a-ffa8-4a5d-bb45-e6c851a7f684
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_pt_paa
+    - node.type.estimate
+id: node.estimate.field_pt_paa
+field_name: field_pt_paa
+entity_type: node
+bundle: estimate
+label: 'Parts Type Aftermarket'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

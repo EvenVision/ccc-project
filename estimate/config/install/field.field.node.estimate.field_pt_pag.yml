@@ -1,0 +1,23 @@
+uuid: 7fb768df-f0ba-468d-88f8-4041ed9f7030
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_pt_pag
+    - node.type.estimate
+id: node.estimate.field_pt_pag
+field_name: field_pt_pag
+entity_type: node
+bundle: estimate
+label: 'Parts Type Glass'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

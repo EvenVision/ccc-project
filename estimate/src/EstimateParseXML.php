@@ -184,6 +184,12 @@ class EstimateParseXML {
     if($this->xml->RepairTotalsInfo && $this->xml->RepairTotalsInfo->PartsTotalsInfo){
       // casting a SimpleXML object to an array for correct foreach work
       $other_info = (array) $this->xml->RepairTotalsInfo;
+
+      $fields = array_keys(static::SALES_PARTS);
+      foreach ($fields as $field){
+          $this->result[$field . '_TotalAmt'] = 0;
+      }
+
       foreach ($other_info['PartsTotalsInfo'] as $info){
         if (empty($info->TotalType)) continue;
 
@@ -200,6 +206,12 @@ class EstimateParseXML {
     if($this->xml->RepairTotalsInfo && $this->xml->RepairTotalsInfo->OtherChargesTotalsInfo){
       // casting a SimpleXML object to an array for correct foreach work
       $other_info = (array) $this->xml->RepairTotalsInfo;
+
+      $fields = array_keys(static::SALES_OTHER);
+      foreach ($fields as $field){
+          $this->result[$field . '_TotalAmt'] = 0;
+      }
+
       foreach ($other_info['OtherChargesTotalsInfo'] as $info){
         if (empty($info->TotalType)) continue;
 
@@ -228,6 +240,13 @@ class EstimateParseXML {
   {
     // xml->DamageLineInfo is array
     if (empty($this->xml->DamageLineInfo)) return;
+
+    $fields = array_keys(static::SALES_LABOR);
+    foreach ($fields as $field){
+        $this->result[$field . '_TotalAmt'] = 0;
+        $this->result[$field . '_TotalHours'] = 0;
+    }
+
     foreach ($this->xml->DamageLineInfo as $DamageLineInfo){
       foreach ($DamageLineInfo as $elementInfo) {
         // $elementInfo is SimpleXMLElement
@@ -246,10 +265,10 @@ class EstimateParseXML {
       $date_formatter = \Drupal::service('date.formatter');
       $date_time = new DrupalDateTime($date_value, new \DateTimeZone('UTC'));
       $timestamp = $date_time->getTimestamp();
-      $format = 'Y-m-d\\TH:i:s';
-      return $date_formatter->format($timestamp, null, $format, null, null);
-  }
+      $formatted = $date_formatter->format($timestamp);
 
+      return $formatted;
+  }
 }
 
 

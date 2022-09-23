@@ -5,3 +5,5 @@ estimate.webhook:
     _title: 'Estimate'
   requirements:
     _access: 'TRUE'
+estimate.link.view:
+  path: '/estimate-view'

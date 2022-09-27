@@ -1,6 +1,9 @@
 <?php
 
+use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Database\Query\AlterableInterface;
+use Drupal\Core\Entity\Entity\EntityFormDisplay;
+use Drupal\Core\Entity\Entity\EntityViewDisplay;
 use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\views\ViewExecutable;
 use Drupal\estimate\EstimateParseXML as XML;
@@ -40,8 +43,25 @@ const CUSTOM_USER_FIELDS = array(
     'field_bhro_high',
 );
 
+const NODE_CREATION_FIELD = 'field_com_name_es_node_field_data__node__field_creationdt.field_creationdt_value';
+
+function estimate_modules_installed() {
+    foreach (\CUSTOM_USER_FIELDS as $key) {
+        if ($field_config_view = EntityViewDisplay::load('user.user.default')){
+            $field_config_view->setComponent($key, [
+                'region' => 'content',
+            ])->save();
+        }
+
+        if ($field_config_form = EntityFormDisplay::load('user.user.default')){
+            $field_config_form->setComponent($key, [
+                'region' => 'content',
+            ])->save();
+        }
+    }
+}
 function estimate_uninstall(){
-    if ($view_name = \Drupal::service('config.factory')->getEditable('views.view.' . 'estimate_view')){
+    if ($view_name = \Drupal::service('config.factory')->getEditable('views.view.estimate_view')){
         $view_name->delete();
     }
 
@@ -81,36 +101,92 @@ if (!function_exists('getallheaders')){
     }
 }
 
-function estimate_form_user_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id){
+function check_admin(){
     $account = \Drupal::currentUser();
-    if (in_array('administrator', $account->getRoles())) return;
+    return in_array('administrator', $account->getRoles());
+}
+
+function estimate_form_user_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id){
+    if (check_admin()) return;
 
     foreach (\CUSTOM_USER_FIELDS as $form_field){
         $form[$form_field]['#access'] = false;
     }
 }
 
+function estimate_node_access(\Drupal\node\NodeInterface $node, $op, \Drupal\Core\Session\AccountInterface $account) {
+    $type = $node->bundle();
+    if (($type == 'estimate' || $type == 'company') && !check_admin()) return AccessResult::forbidden();
+
+    return AccessResult::neutral();
+}
+
 function estimate_views_pre_build(ViewExecutable $view){
     if ($view->id() != 'estimate_view') return;
 
-    $account = \Drupal::currentUser();
-    if (in_array('administrator', $account->getRoles())){
+    if (check_admin()){
         $view->argument = [];
     }
 }
 
 function estimate_query_views_estimate_view_alter(AlterableInterface &$query){
-  $all_fields = $query->getFields();
-  $all_expression = $query->getExpressions();
+    $sql_unix_timestamp = function($field){
+        return "(UNIX_TIMESTAMP(str_to_date($field, '%a, %m/%d/%Y - %H:%i')))";
+    };
 
-  $field = $all_fields['field_com_name_es_node_field_data__node__field_pickup_dt_fie'];
-  $expression = $all_expression['field_com_name_es_node_field_data__node__field_arrival_dt_fi']['expression'];
-  $pars_expression = explode("(", $expression);
-  $pars_expression_part = explode(")", $pars_expression[1]);
+    $all_fields = $query->getFields();
+    $all_expression = $query->getExpressions();
 
-  $field1 = $pars_expression[0] . "(UNIX_TIMESTAMP(str_to_date ({$field['table']} . {$field['field']}, '%a, %m/%d/%Y - %H:%i')) - UNIX_TIMESTAMP(str_to_date ($pars_expression_part[0], '%a, %m/%d/%Y - %H:%i')) )";
+    $field = $all_fields['field_com_name_es_node_field_data__node__field_pickup_dt_fie'];
+    $expression = $all_expression['field_com_name_es_node_field_data__node__field_arrival_dt_fi']['expression'];
+    $pars_expression = explode("(", $expression);
+    $pars_expression_part = explode(")", $pars_expression[1]);
 
-  $query->addExpression($field1,'avgCycleTime');
+    $field1 =
+        $pars_expression[0]."({$sql_unix_timestamp($field['table'] . '.' . $field['field'])} - {$sql_unix_timestamp($pars_expression_part[0])})";
+
+    $query->addExpression($field1, 'avgCycleTime');
+    $query->addExpression($sql_unix_timestamp(NODE_CREATION_FIELD), 'creation_time');
+
+    $time_period = $query->getMetaData('view')->exposed_data['field_creationdt_value'];
+    $time = time();
+    $max = strtotime($time_period, $time);
+
+    //if -1 day, we need to set time() as max value in BETWEEN
+    if ($time_period[0] == '-'){
+        $tmp = $time;
+        $time = $max;
+        $max = $tmp;
+    }
+    $condition = [$time, $max];
+    // apply exposed filter
+    $query->havingCondition('creation_time', $condition, 'BETWEEN');
+
+    clear_expose_filter_node_creation_codition($query->conditions(), 1);
+}
+
+function clear_expose_filter_node_creation_codition(&$condition, $first = false){
+    if (is_array($condition) && !empty($condition['field'])){
+        if ($condition['field'] == NODE_CREATION_FIELD){
+            return null;
+        }
+        return $condition;
+    }
+    if ($first){
+        $conditions = &$condition;
+    } else {
+        $conditions = $condition->conditions();
+    }
+    foreach ($conditions as $key => &$cond){
+        if (is_array($cond)){
+            if (is_object($cond['field'])){
+                clear_expose_filter_node_creation_codition($cond['field']->conditions(), 1);
+                continue;
+            }
+            $cond = clear_expose_filter_node_creation_codition($cond);
+            if (is_null($cond)) unset($conditions[$key]);
+        }
+    }
 }
 
 function estimate_views_pre_render(ViewExecutable $view){

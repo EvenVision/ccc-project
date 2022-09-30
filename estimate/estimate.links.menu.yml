@@ -1,0 +1,6 @@
+estimate.link:
+  title: 'Dashboard'
+  description: 'Collision Dashboard'
+  route_name: estimate.link.view
+  weight: -100
+  menu_name: account

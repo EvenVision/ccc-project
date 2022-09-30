@@ -1,6 +1,9 @@
 <?php
 
+use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Database\Query\AlterableInterface;
+use Drupal\Core\Entity\Entity\EntityFormDisplay;
+use Drupal\Core\Entity\Entity\EntityViewDisplay;
 use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\views\ViewExecutable;
 use Drupal\estimate\EstimateParseXML as XML;
@@ -40,8 +43,25 @@ const CUSTOM_USER_FIELDS = array(
     'field_bhro_high',
 );
 
+const NODE_CREATION_FIELD = 'field_com_name_es_node_field_data__node__field_creationdt.field_creationdt_value';
+
+function estimate_modules_installed() {
+    foreach (\CUSTOM_USER_FIELDS as $key) {
+        if ($field_config_view = EntityViewDisplay::load('user.user.default')){
+            $field_config_view->setComponent($key, [
+                'region' => 'content',
+            ])->save();
+        }
+
+        if ($field_config_form = EntityFormDisplay::load('user.user.default')){
+            $field_config_form->setComponent($key, [
+                'region' => 'content',
+            ])->save();
+        }
+    }
+}
 function estimate_uninstall(){
-    if ($view_name = \Drupal::service('config.factory')->getEditable('views.view.' . 'estimate_view')){
+    if ($view_name = \Drupal::service('config.factory')->getEditable('views.view.estimate_view')){
         $view_name->delete();
     }
 
@@ -61,6 +81,10 @@ function estimate_uninstall(){
         if ($field_config = FieldStorageConfig::loadByName('user', $key)){
             $field_config->delete();
         }
+
+        if ($field_storage = FieldStorageConfig::loadByName('user', $key)){
+            $field_storage->delete();
+        }
     }
 }
 
@@ -77,36 +101,92 @@ if (!function_exists('getallheaders')){
     }
 }
 
-function estimate_form_user_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id){
+function check_admin(){
     $account = \Drupal::currentUser();
-    if (in_array('administrator', $account->getRoles())) return;
+    return in_array('administrator', $account->getRoles());
+}
+
+function estimate_form_user_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id){
+    if (check_admin()) return;
 
     foreach (\CUSTOM_USER_FIELDS as $form_field){
         $form[$form_field]['#access'] = false;
     }
 }
 
+function estimate_node_access(\Drupal\node\NodeInterface $node, $op, \Drupal\Core\Session\AccountInterface $account) {
+    $type = $node->bundle();
+    if (($type == 'estimate' || $type == 'company') && !check_admin()) return AccessResult::forbidden();
+
+    return AccessResult::neutral();
+}
+
 function estimate_views_pre_build(ViewExecutable $view){
     if ($view->id() != 'estimate_view') return;
 
-    $account = \Drupal::currentUser();
-    if (in_array('administrator', $account->getRoles())){
+    if (check_admin()){
         $view->argument = [];
     }
 }
 
 function estimate_query_views_estimate_view_alter(AlterableInterface &$query){
-  $all_fields = $query->getFields();
-  $all_expression = $query->getExpressions();
+    $sql_unix_timestamp = function($field){
+        return "(UNIX_TIMESTAMP(str_to_date($field, '%a, %m/%d/%Y - %H:%i')))";
+    };
 
-  $field = $all_fields['field_com_name_es_node_field_data__node__field_pickup_dt_fie'];
-  $expression = $all_expression['field_com_name_es_node_field_data__node__field_arrival_dt_fi']['expression'];
-  $pars_expression = explode("(", $expression);
-  $pars_expression_part = explode(")", $pars_expression[1]);
+    $all_fields = $query->getFields();
+    $all_expression = $query->getExpressions();
 
-  $field1 = $pars_expression[0] . "(UNIX_TIMESTAMP(str_to_date ({$field['table']} . {$field['field']}, '%a, %m/%d/%Y - %H:%i')) - UNIX_TIMESTAMP(str_to_date ($pars_expression_part[0], '%a, %m/%d/%Y - %H:%i')) )";
+    $field = $all_fields['field_com_name_es_node_field_data__node__field_pickup_dt_fie'];
+    $expression = $all_expression['field_com_name_es_node_field_data__node__field_arrival_dt_fi']['expression'];
+    $pars_expression = explode("(", $expression);
+    $pars_expression_part = explode(")", $pars_expression[1]);
 
-  $query->addExpression($field1,'avgCycleTime');
+    $field1 =
+        $pars_expression[0]."({$sql_unix_timestamp($field['table'] . '.' . $field['field'])} - {$sql_unix_timestamp($pars_expression_part[0])})";
+
+    $query->addExpression($field1, 'avgCycleTime');
+    $query->addExpression($sql_unix_timestamp(NODE_CREATION_FIELD), 'creation_time');
+
+    $time_period = $query->getMetaData('view')->exposed_data['field_creationdt_value'];
+    $time = time();
+    $max = strtotime($time_period, $time);
+
+    //if -1 day, we need to set time() as max value in BETWEEN
+    if ($time_period[0] == '-'){
+        $tmp = $time;
+        $time = $max;
+        $max = $tmp;
+    }
+    $condition = [$time, $max];
+    // apply exposed filter
+    $query->havingCondition('creation_time', $condition, 'BETWEEN');
+
+    clear_expose_filter_node_creation_codition($query->conditions(), 1);
+}
+
+function clear_expose_filter_node_creation_codition(&$condition, $first = false){
+    if (is_array($condition) && !empty($condition['field'])){
+        if ($condition['field'] == NODE_CREATION_FIELD){
+            return null;
+        }
+        return $condition;
+    }
+    if ($first){
+        $conditions = &$condition;
+    } else {
+        $conditions = $condition->conditions();
+    }
+    foreach ($conditions as $key => &$cond){
+        if (is_array($cond)){
+            if (is_object($cond['field'])){
+                clear_expose_filter_node_creation_codition($cond['field']->conditions(), 1);
+                continue;
+            }
+            $cond = clear_expose_filter_node_creation_codition($cond);
+            if (is_null($cond)) unset($conditions[$key]);
+        }
+    }
 }
 
 function estimate_views_pre_render(ViewExecutable $view){
@@ -114,76 +194,97 @@ function estimate_views_pre_render(ViewExecutable $view){
 
     foreach ($view->result as $resultRow){
         $count_estimates = $resultRow->field_com_name_es_node_field_data_nid;
-        $sales_collision_sum = $resultRow->field_com_name_es_node_field_data__node__field_totalamt_p_fi;
+        $sales_collision_sum = $resultRow->field_com_name_es_node_field_data__node__field_totalamt_p_fi ?? 0;
 
         // Cycle Time
-        $resultRow->field_com_name_es_node_field_data__node__field_arrival_dt_fi = ($resultRow->avgCycleTime / 86400);
+        $resultRow->field_com_name_es_node_field_data__node__field_arrival_dt_fi = ($resultRow->avgCycleTime ?? 0 / 86400);
 
-        //Square Foot Efficiency
-        $avgSquareFoot = $sales_collision_sum / $count_estimates;
-        $resultRow->user__field_square_footage_field_square_footage_value = $avgSquareFoot / $resultRow->user__field_square_footage_field_square_footage_value;
+        $avgSquareFoot = $severity = $body_hourse = $paint_hourse = $labor_hours = 0;
+        if($count_estimates > 0){
+            //Square Foot Efficiency
+            $avgSquareFoot = $resultRow->user__field_square_footage_field_square_footage_value ? ($sales_collision_sum / $count_estimates) /
+                $resultRow->user__field_square_footage_field_square_footage_value : 0;
 
-        // Severity
-        $severity = $sales_collision_sum / $count_estimates;
-        $resultRow->field_com_name_es_node_field_data__node__field_totalamt_p_fi = $severity;
+            // Severity
+            $severity = $sales_collision_sum / $count_estimates;
 
-        // Labor Ratio
-        $labor_sum = 0;
-        foreach (XML::SALES_LABOR as $type => $not_used){
-            $type = strtolower($type);
-            $field = 'field_com_name_es_node_field_data__node__field_'.$type.'_amount_fi';
-            if(isset($resultRow->$field)){
-                $labor_sum += $resultRow->$field;
+            // Body Hours / RO
+            $body_hourse = round($resultRow->field_com_name_es_node_field_data__node__field_totalhours_b_ / $count_estimates, 3);
+
+            // Paint Hours / RO
+            $paint_hourse = round($resultRow->field_com_name_es_node_field_data__node__field_totalhours_p_ / $count_estimates, 3);
+
+            // Labor Hours / RO
+            $labor_sum_labor_hours = 0;
+            foreach (XML::SALES_LABOR as $type => $not_used){
+                $type = strtolower($type);
+                $field1 = 'field_com_name_es_node_field_data__node__field_'.$type.'_hours_fie';
+                $field2 = 'field_com_name_es_node_field_data__node__field_'.$type.'_hours_fi';
+                if (isset($resultRow->$field1)){
+                    $labor_sum_labor_hours += $resultRow->$field1;
+
+                }
+                if (isset($resultRow->$field2)){
+                    $labor_sum_labor_hours += $resultRow->$field2;
+                }
+
             }
+            $labor_hours = round($labor_sum_labor_hours / $count_estimates, 3);
         }
 
-        $labor_ratio = round($labor_sum / $sales_collision_sum, 3);
+        //Square Foot Efficiency
+        $resultRow->user__field_square_footage_field_square_footage_value = $avgSquareFoot;
+
+        // Severity
+        $resultRow->field_com_name_es_node_field_data__node__field_totalamt_p_fi = $severity;
+
+        $labor_ratio = $parts_ratio = $sublet_ratio = $parts_sum = 0;
+        if($sales_collision_sum > 0){
+            // Labor Ratio
+            $labor_sum = 0;
+            foreach (XML::SALES_LABOR as $type => $not_used){
+                $type = strtolower($type);
+                $field = 'field_com_name_es_node_field_data__node__field_'.$type.'_amount_fi';
+                if (isset($resultRow->$field)){
+                    $labor_sum += $resultRow->$field;
+                }
+            }
+            $labor_ratio = round($labor_sum / $sales_collision_sum, 3);
+
+            // Parts Ratio
+            $parts_sum = 0;
+            foreach (XML::SALES_PARTS as $type => $not_used){
+                $type = strtolower($type);
+                $field = 'field_com_name_es_node_field_data__node__field_pt_'.$type.'_field_';
+                if (isset($resultRow->$field)){
+                    $parts_sum += $resultRow->$field;
+                }
+            }
+            $parts_ratio = round($parts_sum / $sales_collision_sum, 3);
+
+            // Sublet Ratio
+            $sublet_ratio = round($resultRow->field_com_name_es_node_field_data__node__field_pt_pas_field_ / $sales_collision_sum, 3);
+        }
+        // Labor Ratio
         $resultRow->field_com_name_es_node_field_data__node__field_op4_amount_fi = $labor_ratio;
 
         // Parts Ratio
-        $parts_sum = 0;
-        foreach (XML::SALES_PARTS as $type => $not_used){
-            $type = strtolower($type);
-            $field = 'field_com_name_es_node_field_data__node__field_pt_'.$type.'_field_';
-            if (isset($resultRow->$field)){
-                $parts_sum += $resultRow->$field;
-            }
-        }
-        $parts_ratio = round($parts_sum / $sales_collision_sum, 3);
         $resultRow->field_com_name_es_node_field_data__node__field_pt_paa_field_ = $parts_ratio;
 
         // Sublet Ratio
-        $sublet_ratio = round($resultRow->field_com_name_es_node_field_data__node__field_pt_pas_field_ / $sales_collision_sum, 3);
         $resultRow->field_com_name_es_node_field_data__node__field_pt_pas_field_ = $sublet_ratio;
 
         // Body Hours / RO
-        $body_hourse = round($resultRow->field_com_name_es_node_field_data__node__field_totalhours_b_ / $count_estimates, 3);
         $resultRow->field_com_name_es_node_field_data__node__field_totalhours_b_ = $body_hourse;
 
         // Paint Hours / RO
-        $paint_hourse = round($resultRow->field_com_name_es_node_field_data__node__field_totalhours_p_ / $count_estimates, 3);
         $resultRow->field_com_name_es_node_field_data__node__field_totalhours_p_ = $paint_hourse;
 
         // Labor Hours / RO
-        $labor_sum_labor_hours = 0;
-        foreach (XML::SALES_LABOR as $type => $not_used){
-            $type = strtolower($type);
-            $field1 = 'field_com_name_es_node_field_data__node__field_'.$type.'_hours_fie';
-            $field2 = 'field_com_name_es_node_field_data__node__field_'.$type.'_hours_fi';
-            if (isset($resultRow->$field1)){
-                $labor_sum_labor_hours += $resultRow->$field1;
-            }
-            if (isset($resultRow->$field2)){
-                $labor_sum_labor_hours += $resultRow->$field2;
-            }
-
-        }
-        $labor_hours = round($labor_sum_labor_hours / $count_estimates, 3);
         $resultRow->field_com_name_es_node_field_data__node__field_op4_hours_fie = $labor_hours;
 
         // Repair / Replace Ratio
-        $labor_sum_op9_op10 = 0;
-        $labor_sum_op11 = 0;
+        $labor_sum_op9_op10 = $labor_sum_op11 = 0;
         foreach (XML::SALES_LABOR as $type => $not_used){
             $type = strtolower($type);
             $field1 = 'field_com_name_es_node_field_data__node__field_' . $type . '_hours_fie';
@@ -205,7 +306,8 @@ function estimate_views_pre_render(ViewExecutable $view){
                 }
             }
         }
-        $resultRow->node_field_data_user__field_com_name_us__node__field_ins_com = round($labor_sum_op9_op10/ $labor_sum_op11,3);
+        $repair_ratio = $labor_sum_op11 > 0 ? round($labor_sum_op9_op10/ $labor_sum_op11,3) : 0;
+        $resultRow->node_field_data_user__field_com_name_us__node__field_ins_com = $repair_ratio;
 
         // New / Used / LKQ
         $parts_sum_new = $parts_sum_used = $parts_sum_lkq = 0;
@@ -228,9 +330,13 @@ function estimate_views_pre_render(ViewExecutable $view){
                 }
             }
         }
-
-        $resultRow->field_com_name_es_node_field_data__node__field_pt_pan_field_ = round($parts_sum_new / $parts_sum, 3);
-        $resultRow->field_com_name_es_node_field_data__node__field_pt_pag_field_ = round($parts_sum_used / $parts_sum, 3);
-        $resultRow->field_com_name_es_node_field_data__node__field_pt_paa_field_ = round($parts_sum_lkq / $parts_sum, 3);
+        if ($parts_sum > 0){
+            $parts_sum_new = round($parts_sum_new / $parts_sum, 3);
+            $parts_sum_used = round($parts_sum_used / $parts_sum, 3);
+            $parts_sum_lkq = round($parts_sum_lkq / $parts_sum, 3);
+        }
+        $resultRow->field_com_name_es_node_field_data__node__field_pt_pan_field_ = $parts_sum_new;
+        $resultRow->field_com_name_es_node_field_data__node__field_pt_pag_field_ = $parts_sum_used;
+        $resultRow->field_com_name_es_node_field_data__node__field_pt_paa_field_ = $parts_sum_lkq;
     }
 }

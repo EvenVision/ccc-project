@@ -3,13 +3,14 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.storage.node.field_creationdt
     - field.storage.node.field_pickup_dt
     - field.storage.user.field_square_footage
   module:
     - node
     - user
 _core:
-  default_config_hash: zS9XYVltBK3EXWhDZ8WiQMw_txb2tTfpkuByGQxKuV4
+  default_config_hash: gqn3_g4OenSzuF8qb3Y6wwN0PBn08B8Q3gYmTX4au3w
 id: estimate_view
 label: estimate_view
 module: views
@@ -24,7 +25,7 @@ display:
     display_plugin: default
     position: 0
     display_options:
-      title: estimate_view
+      title: 'Collision Dashboard'
       fields:
         field_arrival_dt:
           id: field_arrival_dt
@@ -100,7 +101,7 @@ display:
           table: node__field_creationdt
           field: field_creationdt
           relationship: reverse__node__field_com_name_es
-          group_type: sum
+          group_type: group
           admin_label: ''
           plugin_id: field
           label: Throughput
@@ -158,6 +159,13 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
+          set_precision: false
+          precision: 0
+          decimal: .
+          format_plural: false
+          format_plural_string: !!binary MQNAY291bnQ=
+          prefix: ''
+          suffix: ''
         field_square_footage:
           id: field_square_footage
           table: user__field_square_footage
@@ -1408,7 +1416,7 @@ display:
           id: field_ins_com_id
           table: node__field_ins_com_id
           field: field_ins_com_id
-          relationship: field_com_name_us
+          relationship: reverse__node__field_com_name_es
           group_type: sum
           admin_label: ''
           plugin_id: field
@@ -2957,7 +2965,20 @@ display:
       cache:
         type: none
         options: {  }
-      empty: {  }
+      empty:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text
+          empty: true
+          content:
+            value: 'There is no data to display'
+            format: basic_html
+          tokenize: false
       sorts: {  }
       arguments:
         uid:
@@ -3047,13 +3068,9 @@ display:
           relationship: reverse__node__field_com_name_es
           group_type: group
           admin_label: ''
-          plugin_id: datetime
+          plugin_id: string
           operator: '='
-          value:
-            min: ''
-            max: ''
-            value: ''
-            type: date
+          value: ''
           group: 1
           exposed: true
           expose:
@@ -3070,8 +3087,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-            min_placeholder: null
-            max_placeholder: null
             placeholder: null
           is_grouped: true
           group_info:
@@ -3094,7 +3109,7 @@ display:
                 operator: '='
                 value: '+1 week'
               3:
-                title: Mounth
+                title: Month
                 operator: '='
                 value: '+1 mounth'
               4:
@@ -3196,6 +3211,7 @@ display:
         - user
         - user.permissions
       tags:
+        - 'config:field.storage.node.field_creationdt'
         - 'config:field.storage.node.field_pickup_dt'
         - 'config:field.storage.user.field_square_footage'
   page_1:
@@ -3216,5 +3232,6 @@ display:
         - user
         - user.permissions
       tags:
+        - 'config:field.storage.node.field_creationdt'
         - 'config:field.storage.node.field_pickup_dt'
         - 'config:field.storage.user.field_square_footage'

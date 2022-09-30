@@ -41,19 +41,16 @@ class EstimateController extends ControllerBase {
         $nodes =  Node::loadMultiple($nids);
 
         if (empty($nodes)){
-          $nodeCompany = Node::create([
-              'type'               => 'company',
-              'title'              => $result['CompanyID'],
-              'field_com_id_com'   => ['value' => $result['CompanyID']],
-              'field_com_name_com' => ['value' => $result['CompanyName']],
-          ]);
+            $nodeCompany = Node::create([
+                'type'                        => 'company',
+                'title'                       => $result['CompanyID'],
+                'field_com_id_com'            => ['value' => $result['CompanyID']],
+                'field_com_name_com'          => ['value' => $result['CompanyName']],
+            ]);
 
-          $nodeCompany->save();
-          $nodes = [$nodeCompany];
-        }
-
-        $targetId = '';
-        if (count($nodes) >= 1){
+            $nodeCompany->save();
+            $targetId = $nodeCompany->id();
+        } else {
             $targetId = array_shift($nodes)->id();
         }
 
@@ -123,8 +120,8 @@ class EstimateController extends ControllerBase {
           'field_op26_amount'                   => ['value' => $result['OP26_TotalAmt']],
           'field_op26_hours'                    => ['value' => $result['OP26_TotalHours']],
         ]);
-        $nodeEstimate->save();
 
+        $nodeEstimate->save();
         // save to xml
         $domxml = new \DOMDocument('1.0');
         $domxml->preserveWhiteSpace = false;
@@ -148,6 +145,4 @@ class EstimateController extends ControllerBase {
 
     return ['#markup' => $message];
   }
-
-
 }

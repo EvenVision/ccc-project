@@ -1,4 +1,4 @@
 {
     "name": "drupal/custom-ev-estimate",
-    "type": "module"
+    "type": "drupal-module",
 }

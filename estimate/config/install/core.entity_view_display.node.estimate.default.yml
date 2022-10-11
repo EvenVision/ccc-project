@@ -7,11 +7,9 @@ dependencies:
     - field.field.node.estimate.field_com_id_es
     - field.field.node.estimate.field_com_name_es
     - field.field.node.estimate.field_creationdt
-    - field.field.node.estimate.field_es_f_name
-    - field.field.node.estimate.field_es_id
-    - field.field.node.estimate.field_es_l_name
     - field.field.node.estimate.field_es_name
     - field.field.node.estimate.field_esaltid
+    - field.field.node.estimate.field_estimator_id
     - field.field.node.estimate.field_ins_com
     - field.field.node.estimate.field_ins_com_id
     - field.field.node.estimate.field_op0_amount
@@ -70,10 +68,8 @@ third_party_settings:
   field_group:
     group_estimator:
       children:
+        - field_estimator_id
         - field_es_name
-        - field_es_f_name
-        - field_es_l_name
-        - field_es_id
       label: Estimator
       parent_name: ''
       region: content
@@ -218,7 +214,7 @@ third_party_settings:
         id: ''
         description: ''
 _core:
-  default_config_hash: cRguZKZ6L35m-H90_-qBrHmmRDsAmOVyv4K5FOfGY_A
+  default_config_hash: tQL5-Y4optF77dZsqyXhCW1PwxcHhs-ALRgQ_WecSLA
 id: node.estimate.default
 targetEntityType: node
 bundle: estimate
@@ -286,7 +282,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 12
+    weight: 1
     region: content
   field_esaltid:
     type: string
@@ -295,6 +291,14 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     weight: 1
+    region: content
+  field_estimator_id:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 0
     region: content
   field_ins_com:
     type: string

@@ -5,12 +5,14 @@ dependencies:
   config:
     - field.storage.node.field_creationdt
     - field.storage.node.field_pickup_dt
-    - field.storage.user.field_square_footage
+    - field.storage.node.field_square_footage
+    - user.role.administrator
+    - user.role.authenticated
   module:
     - node
     - user
 _core:
-  default_config_hash: gqn3_g4OenSzuF8qb3Y6wwN0PBn08B8Q3gYmTX4au3w
+  default_config_hash: livhMNvbPmZwi8Sm9RIspA4KH67offDyNkZKwCYNIas
 id: estimate_view
 label: estimate_view
 module: views
@@ -168,7 +170,7 @@ display:
           suffix: ''
         field_square_footage:
           id: field_square_footage
-          table: user__field_square_footage
+          table: node__field_square_footage
           field: field_square_footage
           relationship: none
           group_type: group
@@ -3213,13 +3215,22 @@ display:
       tags:
         - 'config:field.storage.node.field_creationdt'
         - 'config:field.storage.node.field_pickup_dt'
-        - 'config:field.storage.user.field_square_footage'
+        - 'config:field.storage.node.field_square_footage'
   page_1:
     id: page_1
     display_title: Page
     display_plugin: page
     position: 1
     display_options:
+      title: 'Collision Dashboard'
+      access:
+        type: role
+        options:
+          role:
+            authenticated: authenticated
+      defaults:
+        access: false
+        title: false
       display_extenders: {  }
       path: estimate-view
     cache_metadata:
@@ -3230,8 +3241,37 @@ display:
         - url
         - url.query_args
         - user
-        - user.permissions
+        - user.roles
       tags:
         - 'config:field.storage.node.field_creationdt'
         - 'config:field.storage.node.field_pickup_dt'
-        - 'config:field.storage.user.field_square_footage'
+        - 'config:field.storage.node.field_square_footage'
+  page_2:
+    id: page_2
+    display_title: 'Page Admin'
+    display_plugin: page
+    position: 2
+    display_options:
+      access:
+        type: role
+        options:
+          role:
+            administrator: administrator
+      defaults:
+        access: false
+      display_description: ''
+      display_extenders: {  }
+      path: estimate-view
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - url.query_args
+        - user
+        - user.roles
+      tags:
+        - 'config:field.storage.node.field_creationdt'
+        - 'config:field.storage.node.field_pickup_dt'
+        - 'config:field.storage.node.field_square_footage'

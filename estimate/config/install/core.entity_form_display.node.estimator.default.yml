@@ -1,19 +1,19 @@
-uuid: e1b6c7f0-b804-4a7b-b897-ab72fda9d754
+uuid: 93d7a8e4-0dd0-443a-b021-ed20db96ee94
 langcode: en
 status: true
 dependencies:
   config:
-    - field.field.node.company.field_com_id_com
-    - field.field.node.company.field_com_name_com
-    - field.field.node.company.field_square_footage
-    - node.type.company
+    - field.field.node.estimator.field_est_first_name
+    - field.field.node.estimator.field_est_id
+    - field.field.node.estimator.field_est_last_name
+    - node.type.estimator
   module:
     - path
 _core:
-  default_config_hash: vUUvDRi1xibJBL5WLN1WD4dGiEZCi2JP0oc83A0Z6eA
-id: node.company.default
+  default_config_hash: 5fBZV6RDIU7-miasSza9CXgR75mPZ35YlIM4EKg6EqE
+id: node.estimator.default
 targetEntityType: node
-bundle: company
+bundle: estimator
 mode: default
 content:
   created:
@@ -22,15 +22,7 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_com_id_com:
-    type: string_textfield
-    weight: 121
-    region: content
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-  field_com_name_com:
+  field_est_first_name:
     type: string_textfield
     weight: 122
     region: content
@@ -38,9 +30,17 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-  field_square_footage:
+  field_est_id:
     type: string_textfield
     weight: 123
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_est_last_name:
+    type: string_textfield
+    weight: 121
     region: content
     settings:
       size: 60

@@ -1,30 +1,22 @@
-uuid: 5e3353a1-3d11-4f60-a5fc-4e86fcb91f68
+uuid: b02954f5-c3ad-4d92-bddc-984aaadaff3b
 langcode: en
 status: true
 dependencies:
   config:
-    - field.field.node.company.field_com_id_com
-    - field.field.node.company.field_com_name_com
-    - field.field.node.company.field_square_footage
-    - node.type.company
+    - field.field.node.estimator.field_est_first_name
+    - field.field.node.estimator.field_est_id
+    - field.field.node.estimator.field_est_last_name
+    - node.type.estimator
   module:
     - user
 _core:
-  default_config_hash: z1CUULYbEPBq5CVGHYCfMNP0l3i71x-txBn0MdEptIE
-id: node.company.default
+  default_config_hash: vKCrlhUw7tsfSlecJLt5HqrEiIBFr8O4DM6ZC1nBtMI
+id: node.estimator.default
 targetEntityType: node
-bundle: company
+bundle: estimator
 mode: default
 content:
-  field_com_id_com:
-    type: string
-    label: above
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    weight: 101
-    region: content
-  field_com_name_com:
+  field_est_first_name:
     type: string
     label: above
     settings:
@@ -32,13 +24,21 @@ content:
     third_party_settings: {  }
     weight: 102
     region: content
-  field_square_footage:
+  field_est_id:
     type: string
     label: above
     settings:
       link_to_entity: false
     third_party_settings: {  }
     weight: 103
+    region: content
+  field_est_last_name:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 101
     region: content
   links:
     settings: {  }

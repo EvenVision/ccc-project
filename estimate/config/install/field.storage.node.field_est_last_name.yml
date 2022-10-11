@@ -1,15 +1,17 @@
-uuid: 21b72c62-f9fa-4c7f-9d5c-e5827f8d4bed
+uuid: 5b6bd8c7-011c-4040-ba43-7d1ef11822f8
 langcode: en
 status: true
 dependencies:
   module:
     - node
-id: node.field_estimator_id
-field_name: field_estimator_id
+id: node.field_est_last_name
+field_name: field_est_last_name
 entity_type: node
-type: entity_reference
+type: string
 settings:
-  target_type: node
+  max_length: 255
+  case_sensitive: false
+  is_ascii: false
 module: core
 locked: false
 cardinality: 1

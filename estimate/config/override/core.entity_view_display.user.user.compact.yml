@@ -1,0 +1,79 @@
+uuid: 60f77491-80d1-407b-974e-7fe9ad9a86ce
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.user.compact
+    - field.field.user.user.field_bhro_high
+    - field.field.user.user.field_bhro_low
+    - field.field.user.user.field_com_name_us
+    - field.field.user.user.field_cycle_time_high
+    - field.field.user.user.field_cycle_time_low
+    - field.field.user.user.field_estimator_id
+    - field.field.user.user.field_labor_ratio_high
+    - field.field.user.user.field_labor_ratio_low
+    - field.field.user.user.field_lhro_high
+    - field.field.user.user.field_lhro_low
+    - field.field.user.user.field_parts_ratio_high
+    - field.field.user.user.field_parts_ratio_low
+    - field.field.user.user.field_phro_high
+    - field.field.user.user.field_phro_low
+    - field.field.user.user.field_rrratio_high
+    - field.field.user.user.field_rrratio_low
+    - field.field.user.user.field_severity_high
+    - field.field.user.user.field_severity_low
+    - field.field.user.user.field_sq_foot_high
+    - field.field.user.user.field_sq_foot_low
+    - field.field.user.user.field_sratio_high
+    - field.field.user.user.field_sratio_low
+    - field.field.user.user.field_throughput_high
+    - field.field.user.user.field_throughput_low
+    - field.field.user.user.user_picture
+    - image.style.thumbnail
+  module:
+    - image
+    - user
+_core:
+  default_config_hash: 00zr_RBdTjPjBGITD3h4c1ESQZimjdVCcHGt1trLqIY
+id: user.user.compact
+targetEntityType: user
+bundle: user
+mode: compact
+content:
+  user_picture:
+    type: image
+    label: hidden
+    settings:
+      image_link: content
+      image_style: thumbnail
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  field_bhro_high: true
+  field_bhro_low: true
+  field_com_name_us: true
+  field_cycle_time_high: true
+  field_cycle_time_low: true
+  field_estimator_id: true
+  field_labor_ratio_high: true
+  field_labor_ratio_low: true
+  field_lhro_high: true
+  field_lhro_low: true
+  field_parts_ratio_high: true
+  field_parts_ratio_low: true
+  field_phro_high: true
+  field_phro_low: true
+  field_rrratio_high: true
+  field_rrratio_low: true
+  field_severity_high: true
+  field_severity_low: true
+  field_sq_foot_high: true
+  field_sq_foot_low: true
+  field_sratio_high: true
+  field_sratio_low: true
+  field_throughput_high: true
+  field_throughput_low: true
+  member_for: true

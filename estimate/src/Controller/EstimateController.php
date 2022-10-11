@@ -37,21 +37,45 @@ class EstimateController extends ControllerBase {
         $result = new EstimateParseXML($postdata);
         $result = $result->parseXML();
 
-        $nids = \Drupal::entityQuery('node')->condition('title',$result['CompanyID'])->execute();
-        $nodes =  Node::loadMultiple($nids);
+        $targetIdCompany = $targetIdEstimator = "";
+        $types = array("CompanyID", "EstimatorID");
+        foreach ($types as $type){
+            if ($type == "CompanyID"){
+              $nids = \Drupal::entityQuery('node')->condition('field_com_id_com',$result[$type])->execute();
+              $nodes =  Node::loadMultiple($nids);
+                if (empty($nodes)) {
+                    $nodeCompany = Node::create([
+                        'type'                 => 'company',
+                        'title'                => $result['CompanyName'],
+                        'field_com_id_com'     => ['value' => $result['CompanyID']],
+                        'field_com_name_com'   => ['value' => $result['CompanyName']],
+                    ]);
 
-        if (empty($nodes)){
-            $nodeCompany = Node::create([
-                'type'                        => 'company',
-                'title'                       => $result['CompanyID'],
-                'field_com_id_com'            => ['value' => $result['CompanyID']],
-                'field_com_name_com'          => ['value' => $result['CompanyName']],
-            ]);
+                    $nodeCompany->save();
+                    $targetIdCompany = $nodeCompany->id();
+                } else {
+                    $targetIdCompany = array_shift($nodes)->id();
+                }
+            }
 
-            $nodeCompany->save();
-            $targetId = $nodeCompany->id();
-        } else {
-            $targetId = array_shift($nodes)->id();
+            if ($type == "EstimatorID"){
+              $nids = \Drupal::entityQuery('node')->condition('field_est_id',$result[$type])->execute();
+              $nodes =  Node::loadMultiple($nids);
+                if (empty($nodes)) {
+                    $nodeEstimator = Node::create([
+                        'type'                     => 'estimator',
+                        'title'                    => "{$result['EstimatorFirstName']} {$result['EstimatorLastName']}",
+                        'field_est_first_name'     => ['value' => $result['EstimatorFirstName']],
+                        'field_est_last_name'      => ['value' => $result['EstimatorLastName']],
+                        'field_est_id'             => ['value' => $result['EstimatorID']],
+                    ]);
+
+                    $nodeEstimator->save();
+                    $targetIdEstimator = $nodeEstimator->id();
+                } else {
+                    $targetIdEstimator = array_shift($nodes)->id();
+                }
+            }
         }
 
         $nodeEstimate = Node::create([
@@ -63,7 +87,7 @@ class EstimateController extends ControllerBase {
           'field_totalhours_b'                  => ['value' => $result['LABTotalHours']],
           'field_totalhours_p'                  => ['value' => $result['LARTotalHours']],
           'field_totalamt_p'                    => ['value' => $result['LARTotalAmt2']],
-          'field_com_name_es'                   => ['target_id' => $targetId],
+          'field_com_name_es'                   => ['target_id' => $targetIdCompany],
           'field_pickup_dt'                     => ['value' => $result['ActualPickUpDateTime']],
           'field_roclosed'                      => ['value' => $result['ROClosed']],
           'field_ins_com'                       => ['value' => $result['InsuranceCompany']],
@@ -71,10 +95,8 @@ class EstimateController extends ControllerBase {
           'field_com_id_es'                     => ['value' => $result['CompanyID']],
           'field_creationdt'                    => ['value' => $result['CreationDateTime']],
           'field_es_name'                       => ['value' => $result['EstimatorName']],
-          'field_es_f_name'                     => ['value' => $result['EstimatorFirstName']],
-          'field_es_l_name'                     => ['value' => $result['EstimatorLastName']],
-          'field_es_id'                         => ['value' => $result['EstimatorID']],
           'field_arrival_dt'                    => ['value' => $result['ArrivalDateTime']],
+          'field_estimator_id'                  => ['target_id' => $targetIdEstimator],
 
           'field_pt_paa'                        => ['value' => $result['PAA_TotalAmt']],
           'field_pt_pag'                        => ['value' => $result['PAG_TotalAmt']],

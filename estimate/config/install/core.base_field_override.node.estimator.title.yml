@@ -1,0 +1,18 @@
+uuid: a47ca6dc-7572-4527-a9d4-d92f59bd295d
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.estimator
+id: node.estimator.title
+field_name: title
+entity_type: node
+bundle: estimator
+label: 'Estimator Name'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

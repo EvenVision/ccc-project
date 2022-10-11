@@ -1,0 +1,10 @@
+uuid: 736b416b-43d9-491d-b1e9-509bd1a00b3c
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.content_view_in_profile
+label: 'Content view in profile'
+targetEntityType: node
+cache: true

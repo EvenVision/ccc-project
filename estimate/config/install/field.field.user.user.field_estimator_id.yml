@@ -1,20 +1,30 @@
-uuid: d30485d1-17b9-4011-8c59-6dfaf105ddff
+uuid: 127dca95-94db-4903-94cc-d02f1bfc8e5e
 langcode: en
 status: true
 dependencies:
   config:
     - field.storage.user.field_estimator_id
+    - node.type.estimator
   module:
     - user
 id: user.user.field_estimator_id
 field_name: field_estimator_id
 entity_type: user
 bundle: user
-label: 'Estimator ID'
+label: 'Estimator Name'
 description: ''
 required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
-settings: {  }
-field_type: string
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      estimator: estimator
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

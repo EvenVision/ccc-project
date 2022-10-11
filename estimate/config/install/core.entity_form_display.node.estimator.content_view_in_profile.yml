@@ -1,0 +1,57 @@
+uuid: 3f5ec0f8-03b2-4229-a9cc-9c48e4f6838f
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_form_mode.node.content_view_in_profile
+    - field.field.node.estimator.field_est_first_name
+    - field.field.node.estimator.field_est_id
+    - field.field.node.estimator.field_est_last_name
+    - node.type.estimator
+_core:
+  default_config_hash: MIAUCBV0gnKLnVHaLQte6DyeuDK3-rPEOpKQf-vD6HM
+id: node.estimator.content_view_in_profile
+targetEntityType: node
+bundle: estimator
+mode: content_view_in_profile
+content:
+  field_est_first_name:
+    type: string_textfield
+    weight: 2
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_est_id:
+    type: string_textfield
+    weight: 3
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_est_last_name:
+    type: string_textfield
+    weight: 1
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  langcode: true
+  path: true
+  promote: true
+  status: true
+  sticky: true
+  uid: true

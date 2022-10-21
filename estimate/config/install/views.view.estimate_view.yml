@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - field.storage.node.field_creationdt
+    - field.storage.node.field_esaltid
     - field.storage.node.field_pickup_dt
     - field.storage.node.field_square_footage
     - user.role.authenticated
@@ -11,7 +12,7 @@ dependencies:
     - node
     - user
 _core:
-  default_config_hash: dxaJ9Vytz1sLRJGim_N1cIrmYvx5AWLEZYq785VVz5E
+  default_config_hash: tzGeSyvKHEqIaQIp3MRjsn-8YDMCtkq_b4Pf4CgmLXE
 id: estimate_view
 label: estimate_view
 module: views
@@ -1348,84 +1349,15 @@ display:
           format_plural_string: !!binary MQNAY291bnQ=
           prefix: ''
           suffix: ''
-        field_pt_pag:
-          id: field_pt_pag
-          table: node__field_pt_pag
-          field: field_pt_pag
+        field_esaltid:
+          id: field_esaltid
+          table: node__field_esaltid
+          field: field_esaltid
           relationship: reverse__node__field_com_name_es
-          group_type: sum
+          group_type: group
           admin_label: ''
           plugin_id: field
           label: 'New / Used / LKQ'
-          exclude: false
-          alter:
-            alter_text: true
-            text: '{{ field_pt_pan }} / {{ field_pt_pag }} / {{ field_pt_paa }} '
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: true
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: value
-          type: number_decimal
-          settings: {  }
-          group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-          set_precision: false
-          precision: 0
-          decimal: .
-          format_plural: 0
-          format_plural_string: !!binary MQNAY291bnQ=
-          prefix: ''
-          suffix: ''
-        field_ins_com_id:
-          id: field_ins_com_id
-          table: node__field_ins_com_id
-          field: field_ins_com_id
-          relationship: reverse__node__field_com_name_es
-          group_type: sum
-          admin_label: ''
-          plugin_id: field
-          label: 'Repair / Replace Ratio'
           exclude: false
           alter:
             alter_text: false
@@ -1468,6 +1400,69 @@ display:
           hide_alter_empty: true
           click_sort_column: value
           type: string
+          settings:
+            link_to_entity: false
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+        field_pt_pag:
+          id: field_pt_pag
+          table: node__field_pt_pag
+          field: field_pt_pag
+          relationship: reverse__node__field_com_name_es
+          group_type: sum
+          admin_label: ''
+          plugin_id: field
+          label: 'Repair / Replace Ratio'
+          exclude: false
+          alter:
+            alter_text: false
+            text: '{{ field_pt_pan }} / {{ field_pt_pag }} / {{ field_pt_paa }} '
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: number_decimal
           settings: {  }
           group_column: value
           group_columns: {  }
@@ -3095,7 +3090,7 @@ display:
             placeholder: null
           is_grouped: true
           group_info:
-            label: 'CreationDateTime (field_creationdt)'
+            label: 'CreationDateTime '
             description: ''
             identifier: field_creationdt_value
             optional: true
@@ -3217,6 +3212,7 @@ display:
         - user.permissions
       tags:
         - 'config:field.storage.node.field_creationdt'
+        - 'config:field.storage.node.field_esaltid'
         - 'config:field.storage.node.field_pickup_dt'
         - 'config:field.storage.node.field_square_footage'
   page_1:
@@ -3247,5 +3243,6 @@ display:
         - user.roles
       tags:
         - 'config:field.storage.node.field_creationdt'
+        - 'config:field.storage.node.field_esaltid'
         - 'config:field.storage.node.field_pickup_dt'
         - 'config:field.storage.node.field_square_footage'

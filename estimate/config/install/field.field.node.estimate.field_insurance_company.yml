@@ -1,0 +1,29 @@
+uuid: 1cd60215-ded6-4cc4-95b8-e092c57d4fa3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_insurance_company
+    - node.type.estimate
+    - node.type.insurance_company
+id: node.estimate.field_insurance_company
+field_name: field_insurance_company
+entity_type: node
+bundle: estimate
+label: 'Insurance Company'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      insurance_company: insurance_company
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

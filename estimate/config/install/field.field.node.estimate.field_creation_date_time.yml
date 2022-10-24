@@ -1,0 +1,21 @@
+uuid: ad0142b5-7e3a-46cd-a484-04cf0d68d528
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_creation_date_time
+    - node.type.estimate
+  module:
+    - datetime
+id: node.estimate.field_creation_date_time
+field_name: field_creation_date_time
+entity_type: node
+bundle: estimate
+label: 'Creation Date Time'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

@@ -6,7 +6,9 @@ use Drupal\Core\Entity\Entity\EntityFormDisplay;
 use Drupal\Core\Entity\Entity\EntityFormMode;
 use Drupal\Core\Entity\Entity\EntityViewDisplay;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\user\Entity\User;
 use Drupal\views\ViewExecutable;
 use Drupal\Core\Config\FileStorage;
 use Drupal\estimate\EstimateParseXML as XML;
@@ -77,7 +79,7 @@ function estimate_uninstall(){
         $entity_form_display->delete();
     }
 
-    $types = array('estimate', 'company','estimator');
+    $types = array('estimate', 'company','estimator','insurance_company');
     foreach ($types as $type_name){
         $storage_handler = \Drupal::entityTypeManager()->getStorage("node");
         $entities = $storage_handler->loadByProperties(["type" => $type_name]);
@@ -89,14 +91,21 @@ function estimate_uninstall(){
         }
     }
 
-    foreach (\CUSTOM_USER_FIELDS as $key){
-        if ($field_config = FieldStorageConfig::loadByName('user', $key)){
-            $field_config->delete();
+    foreach (\CUSTOM_USER_FIELDS as $field_name) {
+        $field = FieldConfig::loadByName('user', 'user', $field_name);
+        if (!empty($field)) {
+            $field->delete();
         }
 
-        if ($field_storage = FieldStorageConfig::loadByName('user', $key)){
+        $field_storage = FieldStorageConfig::loadByName('user', $field_name);
+        if (!empty($field_storage)) {
             $field_storage->delete();
         }
+    }
+
+    //Purging fields data after uninstalling module.
+    if (!empty(\Drupal::state()->get('field.storage.deleted'))){
+        field_purge_batch(1000);
     }
 }
 
@@ -143,19 +152,19 @@ function estimate_views_pre_build(ViewExecutable $view){
 
 function estimate_query_views_estimate_view_alter(AlterableInterface &$query){
     $sql_unix_timestamp = function($field){
-        return "(UNIX_TIMESTAMP(str_to_date($field, '%a, %m/%d/%Y - %H:%i')))";
+      return "(UNIX_TIMESTAMP(str_to_date($field, '%a, %m/%d/%Y - %H:%i')))";
     };
 
     $all_fields = $query->getFields();
     $all_expression = $query->getExpressions();
 
-    $field = $all_fields['field_com_name_es_node_field_data__node__field_pickup_dt_fie'];
-    $expression = $all_expression['field_com_name_es_node_field_data__node__field_arrival_dt_fi']['expression'];
+    $field = $all_fields['node__field_pickup_dt_field_pickup_dt_value'];
+    $expression = $all_expression['node__field_arrival_dt_field_arrival_dt_value']['expression'];
     $pars_expression = explode("(", $expression);
     $pars_expression_part = explode(")", $pars_expression[1]);
 
     $field1 =
-        $pars_expression[0]."({$sql_unix_timestamp($field['table'] . '.' . $field['field'])} - {$sql_unix_timestamp($pars_expression_part[0])})";
+      $pars_expression[0]."({$sql_unix_timestamp($field['table'] . '.' . $field['field'])} - {$sql_unix_timestamp($pars_expression_part[0])})";
 
     $query->addExpression($field1, 'avgCycleTime');
     if ($query->getMetaData('view')->exposed_data['field_creationdt_value'] != 'All'){
@@ -178,42 +187,92 @@ function estimate_query_views_estimate_view_alter(AlterableInterface &$query){
         clear_expose_filter_node_creation_codition($query->conditions(), 1);
     }
 }
+function estimate_form_views_exposed_form_alter(&$form, FormStateInterface $form_state) {
+    if ($form['#id'] !== "views-exposed-form-estimate-view-admin-page-1") return;
 
-function estimate_query_views_estimate_view_admin_alter(AlterableInterface &$query){
-    $sql_unix_timestamp = function($field){
-        return "(UNIX_TIMESTAMP(str_to_date($field, '%a, %m/%d/%Y - %H:%i')))";
-    };
-
-    $all_fields = $query->getFields();
-    $all_expression = $query->getExpressions();
-
-    $field = $all_fields['node__field_pickup_dt_field_pickup_dt_value'];
-    $expression = $all_expression['node__field_arrival_dt_field_arrival_dt_value']['expression'];
-    $pars_expression = explode("(", $expression);
-    $pars_expression_part = explode(")", $pars_expression[1]);
-
-    $field1 =
-        $pars_expression[0]."({$sql_unix_timestamp($field['table'] . '.' . $field['field'])} - {$sql_unix_timestamp($pars_expression_part[0])})";
-
-    $query->addExpression($field1, 'avgCycleTime');
-    if ($query->getMetaData('view')->exposed_data['field_creationdt_value'] != 'All'){
-        $query->addExpression($sql_unix_timestamp(NODE_CREATION_FIELD), 'creation_time');
-
-        $time_period = $query->getMetaData('view')->exposed_data['field_creationdt_value'];
-        $time = time();
-        $max = strtotime($time_period, $time);
-
-        //if -1 day, we need to set time() as max value in BETWEEN
-        if ($time_period[0] == '-') {
-            $tmp = $time;
-            $time = $max;
-            $max = $tmp;
+    $userInput = $form_state->getUserInput();
+    if (empty($userInput["current_period"]) || ($userInput["field_creationdt_value"] == 'All')) {
+        $userInput["current_period"] = time();
+    }
+    $sign = null;
+    if (isset($userInput["change_period"])){
+        if ($userInput["change_period"] == 1) {
+            $sign = '+';
+        } elseif ($userInput["change_period"] == 2) {
+            $sign = '-';
         }
-        $condition = [$time, $max];
-        // apply exposed filter
-        $query->havingCondition('creation_time', $condition, 'BETWEEN');
+    }
+    unset($userInput["change_period"]);
+    $datetime = new DateTime(date('r', $userInput["current_period"]));
 
-        clear_expose_filter_node_creation_codition($query->conditions(), 1);
+    $min = $max ='';
+    if (isset($userInput["field_creationdt_value"])) {
+        if ($userInput["field_creationdt_value"] == 1) {
+            if ($sign) {
+                $datetime->modify("{$sign}1 day");
+            }
+            $userInput["current_period"] = $datetime->getTimestamp();
+            $datetime->setTime(0, 0, 0);
+            $min = $datetime->format('m/d/Y H:i');
+            $datetime->setTime(23, 59, 59);
+            $max = $datetime->format('m/d/Y H:i');
+        } elseif ($userInput["field_creationdt_value"] == 2) {
+            if ($sign) {
+                $datetime->modify("{$sign}1 week");
+            }
+            $userInput["current_period"] = $datetime->getTimestamp();
+            $datetime->setTime(0, 0, 0);
+            $datetime->modify('Last Monday');
+            $min = $datetime->format('m/d/Y H:i');
+            $datetime->modify('Next Sunday');
+            $datetime->setTime(23, 59, 59);
+            $max = $datetime->format('m/d/Y H:i');
+        } elseif ($userInput["field_creationdt_value"] == 3) {
+            if ($sign) {
+                $datetime->modify("{$sign}1 month");
+            }
+            $userInput["current_period"] = $datetime->getTimestamp();
+            $datetime->setTime(0, 0, 0);
+            $datetime->setDate($datetime->format('Y'), $datetime->format('m'), 1);
+            $min = $datetime->format('m/d/Y H:i');
+            $datetime->setDate($datetime->format('Y'), $datetime->format('m'), $datetime->format('t'));
+            $datetime->setTime(23, 59, 59);
+            $max = $datetime->format('m/d/Y H:i');
+        } elseif ($userInput["field_creationdt_value"] == 4) {
+            if ($sign) {
+                $datetime->modify("{$sign}1 year");
+            }
+            $userInput["current_period"] = $datetime->getTimestamp();
+            $datetime->setTime(0, 0, 0);
+            $datetime->setDate($datetime->format('Y'), 1, 1);
+            $min = $datetime->format('m/d/Y H:i');
+            $datetime->setTime(23, 59, 59);
+            $datetime->setDate($datetime->format('Y'), 12, 31);
+            $max = $datetime->format('m/d/Y H:i');
+        }
+    }
+    $userInput["field_creation_date_time_value"]["min"] = $min;
+    $userInput["field_creation_date_time_value"]["max"] = $max;
+
+    $form_state->setUserInput($userInput);
+}
+function estimate_query_views_estimate_view_admin_alter(AlterableInterface &$query){
+  $view=$query->getMetaData('view');
+
+  $datetime = new DateTime(date('r',$view->exposed_data["current_period"]));
+  $userInput = $view->getExposedInput();
+    if (isset($userInput["field_creationdt_value"])) {
+        if ($userInput["field_creationdt_value"] == 1) {
+            $view->header["area"]->options["content"]["value"] = "Day: " . $datetime->format('d F Y');
+        } elseif ($userInput["field_creationdt_value"] == 2) {
+            $view->header["area"]->options["content"]["value"] = "Week: " . $datetime->format('W-Y');
+        } elseif ($userInput["field_creationdt_value"] == 3) {
+            $view->header["area"]->options["content"]["value"] = "Month: " . $datetime->format('F Y');
+        } elseif ($userInput["field_creationdt_value"] == 4) {
+            $view->header["area"]->options["content"]["value"] = "Year: " . $datetime->format('Y');
+        } else {
+            $view->header["area"]->options["content"]["value"] = 'All date';
+        }
     }
 }
 
@@ -253,12 +312,36 @@ function estimate_views_pre_render(ViewExecutable $view){
 }
 
 function _calcResultUserView($view){
+    $time_period = $view->exposed_data['field_creationdt_value'];
+    $holidays = array();
+    $countDays = 0;
+    switch ($time_period) {
+        case 'All':
+            $countDays = countDays("2000-01-01", date("Y-m-d"), $holidays);
+            break;
+        case '+1 day':
+            $countDays = 1;
+            break;
+        case '+1 week':
+            $countDays = 5;
+            break;
+        case '+1 mounth':
+            $countDays = countDaysMounth(date("Y"), date("m"), array(0, 6)); ;
+            break;
+        case '+1 year':
+            $countDays = countDays(date("Y").'-01-01', date("Y").'-12-31', $holidays);
+            break;
+    }
+
     foreach ($view->result as $resultRow){
         $count_estimates = $resultRow->field_com_name_es_node_field_data_nid;
         $sales_collision_sum = $resultRow->field_com_name_es_node_field_data__node__field_totalamt_p_fi ?? 0;
 
         // Cycle Time
         $resultRow->field_com_name_es_node_field_data__node__field_arrival_dt_fi = ($resultRow->avgCycleTime ?? 0 / 86400);
+
+        // Throughput
+        $resultRow->field_com_name_es_node_field_data__node__field_creationdt_fi = round($count_estimates / $countDays, 3);
 
         $avgSquareFoot = $severity = $body_hourse = $paint_hourse = $labor_hours = 0;
         if($count_estimates > 0){
@@ -294,7 +377,7 @@ function _calcResultUserView($view){
         }
 
         //Square Foot Efficiency
-        $resultRow->node_field_data_user__field_com_name_us__node__field_square_ = $avgSquareFoot;
+        $resultRow->node_field_data_user__field_com_name_us__node__field_square_ = round($avgSquareFoot,3);
 
         // Severity
         $resultRow->field_com_name_es_node_field_data__node__field_totalamt_p_fi = $severity;
@@ -368,7 +451,7 @@ function _calcResultUserView($view){
             }
         }
         $repair_ratio = $labor_sum_op11 > 0 ? round($labor_sum_op9_op10/ $labor_sum_op11,3) : 0;
-        $resultRow->node_field_data_user__field_com_name_us__node__field_ins_com = $repair_ratio;
+        $resultRow->field_com_name_es_node_field_data__node__field_pt_pag_field_ = $repair_ratio;
 
         // New / Used / LKQ
         $parts_sum_new = $parts_sum_used = $parts_sum_lkq = 0;
@@ -396,10 +479,58 @@ function _calcResultUserView($view){
             $parts_sum_used = round($parts_sum_used / $parts_sum, 3);
             $parts_sum_lkq = round($parts_sum_lkq / $parts_sum, 3);
         }
-        $resultRow->field_com_name_es_node_field_data__node__field_pt_pan_field_ = $parts_sum_new;
-        $resultRow->field_com_name_es_node_field_data__node__field_pt_pag_field_ = $parts_sum_used;
-        $resultRow->field_com_name_es_node_field_data__node__field_pt_paa_field_ = $parts_sum_lkq;
+        $resultRow->field_com_name_es_node_field_data__node__field_esaltid_field = $parts_sum_new.'/'.$parts_sum_used.'/'.$parts_sum_lkq;
+
+        $view->result[1] = clone $resultRow;
+        $view->result[2] = clone $resultRow;
     }
+
+    $fields = getUserFields();
+
+    // add rows with min and max value
+    foreach ($view->result as $key => $resultRow) {
+        if ($key === 0 || $key === 2) {
+            $value = ($key === 0) ? 'low' : 'high';
+
+            // Cycle Time
+            $resultRow->field_com_name_es_node_field_data__node__field_arrival_dt_fi = $fields['field_cycle_time_' . $value];
+
+            //Throughput
+            $resultRow->field_com_name_es_node_field_data__node__field_creationdt_fi = $fields['field_throughput_' . $value];
+
+            //Square Foot Efficiency
+            $resultRow->node_field_data_user__field_com_name_us__node__field_square_ = $fields['field_sq_foot_' . $value];
+
+            // Severity
+            $resultRow->field_com_name_es_node_field_data__node__field_totalamt_p_fi = $fields['field_severity_' . $value];
+
+            // Labor Ratio
+            $resultRow->field_com_name_es_node_field_data__node__field_op4_amount_fi = $fields['field_labor_ratio_' . $value];
+
+            // Parts Ratio
+            $resultRow->field_com_name_es_node_field_data__node__field_pt_paa_field_ = $fields['field_parts_ratio_' . $value];
+
+            // Sublet Ratio
+            $resultRow->field_com_name_es_node_field_data__node__field_op16_amount_f = $fields['field_sratio_' . $value];
+
+            // New / Used / LKQ
+            $resultRow->field_com_name_es_node_field_data__node__field_esaltid_field = "";
+
+            // Body Hours / RO
+            $resultRow->field_com_name_es_node_field_data__node__field_totalhours_b_ = $fields['field_bhro_' . $value];
+
+            // Paint Hours / RO
+            $resultRow->field_com_name_es_node_field_data__node__field_totalhours_p_ = $fields['field_phro_' . $value];
+
+            // Labor Hours / RO
+            $resultRow->field_com_name_es_node_field_data__node__field_op4_hours_fie = $fields['field_lhro_' . $value];
+
+            // Repair / Replace Ratio
+            $resultRow->field_com_name_es_node_field_data__node__field_pt_pag_field_ = $fields['field_rrratio_' . $value];
+        }
+    }
+
+
     return $view;
 }
 
@@ -560,4 +691,72 @@ function estimate_preprocess_page(&$variables) {
             break;
         }
     }
+}
+
+function countDays($startDate,$endDate,$holidays){
+    $endDate = strtotime($endDate);
+    $startDate = strtotime($startDate);
+
+    $days = ($endDate - $startDate) / 86400 + 1;
+
+    $no_full_weeks = floor($days / 7);
+    $no_remaining_days = fmod($days, 7);
+
+    $the_first_day_of_week = date("N", $startDate);
+    $the_last_day_of_week = date("N", $endDate);
+
+    if ($the_first_day_of_week <= $the_last_day_of_week) {
+        if ($the_first_day_of_week <= 6 && 6 <= $the_last_day_of_week) $no_remaining_days--;
+        if ($the_first_day_of_week <= 7 && 7 <= $the_last_day_of_week) $no_remaining_days--;
+    }
+    else {
+        if ($the_first_day_of_week == 7) {
+            $no_remaining_days--;
+
+            if ($the_last_day_of_week == 6) {
+                $no_remaining_days--;
+            }
+        }
+        else {
+            $no_remaining_days -= 2;
+        }
+    }
+
+    $workingDays = $no_full_weeks * 5;
+    if ($no_remaining_days > 0 )
+    {
+        $workingDays += $no_remaining_days;
+    }
+
+    foreach($holidays as $holiday){
+        $time_stamp=strtotime($holiday);
+        if ($startDate <= $time_stamp && $time_stamp <= $endDate && date("N",$time_stamp) != 6 && date("N",$time_stamp) != 7)
+            $workingDays--;
+    }
+
+    return $workingDays;
+}
+
+function countDaysMounth($year, $month, $ignore) {
+    $count = 0;
+    $counter = mktime(0, 0, 0, $month, 1, $year);
+    while (date("n", $counter) == $month) {
+        if (!in_array(date("w", $counter), $ignore)) {
+            $count++;
+        }
+        $counter = strtotime("+1 day", $counter);
+    }
+    return $count;
+}
+
+// get values CUSTOM USER FIELDS
+function getUserFields(){
+
+    $result = [];
+    $user = User::load(\Drupal::currentUser()->id());
+
+    foreach (\CUSTOM_USER_FIELDS as $field){
+        $result[$field] = $user->$field->value;
+    }
+    return $result;
 }

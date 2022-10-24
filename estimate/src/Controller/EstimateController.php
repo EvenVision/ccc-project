@@ -7,6 +7,7 @@
 
 namespace Drupal\estimate\Controller;
 
+use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\node\Entity\Node;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\estimate\EstimateParseXML;
@@ -37,9 +38,26 @@ class EstimateController extends ControllerBase {
         $result = new EstimateParseXML($postdata);
         $result = $result->parseXML();
 
-        $targetIdCompany = $targetIdEstimator = "";
-        $types = array("CompanyID", "EstimatorID");
+        $targetIdCompany = $targetIdInsuranceCompany = $targetIdEstimator = "";
+        $types = array("CompanyID", "EstimatorID", "InsuranceCompanyIDNum");
         foreach ($types as $type){
+
+          if ($type == "InsuranceCompanyIDNum"){
+            $nids = \Drupal::entityQuery('node')->condition('field_insurance_company_id',$result[$type])->execute();
+            $nodes =  Node::loadMultiple($nids);
+            if (empty($nodes)) {
+              $nodeInsuranceCompany = Node::create([
+                'type'                          => 'insurance_company',
+                'title'                         => $result["InsuranceCompany"],
+                'field_insurance_company_id'    => ['value' => $result["InsuranceCompanyIDNum"]],
+              ]);
+
+              $nodeInsuranceCompany->save();
+              $targetIdInsuranceCompany = $nodeInsuranceCompany->id();
+            } else {
+              $targetIdInsuranceCompany = array_shift($nodes)->id();
+            }
+          }
             if ($type == "CompanyID"){
               $nids = \Drupal::entityQuery('node')->condition('field_com_id_com',$result[$type])->execute();
               $nodes =  Node::loadMultiple($nids);
@@ -78,6 +96,10 @@ class EstimateController extends ControllerBase {
             }
         }
 
+        $CreationDateTime = str_replace(' - ',' ',$result['CreationDateTime']);
+        $date_time = new DrupalDateTime($CreationDateTime, new \DateTimeZone('UTC'));
+        $creationdate = $date_time->format('Y-m-d\TH:i:s');
+
         $nodeEstimate = Node::create([
           'type'                                => 'estimate',
           'title'                               => 'Estimate',
@@ -90,10 +112,10 @@ class EstimateController extends ControllerBase {
           'field_com_name_es'                   => ['target_id' => $targetIdCompany],
           'field_pickup_dt'                     => ['value' => $result['ActualPickUpDateTime']],
           'field_roclosed'                      => ['value' => $result['ROClosed']],
-          'field_ins_com'                       => ['value' => $result['InsuranceCompany']],
-          'field_ins_com_id'                    => ['value' => $result['InsuranceCompanyIDNum']],
+          'field_insurance_company'             => ['target_id' => $targetIdInsuranceCompany],
           'field_com_id_es'                     => ['value' => $result['CompanyID']],
           'field_creationdt'                    => ['value' => $result['CreationDateTime']],
+          'field_creation_date_time'            => ['value' => $creationdate],
           'field_es_name'                       => ['value' => $result['EstimatorName']],
           'field_arrival_dt'                    => ['value' => $result['ArrivalDateTime']],
           'field_estimator_id'                  => ['target_id' => $targetIdEstimator],

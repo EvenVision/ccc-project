@@ -6,3 +6,6 @@ core_version_requirement: ^8.9 || ^9
 dependencies:
   - drupal:field_group
   - drupal:inline_entity_form
+  - drupal:verf
+  - drupal:better_exposed_filters
+  - drupal:jquery_ui_slider

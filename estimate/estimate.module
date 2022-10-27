@@ -158,8 +158,8 @@ function estimate_query_views_estimate_view_alter(AlterableInterface &$query){
     $all_fields = $query->getFields();
     $all_expression = $query->getExpressions();
 
-    $field = $all_fields['node__field_pickup_dt_field_pickup_dt_value'];
-    $expression = $all_expression['node__field_arrival_dt_field_arrival_dt_value']['expression'];
+    $field = $all_fields['field_com_name_es_node_field_data__node__field_pickup_dt_fie'];
+    $expression = $all_expression['field_com_name_es_node_field_data__node__field_arrival_dt_fi']['expression'];
     $pars_expression = explode("(", $expression);
     $pars_expression_part = explode(")", $pars_expression[1]);
 

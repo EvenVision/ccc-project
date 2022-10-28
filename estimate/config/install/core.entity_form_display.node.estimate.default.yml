@@ -6,12 +6,12 @@ dependencies:
     - field.field.node.estimate.field_arrival_dt
     - field.field.node.estimate.field_com_id_es
     - field.field.node.estimate.field_com_name_es
+    - field.field.node.estimate.field_creation_date_time
     - field.field.node.estimate.field_creationdt
     - field.field.node.estimate.field_es_name
     - field.field.node.estimate.field_esaltid
     - field.field.node.estimate.field_estimator_id
-    - field.field.node.estimate.field_ins_com
-    - field.field.node.estimate.field_ins_com_id
+    - field.field.node.estimate.field_insurance_company
     - field.field.node.estimate.field_op0_amount
     - field.field.node.estimate.field_op0_hours
     - field.field.node.estimate.field_op10_amount
@@ -193,8 +193,7 @@ third_party_settings:
         required_fields: true
     group_insurance:
       children:
-        - field_ins_com
-        - field_ins_com_id
+        - field_insurance_company
       label: Insurance
       region: content
       parent_name: ''
@@ -207,7 +206,7 @@ third_party_settings:
         description: ''
         required_fields: true
 _core:
-  default_config_hash: DnqVgWn1hY5wObdNjj_iO6s-9vwtrG1TYbCsSrbn74Q
+  default_config_hash: mHDRYxHhS2lbOUfFHBjTKiuuGjTRDvjR2OMGPuWeV4I
 id: node.estimate.default
 targetEntityType: node
 bundle: estimate
@@ -303,19 +302,13 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-  field_ins_com:
-    type: string_textfield
-    weight: 15
+  field_insurance_company:
+    type: entity_reference_autocomplete
+    weight: 0
     region: content
     settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-  field_ins_com_id:
-    type: string_textfield
-    weight: 16
-    region: content
-    settings:
+      match_operator: CONTAINS
+      match_limit: 10
       size: 60
       placeholder: ''
     third_party_settings: {  }
@@ -701,4 +694,5 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-hidden: {  }
+hidden:
+  field_creation_date_time: true

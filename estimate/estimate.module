@@ -636,7 +636,7 @@ function _calcResultAdminView($view){
             }
         }
         $repair_ratio = $labor_sum_op11 > 0 ? round($labor_sum_op9_op10/ $labor_sum_op11,3) : 0;
-        $resultRow->node__field_ins_com_id_field_ins_com_id_value = $repair_ratio;
+        $resultRow->node__field_op16_amount_field_op16_amount_value = $repair_ratio;
 
         // New / Used / LKQ
         $parts_sum_new = $parts_sum_used = $parts_sum_lkq = 0;
@@ -674,7 +674,7 @@ function _calcResultAdminView($view){
 
 function estimate_preprocess_page(&$variables) {
     switch (\Drupal::service('path.current')->getPath()) {
-        case '/estimate-view-a' :
+        case '/estimate-view-admin' :
         {
             if (!check_admin()) {
                 (new RedirectResponse('estimate-view'))->send();

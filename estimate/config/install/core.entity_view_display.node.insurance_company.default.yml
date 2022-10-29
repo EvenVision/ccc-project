@@ -1,0 +1,39 @@
+uuid: 687cdbe9-6373-40ce-b67d-d8867b2a9cac
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.insurance_company.field_ins_company
+    - field.field.node.insurance_company.field_insurance_company_id
+    - node.type.insurance_company
+  module:
+    - user
+_core:
+  default_config_hash: Vn0ljGM3KtMFUhly-LNKGUrB9Esw8BUFRpseSFdPvjI
+id: node.insurance_company.default
+targetEntityType: node
+bundle: insurance_company
+mode: default
+content:
+  field_ins_company:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_insurance_company_id:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden: {  }

@@ -6,12 +6,12 @@ dependencies:
     - field.field.node.estimate.field_arrival_dt
     - field.field.node.estimate.field_com_id_es
     - field.field.node.estimate.field_com_name_es
+    - field.field.node.estimate.field_creation_date_time
     - field.field.node.estimate.field_creationdt
     - field.field.node.estimate.field_es_name
     - field.field.node.estimate.field_esaltid
     - field.field.node.estimate.field_estimator_id
-    - field.field.node.estimate.field_ins_com
-    - field.field.node.estimate.field_ins_com_id
+    - field.field.node.estimate.field_insurance_company
     - field.field.node.estimate.field_op0_amount
     - field.field.node.estimate.field_op0_hours
     - field.field.node.estimate.field_op10_amount
@@ -131,8 +131,7 @@ third_party_settings:
         description: ''
     group_insurance:
       children:
-        - field_ins_com
-        - field_ins_com_id
+        - field_insurance_company
       label: Insurance
       parent_name: ''
       region: content
@@ -214,7 +213,7 @@ third_party_settings:
         id: ''
         description: ''
 _core:
-  default_config_hash: tQL5-Y4optF77dZsqyXhCW1PwxcHhs-ALRgQ_WecSLA
+  default_config_hash: 8UCNo148LDz0YHb3mU-IiTU43Usm1zFkB2A81RbCe-g
 id: node.estimate.default
 targetEntityType: node
 bundle: estimate
@@ -300,21 +299,13 @@ content:
     third_party_settings: {  }
     weight: 0
     region: content
-  field_ins_com:
-    type: string
+  field_insurance_company:
+    type: entity_reference_label
     label: above
     settings:
-      link_to_entity: false
+      link: true
     third_party_settings: {  }
-    weight: 10
-    region: content
-  field_ins_com_id:
-    type: string
-    label: above
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    weight: 11
+    weight: 0
     region: content
   field_op0_amount:
     type: number_decimal
@@ -845,4 +836,5 @@ content:
     third_party_settings: {  }
     weight: 0
     region: content
-hidden: {  }
+hidden:
+  field_creation_date_time: true

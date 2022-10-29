@@ -12,7 +12,7 @@ dependencies:
     - node
     - user
 _core:
-  default_config_hash: tzGeSyvKHEqIaQIp3MRjsn-8YDMCtkq_b4Pf4CgmLXE
+  default_config_hash: B6ijnzt5LPmLniZNyZKEUxDfAYKa2csasRoUWjXLGTA
 id: estimate_view
 label: estimate_view
 module: views

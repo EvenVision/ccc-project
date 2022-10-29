@@ -50,6 +50,7 @@ class EstimateController extends ControllerBase {
                 'type'                          => 'insurance_company',
                 'title'                         => $result["InsuranceCompany"],
                 'field_insurance_company_id'    => ['value' => $result["InsuranceCompanyIDNum"]],
+                'field_ins_company'             => ['value' => $result["InsuranceCompany"]],
               ]);
 
               $nodeInsuranceCompany->save();

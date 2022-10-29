@@ -1,14 +1,14 @@
-uuid: 0b9917fb-2ccb-490b-a4c3-ce29bbcda231
+uuid: 8e7c3579-25fb-43f7-9f72-2352f601c0ee
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_ins_com
-    - node.type.estimate
-id: node.estimate.field_ins_com
-field_name: field_ins_com
+    - field.storage.node.field_ins_company
+    - node.type.insurance_company
+id: node.insurance_company.field_ins_company
+field_name: field_ins_company
 entity_type: node
-bundle: estimate
+bundle: insurance_company
 label: 'Insurance Company'
 description: ''
 required: false

@@ -151,44 +151,26 @@ function estimate_views_pre_build(ViewExecutable $view){
 }
 
 function estimate_query_views_estimate_view_alter(AlterableInterface &$query){
-    $sql_unix_timestamp = function($field){
-      return "(UNIX_TIMESTAMP(str_to_date($field, '%a, %m/%d/%Y - %H:%i')))";
-    };
+    $view=$query->getMetaData('view');
 
-    $all_fields = $query->getFields();
-    $all_expression = $query->getExpressions();
-
-    $field = $all_fields['field_com_name_es_node_field_data__node__field_pickup_dt_fie'];
-    $expression = $all_expression['field_com_name_es_node_field_data__node__field_arrival_dt_fi']['expression'];
-    $pars_expression = explode("(", $expression);
-    $pars_expression_part = explode(")", $pars_expression[1]);
-
-    $field1 =
-      $pars_expression[0]."({$sql_unix_timestamp($field['table'] . '.' . $field['field'])} - {$sql_unix_timestamp($pars_expression_part[0])})";
-
-    $query->addExpression($field1, 'avgCycleTime');
-    if ($query->getMetaData('view')->exposed_data['field_creationdt_value'] != 'All'){
-        $query->addExpression($sql_unix_timestamp(NODE_CREATION_FIELD), 'creation_time');
-
-        $time_period = $query->getMetaData('view')->exposed_data['field_creationdt_value'];
-        $time = time();
-        $max = strtotime($time_period, $time);
-
-        //if -1 day, we need to set time() as max value in BETWEEN
-        if ($time_period[0] == '-') {
-            $tmp = $time;
-            $time = $max;
-            $max = $tmp;
+    $datetime = new DateTime(date('r',$view->exposed_data["current_period"]));
+    $userInput = $view->getExposedInput();
+    if (isset($userInput["field_creationdt_value"])) {
+        if ($userInput["field_creationdt_value"] == 1) {
+            $view->header["area"]->options["content"]["value"] = "Day: " . $datetime->format('d F Y');
+        } elseif ($userInput["field_creationdt_value"] == 2) {
+            $view->header["area"]->options["content"]["value"] = "Week: " . $datetime->format('W-Y');
+        } elseif ($userInput["field_creationdt_value"] == 3) {
+            $view->header["area"]->options["content"]["value"] = "Month: " . $datetime->format('F Y');
+        } elseif ($userInput["field_creationdt_value"] == 4) {
+            $view->header["area"]->options["content"]["value"] = "Year: " . $datetime->format('Y');
+        } else {
+            $view->header["area"]->options["content"]["value"] = 'All date';
         }
-        $condition = [$time, $max];
-        // apply exposed filter
-        $query->havingCondition('creation_time', $condition, 'BETWEEN');
-
-        clear_expose_filter_node_creation_codition($query->conditions(), 1);
     }
 }
 function estimate_form_views_exposed_form_alter(&$form, FormStateInterface $form_state) {
-    if ($form['#id'] !== "views-exposed-form-estimate-view-admin-page-1") return;
+    if ($form['#id'] !== "views-exposed-form-estimate-view-admin-page-1" and $form['#id'] !== 'views-exposed-form-estimate-view-page-1') return;
 
     $userInput = $form_state->getUserInput();
     if (empty($userInput["current_period"]) || ($userInput["field_creationdt_value"] == 'All')) {
@@ -535,12 +517,36 @@ function _calcResultUserView($view){
 }
 
 function _calcResultAdminView($view){
+    $time_period = $view->exposed_data['field_creationdt_value'];
+    $holidays = array();
+    $countDays = 0;
+    switch ($time_period) {
+        case 'All':
+            $countDays = countDays("2000-01-01", date("Y-m-d"), $holidays);
+            break;
+        case '+1 day':
+            $countDays = 1;
+            break;
+        case '+1 week':
+            $countDays = 5;
+            break;
+        case '+1 mounth':
+            $countDays = countDaysMounth(date("Y"), date("m"), array(0, 6)); ;
+            break;
+        case '+1 year':
+            $countDays = countDays(date("Y").'-01-01', date("Y").'-12-31', $holidays);
+            break;
+    }
+
     foreach ($view->result as $resultRow){
         $count_estimates = $resultRow->nid;
         $sales_collision_sum = $resultRow->node__field_totalamt_p_field_totalamt_p_value ?? 0;
 
         // Cycle Time
         $resultRow->node__field_arrival_dt_field_arrival_dt_value = ($resultRow->avgCycleTime ?? 0 / 86400);
+
+        // Throughput
+        $resultRow->node__field_creationdt_field_creationdt_value = round($count_estimates / $countDays, 3);
 
         $avgSquareFoot = $severity = $body_hourse = $paint_hourse = $labor_hours = 0;
         if($count_estimates > 0) {

@@ -9,10 +9,13 @@ dependencies:
     - field.storage.node.field_square_footage
     - user.role.authenticated
   module:
+    - better_exposed_filters
+    - datetime
     - node
     - user
+    - verf
 _core:
-  default_config_hash: B6ijnzt5LPmLniZNyZKEUxDfAYKa2csasRoUWjXLGTA
+  default_config_hash: YyhrFa7l5qz7TrQYyuiW_oYKl_f1zgvq4q2cP8M_kks
 id: estimate_view
 label: estimate_view
 module: views
@@ -2949,7 +2952,7 @@ display:
             offset: false
             offset_label: Offset
       exposed_form:
-        type: basic
+        type: bef
         options:
           submit_button: Apply
           reset_button: false
@@ -2958,6 +2961,64 @@ display:
           expose_sort_order: true
           sort_asc_label: Asc
           sort_desc_label: Desc
+          text_input_required: 'Select any filter and click on Apply to see results'
+          text_input_required_format: basic_html
+          bef:
+            general:
+              autosubmit: true
+              autosubmit_exclude_textfield: false
+              autosubmit_textfield_delay: 500
+              autosubmit_hide: false
+              input_required: false
+              allow_secondary: false
+              secondary_label: 'Advanced options'
+              secondary_open: false
+              reset_button_always_show: false
+            filter:
+              field_creationdt_value:
+                plugin_id: default
+                advanced:
+                  placeholder_text: ''
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: false
+              changed:
+                plugin_id: bef_links
+                advanced:
+                  placeholder_text: ''
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: false
+                select_all_none: false
+              changed_1:
+                plugin_id: default
+                advanced:
+                  placeholder_text: ''
+                  collapsible: true
+                  is_secondary: false
+              field_creation_date_time_value:
+                plugin_id: default
+                advanced:
+                  collapsible: false
+                  is_secondary: false
+              field_com_name_es_target_id_verf:
+                plugin_id: default
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: false
+              field_insurance_company_target_id_verf:
+                plugin_id: default
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: false
       access:
         type: perm
         options:
@@ -3102,20 +3163,287 @@ display:
             group_items:
               1:
                 title: Day
-                operator: '='
+                operator: '!='
                 value: '+1 day'
               2:
                 title: Week
-                operator: '='
+                operator: '!='
                 value: '+1 week'
               3:
                 title: Month
-                operator: '='
+                operator: '!='
                 value: '+1 mounth'
               4:
                 title: Year
-                operator: '='
+                operator: '!='
                 value: '+1 year'
+        changed:
+          id: changed
+          table: node_field_data
+          field: changed
+          relationship: reverse__node__field_com_name_es
+          group_type: group
+          admin_label: 'Change period'
+          entity_type: node
+          entity_field: changed
+          plugin_id: date
+          operator: '='
+          value:
+            min: ''
+            max: ''
+            value: ''
+            type: date
+          group: 1
+          exposed: true
+          expose:
+            operator_id: changed_op
+            label: Changed
+            description: null
+            use_operator: false
+            operator: changed_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: changed
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            min_placeholder: null
+            max_placeholder: null
+            placeholder: null
+          is_grouped: true
+          group_info:
+            label: 'Change period'
+            description: ''
+            identifier: change_period
+            optional: false
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items:
+              1:
+                title: Next
+                operator: '!='
+                value:
+                  min: ''
+                  max: ''
+                  value: 111Next
+                  type: date
+              2:
+                title: Prev
+                operator: '!='
+                value:
+                  min: ''
+                  max: ''
+                  value: 111Prev
+                  type: date
+              3:
+                title: ''
+                operator: '='
+                value:
+                  min: ''
+                  max: ''
+                  value: ''
+                  type: date
+        changed_1:
+          id: changed_1
+          table: node_field_data
+          field: changed
+          relationship: reverse__node__field_com_name_es
+          group_type: group
+          admin_label: 'Current period'
+          entity_type: node
+          entity_field: changed
+          plugin_id: date
+          operator: '!='
+          value:
+            min: ''
+            max: ''
+            value: ''
+            type: date
+          group: 1
+          exposed: true
+          expose:
+            operator_id: changed_1_op
+            label: 'Current period'
+            description: ''
+            use_operator: false
+            operator: changed_1_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: current_period
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              content_editor: '0'
+              administrator: '0'
+            min_placeholder: ''
+            max_placeholder: ''
+            placeholder: ''
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+        field_creation_date_time_value:
+          id: field_creation_date_time_value
+          table: node__field_creation_date_time
+          field: field_creation_date_time_value
+          relationship: reverse__node__field_com_name_es
+          group_type: group
+          admin_label: ''
+          plugin_id: datetime
+          operator: between
+          value:
+            min: ''
+            max: ''
+            value: ''
+            type: date
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_creation_date_time_value_op
+            label: 'Creation Date Time (field_creation_date_time)'
+            description: ''
+            use_operator: false
+            operator: field_creation_date_time_value_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_creation_date_time_value
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              content_editor: '0'
+              administrator: '0'
+            min_placeholder: ''
+            max_placeholder: ''
+            placeholder: ''
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+        field_com_name_es_target_id_verf:
+          id: field_com_name_es_target_id_verf
+          table: node__field_com_name_es
+          field: field_com_name_es_target_id_verf
+          relationship: reverse__node__field_com_name_es
+          group_type: group
+          admin_label: ''
+          plugin_id: verf
+          operator: in
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_com_name_es_target_id_verf_op
+            label: 'Company Name '
+            description: ''
+            use_operator: false
+            operator: field_com_name_es_target_id_verf_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_com_name_es_target_id_verf
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              content_editor: '0'
+              administrator: '0'
+            reduce: 0
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          verf_target_bundles:
+            company: company
+            article: '0'
+            estimate: '0'
+            estimator: '0'
+            insurance_company: '0'
+            page: '0'
+        field_insurance_company_target_id_verf:
+          id: field_insurance_company_target_id_verf
+          table: node__field_insurance_company
+          field: field_insurance_company_target_id_verf
+          relationship: reverse__node__field_com_name_es
+          group_type: group
+          admin_label: ''
+          plugin_id: verf
+          operator: in
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_insurance_company_target_id_verf_op
+            label: 'Insurance Company '
+            description: ''
+            use_operator: false
+            operator: field_insurance_company_target_id_verf_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_insurance_company_target_id_verf
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              content_editor: '0'
+              administrator: '0'
+            reduce: 0
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          verf_target_bundles:
+            insurance_company: insurance_company
+            article: '0'
+            company: '0'
+            estimate: '0'
+            estimator: '0'
+            page: '0'
       filter_groups:
         operator: AND
         groups:
@@ -3197,9 +3525,36 @@ display:
           entity_type: node
           plugin_id: entity_reverse
           required: false
+      use_ajax: true
       group_by: true
-      header: {  }
-      footer: {  }
+      header:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text
+          empty: true
+          content:
+            value: 'All date'
+            format: basic_html
+          tokenize: false
+      footer:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text
+          empty: true
+          content:
+            value: "<style>\r\n.path-estimate-view *[data-drupal-selector=\"edit-current-period-collapsible\"],\r\n.path-estimate-view *[data-drupal-selector=\"edit-field-creation-date-time-value-wrapper\"]\r\n{display:none !important;}\r\n</style>"
+            format: full_html
+          tokenize: false
       display_extenders: {  }
     cache_metadata:
       max-age: -1
@@ -3209,12 +3564,15 @@ display:
         - url
         - url.query_args
         - user
+        - 'user.node_grants:view'
         - user.permissions
       tags:
         - 'config:field.storage.node.field_creationdt'
         - 'config:field.storage.node.field_esaltid'
         - 'config:field.storage.node.field_pickup_dt'
         - 'config:field.storage.node.field_square_footage'
+        - 'config:views.view.estimate_view'
+        - node_list
   page_1:
     id: page_1
     display_title: Page
@@ -3240,9 +3598,12 @@ display:
         - url
         - url.query_args
         - user
+        - 'user.node_grants:view'
         - user.roles
       tags:
         - 'config:field.storage.node.field_creationdt'
         - 'config:field.storage.node.field_esaltid'
         - 'config:field.storage.node.field_pickup_dt'
         - 'config:field.storage.node.field_square_footage'
+        - 'config:views.view.estimate_view'
+        - node_list

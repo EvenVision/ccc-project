@@ -6,7 +6,6 @@ dependencies:
     - field.field.node.estimate.field_arrival_dt
     - field.field.node.estimate.field_com_id_es
     - field.field.node.estimate.field_com_name_es
-    - field.field.node.estimate.field_creation_date_time
     - field.field.node.estimate.field_creationdt
     - field.field.node.estimate.field_es_name
     - field.field.node.estimate.field_esaltid
@@ -34,6 +33,7 @@ dependencies:
     - field.field.node.estimate.field_op6_hours
     - field.field.node.estimate.field_op9_amount
     - field.field.node.estimate.field_op9_hours
+    - field.field.node.estimate.field_pickup_date_time
     - field.field.node.estimate.field_pickup_dt
     - field.field.node.estimate.field_pt_paa
     - field.field.node.estimate.field_pt_pag
@@ -103,7 +103,7 @@ third_party_settings:
       label: Estimator
       region: content
       parent_name: ''
-      weight: 13
+      weight: 12
       format_type: fieldset
       format_settings:
         classes: ''
@@ -138,7 +138,7 @@ third_party_settings:
       label: 'Sales Labor'
       region: content
       parent_name: ''
-      weight: 17
+      weight: 14
       format_type: fieldset
       format_settings:
         classes: ''
@@ -161,7 +161,7 @@ third_party_settings:
       label: 'Sales Parts'
       region: content
       parent_name: ''
-      weight: 18
+      weight: 15
       format_type: fieldset
       format_settings:
         classes: ''
@@ -183,7 +183,7 @@ third_party_settings:
       label: 'Sales Other'
       region: content
       parent_name: ''
-      weight: 19
+      weight: 16
       format_type: fieldset
       format_settings:
         classes: ''
@@ -197,7 +197,7 @@ third_party_settings:
       label: Insurance
       region: content
       parent_name: ''
-      weight: 14
+      weight: 13
       format_type: fieldset
       format_settings:
         classes: ''
@@ -206,7 +206,7 @@ third_party_settings:
         description: ''
         required_fields: true
 _core:
-  default_config_hash: mHDRYxHhS2lbOUfFHBjTKiuuGjTRDvjR2OMGPuWeV4I
+  default_config_hash: vJxjGOOSkvbLV6RH7ZKlKkX5S-O3l4AwRj2KVnnxlOA
 id: node.estimate.default
 targetEntityType: node
 bundle: estimate
@@ -616,35 +616,35 @@ content:
     third_party_settings: {  }
   field_totalamt:
     type: number
-    weight: 20
+    weight: 17
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_totalamt_b:
     type: number
-    weight: 21
+    weight: 18
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_totalamt_p:
     type: number
-    weight: 22
+    weight: 19
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_totalhours_b:
     type: number
-    weight: 23
+    weight: 20
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_totalhours_p:
     type: number
-    weight: 24
+    weight: 21
     region: content
     settings:
       placeholder: ''
@@ -695,4 +695,4 @@ content:
       placeholder: ''
     third_party_settings: {  }
 hidden:
-  field_creation_date_time: true
+  field_pickup_date_time: true

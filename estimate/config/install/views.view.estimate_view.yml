@@ -6,6 +6,7 @@ dependencies:
     - field.storage.node.field_creationdt
     - field.storage.node.field_esaltid
     - field.storage.node.field_pickup_dt
+    - field.storage.node.field_roclosed
     - field.storage.node.field_square_footage
     - user.role.authenticated
   module:
@@ -15,7 +16,7 @@ dependencies:
     - user
     - verf
 _core:
-  default_config_hash: YyhrFa7l5qz7TrQYyuiW_oYKl_f1zgvq4q2cP8M_kks
+  default_config_hash: hLZPiB_PXxXiH8xeZ7tEk5SxNXifN5IN0fWozKuvUgM
 id: estimate_view
 label: estimate_view
 module: views
@@ -242,7 +243,7 @@ display:
           group_type: group
           admin_label: ''
           plugin_id: field
-          label: 'Square Footage'
+          label: 'Square Foot Efficiency'
           exclude: false
           alter:
             alter_text: false
@@ -2864,15 +2865,80 @@ display:
           format_plural_string: !!binary MQNAY291bnQ=
           prefix: ''
           suffix: ''
-        field_pt_pan_1:
-          id: field_pt_pan_1
-          table: node__field_pt_pan
-          field: field_pt_pan
+        field_roclosed:
+          id: field_roclosed
+          table: node__field_roclosed
+          field: field_roclosed
+          relationship: reverse__node__field_com_name_es
+          group_type: group
+          admin_label: ''
+          plugin_id: field
+          label: ROClosed
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: boolean
+          settings:
+            format: true-false
+            format_custom_false: ''
+            format_custom_true: ''
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+        field_totalamt:
+          id: field_totalamt
+          table: node__field_totalamt
+          field: field_totalamt
           relationship: reverse__node__field_com_name_es
           group_type: sum
           admin_label: ''
           plugin_id: field
-          label: "Parts Type New OEM\t"
+          label: TotalAmt
           exclude: true
           alter:
             alter_text: false
@@ -2975,12 +3041,17 @@ display:
               secondary_open: false
               reset_button_always_show: false
             filter:
-              field_creationdt_value:
+              field_pickup_dt_value:
                 plugin_id: default
                 advanced:
                   placeholder_text: ''
                   rewrite:
                     filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: false
+              field_pickup_date_time_value:
+                plugin_id: default
+                advanced:
                   collapsible: false
                   is_secondary: false
               changed:
@@ -2997,11 +3068,6 @@ display:
                 advanced:
                   placeholder_text: ''
                   collapsible: true
-                  is_secondary: false
-              field_creation_date_time_value:
-                plugin_id: default
-                advanced:
-                  collapsible: false
                   is_secondary: false
               field_com_name_es_target_id_verf:
                 plugin_id: default
@@ -3122,10 +3188,10 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-        field_creationdt_value:
-          id: field_creationdt_value
-          table: node__field_creationdt
-          field: field_creationdt_value
+        field_pickup_dt_value:
+          id: field_pickup_dt_value
+          table: node__field_pickup_dt
+          field: field_pickup_dt_value
           relationship: reverse__node__field_com_name_es
           group_type: group
           admin_label: ''
@@ -3135,14 +3201,14 @@ display:
           group: 1
           exposed: true
           expose:
-            operator_id: field_creationdt_value_op
-            label: 'CreationDateTime (field_creationdt)'
+            operator_id: field_pickup_dt_value_op
+            label: 'PickUp Date/Time (field_pickup_dt)'
             description: null
             use_operator: false
-            operator: field_creationdt_value_op
+            operator: field_pickup_dt_value_op
             operator_limit_selection: false
             operator_list: {  }
-            identifier: field_creationdt_value
+            identifier: field_pickup_dt_value
             required: false
             remember: false
             multiple: false
@@ -3151,14 +3217,14 @@ display:
             placeholder: null
           is_grouped: true
           group_info:
-            label: 'CreationDateTime '
+            label: 'PickUp Date/Time '
             description: ''
-            identifier: field_creationdt_value
+            identifier: field_pickup_dt_value
             optional: true
             widget: select
             multiple: false
             remember: false
-            default_group: All
+            default_group: '3'
             default_group_multiple: {  }
             group_items:
               1:
@@ -3172,11 +3238,59 @@ display:
               3:
                 title: Month
                 operator: '!='
-                value: '+1 mounth'
+                value: '+1 month'
               4:
                 title: Year
                 operator: '!='
                 value: '+1 year'
+        field_pickup_date_time_value:
+          id: field_pickup_date_time_value
+          table: node__field_pickup_date_time
+          field: field_pickup_date_time_value
+          relationship: reverse__node__field_com_name_es
+          group_type: group
+          admin_label: ''
+          plugin_id: datetime
+          operator: between
+          value:
+            min: ''
+            max: ''
+            value: ''
+            type: date
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_pickup_date_time_value_op
+            label: 'PickUp Date/Time (field_pickup_date_time)'
+            description: ''
+            use_operator: false
+            operator: field_pickup_date_time_value_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_pickup_date_time_value
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              content_editor: '0'
+              administrator: '0'
+            min_placeholder: ''
+            max_placeholder: ''
+            placeholder: ''
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
         changed:
           id: changed
           table: node_field_data
@@ -3275,54 +3389,6 @@ display:
             operator_limit_selection: false
             operator_list: {  }
             identifier: current_period
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-              anonymous: '0'
-              content_editor: '0'
-              administrator: '0'
-            min_placeholder: ''
-            max_placeholder: ''
-            placeholder: ''
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-        field_creation_date_time_value:
-          id: field_creation_date_time_value
-          table: node__field_creation_date_time
-          field: field_creation_date_time_value
-          relationship: reverse__node__field_com_name_es
-          group_type: group
-          admin_label: ''
-          plugin_id: datetime
-          operator: between
-          value:
-            min: ''
-            max: ''
-            value: ''
-            type: date
-          group: 1
-          exposed: true
-          expose:
-            operator_id: field_creation_date_time_value_op
-            label: 'Creation Date Time (field_creation_date_time)'
-            description: ''
-            use_operator: false
-            operator: field_creation_date_time_value_op
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: field_creation_date_time_value
             required: false
             remember: false
             multiple: false
@@ -3552,7 +3618,7 @@ display:
           plugin_id: text
           empty: true
           content:
-            value: "<style>\r\n.path-estimate-view *[data-drupal-selector=\"edit-current-period-collapsible\"],\r\n.path-estimate-view *[data-drupal-selector=\"edit-field-creation-date-time-value-wrapper\"]\r\n{display:none !important;}\r\n</style>"
+            value: "<style>\r\n.path-estimate-view *[data-drupal-selector=\"edit-current-period-collapsible\"],\r\n.path-estimate-view *[data-drupal-selector=\"edit-field-pickup-date-time-value-wrapper\"]\r\n{display:none !important;}\r\n</style>"
             format: full_html
           tokenize: false
       display_extenders: {  }
@@ -3570,6 +3636,7 @@ display:
         - 'config:field.storage.node.field_creationdt'
         - 'config:field.storage.node.field_esaltid'
         - 'config:field.storage.node.field_pickup_dt'
+        - 'config:field.storage.node.field_roclosed'
         - 'config:field.storage.node.field_square_footage'
         - 'config:views.view.estimate_view'
         - node_list
@@ -3604,6 +3671,7 @@ display:
         - 'config:field.storage.node.field_creationdt'
         - 'config:field.storage.node.field_esaltid'
         - 'config:field.storage.node.field_pickup_dt'
+        - 'config:field.storage.node.field_roclosed'
         - 'config:field.storage.node.field_square_footage'
         - 'config:views.view.estimate_view'
         - node_list

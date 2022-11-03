@@ -6,7 +6,6 @@ dependencies:
     - field.field.node.estimate.field_arrival_dt
     - field.field.node.estimate.field_com_id_es
     - field.field.node.estimate.field_com_name_es
-    - field.field.node.estimate.field_creation_date_time
     - field.field.node.estimate.field_creationdt
     - field.field.node.estimate.field_es_name
     - field.field.node.estimate.field_esaltid
@@ -34,6 +33,7 @@ dependencies:
     - field.field.node.estimate.field_op6_hours
     - field.field.node.estimate.field_op9_amount
     - field.field.node.estimate.field_op9_hours
+    - field.field.node.estimate.field_pickup_date_time
     - field.field.node.estimate.field_pickup_dt
     - field.field.node.estimate.field_pt_paa
     - field.field.node.estimate.field_pt_pag
@@ -213,7 +213,7 @@ third_party_settings:
         id: ''
         description: ''
 _core:
-  default_config_hash: 8UCNo148LDz0YHb3mU-IiTU43Usm1zFkB2A81RbCe-g
+  default_config_hash: VAhVjV-73COwbZl8A3LmwgCoqu-hFuro44GAbadJqyI
 id: node.estimate.default
 targetEntityType: node
 bundle: estimate
@@ -837,4 +837,4 @@ content:
     weight: 0
     region: content
 hidden:
-  field_creation_date_time: true
+  field_pickup_date_time: true

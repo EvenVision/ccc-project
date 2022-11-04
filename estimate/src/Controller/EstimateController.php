@@ -97,9 +97,9 @@ class EstimateController extends ControllerBase {
             }
         }
 
-        $CreationDateTime = str_replace(' - ',' ',$result['CreationDateTime']);
+        $CreationDateTime = str_replace(' - ',' ',$result['ActualPickUpDateTime']);
         $date_time = new DrupalDateTime($CreationDateTime, new \DateTimeZone('UTC'));
-        $creationdate = $date_time->format('Y-m-d\TH:i:s');
+        $pickUpDate = $date_time->format('Y-m-d\TH:i:s');
 
         $nodeEstimate = Node::create([
           'type'                                => 'estimate',
@@ -116,7 +116,7 @@ class EstimateController extends ControllerBase {
           'field_insurance_company'             => ['target_id' => $targetIdInsuranceCompany],
           'field_com_id_es'                     => ['value' => $result['CompanyID']],
           'field_creationdt'                    => ['value' => $result['CreationDateTime']],
-          'field_creation_date_time'            => ['value' => $creationdate],
+          'field_pickup_date_time'              => ['value' => $pickUpDate],
           'field_es_name'                       => ['value' => $result['EstimatorName']],
           'field_arrival_dt'                    => ['value' => $result['ArrivalDateTime']],
           'field_estimator_id'                  => ['target_id' => $targetIdEstimator],

@@ -16,7 +16,7 @@ dependencies:
     - user
     - verf
 _core:
-  default_config_hash: hLZPiB_PXxXiH8xeZ7tEk5SxNXifN5IN0fWozKuvUgM
+  default_config_hash: XB0XVPrWLgDpJzaLJ0lJteAaeW8IuQfNSjPC8xd80mg
 id: estimate_view
 label: estimate_view
 module: views
@@ -3510,6 +3510,44 @@ display:
             estimate: '0'
             estimator: '0'
             page: '0'
+        field_roclosed_value:
+          id: field_roclosed_value
+          table: node__field_roclosed
+          field: field_roclosed_value
+          relationship: reverse__node__field_com_name_es
+          group_type: group
+          admin_label: ''
+          plugin_id: boolean
+          operator: '='
+          value: '1'
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
       filter_groups:
         operator: AND
         groups:

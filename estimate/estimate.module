@@ -2,6 +2,7 @@
 
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Database\Query\AlterableInterface;
+use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\Entity\EntityFormDisplay;
 use Drupal\Core\Entity\Entity\EntityFormMode;
 use Drupal\Core\Entity\Entity\EntityViewDisplay;
@@ -154,6 +155,20 @@ function estimate_views_pre_build(ViewExecutable $view){
 }
 
 function estimate_query_views_estimate_view_alter(AlterableInterface &$query){
+    // this code need to calculate the average date pickup_dt and arrival_dt
+    $all_fields = $query->getFields();
+    $all_expression = $query->getExpressions();
+
+    $field = $all_fields['field_com_name_es_node_field_data__node__field_pickup_dt_fie'];
+    $expression = $all_expression['field_com_name_es_node_field_data__node__field_arrival_dt_fi']['expression'];
+    $pars_expression = explode("(", $expression);
+    $pars_expression_part = explode(")", $pars_expression[1]);
+
+    $field1 = $pars_expression[0] . "(UNIX_TIMESTAMP(str_to_date ({$field['table']} . {$field['field']}, '%a, %m/%d/%Y - %H:%i')) - UNIX_TIMESTAMP(str_to_date ($pars_expression_part[0], '%a, %m/%d/%Y - %H:%i')) )";
+
+    $query->addExpression($field1,'avgCycleTime');
+
+    // filter PickUp Date/Time
     $view=$query->getMetaData('view');
 
     $datetime = new DateTime(date('r',$view->exposed_data["current_period"]));
@@ -248,10 +263,24 @@ function estimate_form_views_exposed_form_alter(&$form, FormStateInterface $form
     $form_state->setUserInput($userInput);
 }
 function estimate_query_views_estimate_view_admin_alter(AlterableInterface &$query){
-  $view=$query->getMetaData('view');
+    // this code need to calculate the average date pickup_dt and arrival_dt
+    $all_fields = $query->getFields();
+    $all_expression = $query->getExpressions();
 
-  $datetime = new DateTime(date('r',$view->exposed_data["current_period"]));
-  $userInput = $view->getExposedInput();
+    $field = $all_fields['node__field_pickup_dt_field_pickup_dt_value'];
+    $expression = $all_expression['node__field_arrival_dt_field_arrival_dt_value']['expression'];
+    $pars_expression = explode("(", $expression);
+    $pars_expression_part = explode(")", $pars_expression[1]);
+
+    $field1 = $pars_expression[0] . "(UNIX_TIMESTAMP(str_to_date ({$field['table']} . {$field['field']}, '%a, %m/%d/%Y - %H:%i')) - UNIX_TIMESTAMP(str_to_date ($pars_expression_part[0], '%a, %m/%d/%Y - %H:%i')) )";
+
+    $query->addExpression($field1,'avgCycleTime');
+
+    // filter PickUp Date/Time
+    $view=$query->getMetaData('view');
+
+    $datetime = new DateTime(date('r',$view->exposed_data["current_period"]));
+    $userInput = $view->getExposedInput();
     if (isset($userInput["field_pickup_dt_value"])) {
         if ($userInput["field_pickup_dt_value"] == 1) {
             $view->header["area"]->options["content"]["value"] = "Day: " . $datetime->format('d F Y');
@@ -327,9 +356,47 @@ function _calcResultUserView($view){
     }
 
     foreach ($view->result as $resultRow){
-        if ($resultRow->field_com_name_es_node_field_data__node__field_roclosed_fiel === '0') {
-            unset($view->result[$resultRow->index]);
+        // convert datetime to unix
+        if ($view->exposed_data['field_pickup_dt_value'] === 'All'){
+            // Drupal default minimal value, that equals 1 Jan 1970
+            $min = 26260000;
+            $max = $view->exposed_data['current_period'];
+        } else {
+            $date_time = new DrupalDateTime($view->exposed_data['field_pickup_date_time_value']['min'], new \DateTimeZone('UTC'));
+            $min = $date_time->getTimestamp();
+            $date_time = new DrupalDateTime($view->exposed_data['field_pickup_date_time_value']['max'], new \DateTimeZone('UTC'));
+            $max = $date_time->getTimestamp();
         }
+
+        $query = \Drupal::database()->select('user__field_com_name_us', 'ucn');
+        $query->fields('ucn', ['field_com_name_us_target_id']);
+        $companyIds = $query->execute()->fetchAll();
+        $ids = array();
+        foreach ($companyIds as $id){
+            $ids[] = $id->field_com_name_us_target_id;
+        }
+        // this query need to count of Estimates with a Unique Estimate Alt ID, AND field ROClosed = True
+        $query = \Drupal::database()->select('node__field_esaltid', 'aid');
+        $query->distinct();
+
+        $query->fields('aid',   ['field_esaltid_value']);
+        $query->fields('pdt',   ['field_pickup_date_time_value']);
+        $query->fields('nfd',   ['nid']);
+
+        $query->join('node__field_pickup_date_time', 'pdt', 'pdt.entity_id = aid.entity_id');
+        $query->join('node__field_roclosed', 'rc', 'rc.entity_id = aid.entity_id');
+        $query->join('node_field_data', 'nfd');
+
+        $query->condition('aid.bundle', 'estimate');
+        $query->condition('pdt.bundle', 'estimate');
+        $query->condition('rc.bundle', 'estimate');
+        $query->condition('rc.field_roclosed_value', 1);
+        $query->condition('nfd.nid' , $ids , 'IN');
+
+        $query->where("UNIX_TIMESTAMP(STR_TO_DATE([pdt].[field_pickup_date_time_value], '%Y-%m-%dT%H:%i:%s')) BETWEEN {$min} AND {$max}");
+
+        $uniqueIds = $query->countQuery()->execute()->fetch();
+
         $count_estimates = $resultRow->field_com_name_es_node_field_data_nid;
         $sales_collision_sum = $resultRow->field_com_name_es_node_field_data__node__field_totalamt_fiel ?? 0;
 
@@ -468,7 +535,7 @@ function _calcResultUserView($view){
         $resultRow->field_com_name_es_node_field_data__node__field_arrival_dt_fi = ($resultRow->avgCycleTime ?? 0 / 86400);
 
         // Throughput
-        $resultRow->field_com_name_es_node_field_data__node__field_creationdt_fi = round($count_estimates / $countDays, 3);
+        $resultRow->field_com_name_es_node_field_data__node__field_creationdt_fi = round($uniqueIds->expression/ $countDays, 3);
 
         //Square Foot Efficiency
         $resultRow->node_field_data_user__field_com_name_us__node__field_square_ = round($avgSquareFoot,3);
@@ -492,7 +559,7 @@ function _calcResultUserView($view){
         $resultRow->field_com_name_es_node_field_data__node__field_op4_hours_fie = $labor_hours;
 
         // Sublet Ratio
-        $resultRow->field_com_name_es_node_field_data__node__field_pt_pas_field_ = $sublet_ratio;
+        $resultRow->field_com_name_es_node_field_data__node__field_op16_amount_f = $sublet_ratio;
 
         $view->result[1] = clone $resultRow;
         $view->result[2] = clone $resultRow;
@@ -570,9 +637,37 @@ function _calcResultAdminView($view){
     }
 
     foreach ($view->result as $resultRow){
-        if ($resultRow->node__field_roclosed_field_roclosed_value === '0') {
-            unset($view->result[$resultRow->index]);
+        // convert datetime to unix
+        if ($view->exposed_data['field_pickup_dt_value'] === 'All'){
+            // Drupal default minimal value, that equals 1 Jan 1970
+            $min = 26260000;
+            $max = $view->exposed_data['current_period'];
+        } else {
+            $date_time = new DrupalDateTime($view->exposed_data['field_pickup_date_time_value']['min'], new \DateTimeZone('UTC'));
+            $min = $date_time->getTimestamp();
+            $date_time = new DrupalDateTime($view->exposed_data['field_pickup_date_time_value']['max'], new \DateTimeZone('UTC'));
+            $max = $date_time->getTimestamp();
         }
+
+        $query = \Drupal::database()->select('node__field_esaltid', 'aid');
+        $query->distinct();
+
+        $query->fields('aid',   ['field_esaltid_value']);
+        $query->fields('pdt',   ['field_pickup_date_time_value']);
+        $query->join('node__field_pickup_date_time', 'pdt', 'pdt.entity_id = aid.entity_id');
+        $query->join('node__field_roclosed', 'rc', 'rc.entity_id = aid.entity_id');
+
+        $query->join('node__field_pickup_date_time', 'pdt', 'pdt.bundle = aid.bundle');
+        $query->join('node__field_roclosed', 'rc', 'rc.bundle = aid.bundle');
+
+        $query->condition('aid.bundle', 'estimate');
+        $query->condition('pdt.bundle', 'estimate');
+        $query->condition('rc.bundle', 'estimate');
+        $query->condition('rc.field_roclosed_value', 1);
+        $query->where("UNIX_TIMESTAMP(STR_TO_DATE([pdt].[field_pickup_date_time_value], '%Y-%m-%dT%H:%i:%s')) BETWEEN {$min} AND {$max}");
+
+        $uniqueIds = $query->countQuery()->execute()->fetch();
+
         $count_estimates = $resultRow->nid;
         $sales_collision_sum = $resultRow->node__field_totalamt_field_totalamt_value ?? 0;
 
@@ -686,7 +781,7 @@ function _calcResultAdminView($view){
         $resultRow->node__field_arrival_dt_field_arrival_dt_value = ($resultRow->avgCycleTime ?? 0 / 86400);
 
         // Throughput
-        $resultRow->node__field_creationdt_field_creationdt_value = round($count_estimates / $countDays, 3);
+        $resultRow->node__field_creationdt_field_creationdt_value = round($uniqueIds->expression / $countDays, 3);
 
         //Square Foot Efficiency
         $resultRow->node_field_data_node__field_com_name_es__node__field_square_ = $avgSquareFoot;

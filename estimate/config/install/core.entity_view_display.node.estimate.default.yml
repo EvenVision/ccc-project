@@ -80,21 +80,6 @@ third_party_settings:
         show_empty_fields: false
         id: ''
         description: ''
-    group_more_fields:
-      children:
-        - field_com_name_es
-        - field_pickup_dt
-        - field_roclosed
-      label: 'More fields'
-      parent_name: ''
-      region: content
-      weight: 4
-      format_type: fieldset
-      format_settings:
-        classes: ''
-        show_empty_fields: false
-        id: ''
-        description: ''
     group_sales_labor:
       children:
         - field_op4_amount
@@ -105,8 +90,8 @@ third_party_settings:
         - field_op15_hours
         - field_op5_amount
         - field_op5_hours
-        - field_op26_hours
         - field_op26_amount
+        - field_op26_hours
         - field_op6_amount
         - field_op6_hours
         - field_op2_amount
@@ -144,7 +129,9 @@ third_party_settings:
         description: ''
     group_cycle_time:
       children:
+        - field_pickup_dt
         - field_arrival_dt
+        - field_roclosed
       label: 'Cycle Time'
       parent_name: ''
       region: content
@@ -198,14 +185,17 @@ third_party_settings:
         show_empty_fields: false
         id: ''
         description: ''
-    group_sales_collision_:
+    group_totals:
       children:
+        - field_totalamt
+        - field_totalamt_b
         - field_totalamt_p
+        - field_totalhours_b
         - field_totalhours_p
-      label: 'Sales Collision '
+      label: Totals
       parent_name: ''
       region: content
-      weight: 11
+      weight: 12
       format_type: fieldset
       format_settings:
         classes: ''
@@ -213,7 +203,7 @@ third_party_settings:
         id: ''
         description: ''
 _core:
-  default_config_hash: VAhVjV-73COwbZl8A3LmwgCoqu-hFuro44GAbadJqyI
+  default_config_hash: aOeVYqETgh3ONj3vtOo4uwz96w6Ov970XD81fScshDQ
 id: node.estimate.default
 targetEntityType: node
 bundle: estimate
@@ -225,7 +215,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 2
+    weight: 6
     region: content
   field_com_id_es:
     type: string
@@ -241,7 +231,7 @@ content:
     settings:
       link: true
     third_party_settings: {  }
-    weight: 2
+    weight: 3
     region: content
   field_creationdt:
     type: string
@@ -249,7 +239,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 3
+    weight: 4
     region: content
   field_es_f_name:
     type: string
@@ -426,7 +416,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 22
+    weight: 21
     region: content
   field_op26_hours:
     type: number_decimal
@@ -437,7 +427,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 21
+    weight: 22
     region: content
   field_op2_amount:
     type: number_decimal
@@ -555,7 +545,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 3
+    weight: 5
     region: content
   field_pt_paa:
     type: number_decimal
@@ -675,7 +665,7 @@ content:
       format_custom_false: ''
       format_custom_true: ''
     third_party_settings: {  }
-    weight: 4
+    weight: 7
     region: content
   field_so_mahw:
     type: number_decimal
@@ -785,7 +775,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 12
+    weight: 13
     region: content
   field_totalamt_b:
     type: number_decimal
@@ -796,7 +786,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 13
+    weight: 14
     region: content
   field_totalamt_p:
     type: number_decimal
@@ -807,7 +797,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 17
+    weight: 15
     region: content
   field_totalhours_b:
     type: number_decimal
@@ -818,7 +808,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 14
+    weight: 16
     region: content
   field_totalhours_p:
     type: number_decimal
@@ -829,7 +819,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 18
+    weight: 17
     region: content
   links:
     settings: {  }

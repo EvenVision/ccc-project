@@ -207,6 +207,16 @@ function estimate_query_views_estimate_view_alter(AlterableInterface &$query){
 function estimate_form_views_exposed_form_alter(&$form, FormStateInterface $form_state) {
     if ($form['#id'] !== "views-exposed-form-estimate-view-admin-page-1" and $form['#id'] !== 'views-exposed-form-estimate-view-page-1') return;
 
+    if ($form['#id'] === 'views-exposed-form-estimate-view-page-1') {
+        // get all the company ids for user
+        $companyIds = getUserCompanyIDs();
+        foreach ($form['field_com_name_es_target_id_verf']['#options'] as $option => $value) {
+            if (in_array($option, $companyIds) or $option === 'All') {
+                continue;
+            }
+            unset($form['field_com_name_es_target_id_verf']['#options'][$option]);
+        }
+    }
     $userInput = $form_state->getUserInput();
     if (empty($userInput["current_period"]) || ($userInput["field_pickup_dt_value"] == 'All')) {
         $userInput["current_period"] = time();
@@ -382,17 +392,8 @@ function _calcResultUserView($view){
             $date_time = new DrupalDateTime($view->exposed_data['field_pickup_date_time_value']['max'], new \DateTimeZone('UTC'));
             $max = $date_time->getTimestamp();
         }
-        // get user id
-        $userId = \Drupal::currentUser()->id();
-
-        $query = \Drupal::database()->select('user__field_com_name_us', 'ucn');
-        $query->fields('ucn', ['field_com_name_us_target_id']);
-        $query->condition('ucn.entity_id', $userId);
-        $companyIds = $query->execute()->fetchAll();
-        $ids = array();
-        foreach ($companyIds as $id){
-            $ids[] = $id->field_com_name_us_target_id;
-        }
+        // get all company ids for current user
+        $companyIds = getUserCompanyIDs();
         // this query need to count of Estimates with a Unique Estimate Alt ID, AND field ROClosed = True
         $query = \Drupal::database()->select('node__field_esaltid', 'aid');
         $query->distinct();
@@ -409,7 +410,7 @@ function _calcResultUserView($view){
         $query->condition('pdt.bundle', 'estimate');
         $query->condition('rc.bundle', 'estimate');
         $query->condition('rc.field_roclosed_value', 1);
-        $query->condition('nfc.field_com_name_es_target_id' , $ids , 'IN');
+        $query->condition('nfc.field_com_name_es_target_id' , $companyIds , 'IN');
 
         $query->where("UNIX_TIMESTAMP(STR_TO_DATE([pdt].[field_pickup_date_time_value], '%Y-%m-%dT%H:%i:%s')) BETWEEN {$min} AND {$max}");
 
@@ -956,14 +957,15 @@ function countDaysMounth($year, $month, $ignore) {
 
 // get values CUSTOM USER FIELDS
 function getUserFields(){
+    static $user_fields = null;
+    if (is_null($user_fields)) {
+        $user = User::load(\Drupal::currentUser()->id());
 
-    $result = [];
-    $user = User::load(\Drupal::currentUser()->id());
-
-    foreach (\CUSTOM_USER_FIELDS as $field){
-        $result[$field] = $user->$field->value;
+        foreach (\CUSTOM_USER_FIELDS as $field) {
+            $user_fields[$field] = $user->$field->value;
+        }
     }
-    return $result;
+    return $user_fields;
 }
 
 // adds default values in CUSTOM user profile fields
@@ -982,4 +984,19 @@ function setValueFields() {
     }
 
     $account->save();
+}
+function getUserCompanyIDs(){
+    static $ids = null;
+    if (is_null($ids)) {
+        $userId = \Drupal::currentUser()->id();
+
+        $query = \Drupal::database()->select('user__field_com_name_us', 'ucn');
+        $query->fields('ucn', ['field_com_name_us_target_id']);
+        $query->condition('ucn.entity_id', $userId);
+        $companyIds = $query->execute()->fetchAll();
+        foreach ($companyIds as $id) {
+            $ids[] = $id->field_com_name_us_target_id;
+        }
+    }
+    return $ids;
 }

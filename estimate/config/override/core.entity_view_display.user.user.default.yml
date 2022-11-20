@@ -48,7 +48,7 @@ third_party_settings:
         id: ''
         description: ''
         required_fields: true
-        formatter: open
+        formatter: closed
     group_thresholds:
       children:
         - field_cycle_time_high
@@ -84,7 +84,7 @@ third_party_settings:
         id: ''
         description: ''
         required_fields: true
-        formatter: open
+        formatter: closed
     group_estimators:
       children:
         - field_estimator_id
@@ -99,7 +99,7 @@ third_party_settings:
         id: ''
         description: ''
         required_fields: true
-        formatter: open
+        formatter: closed
 _core:
   default_config_hash: FaQ9Ptcpxpg30AtiqRDtl_8zbJArHP1LPfug_s59TOA
 id: user.user.default

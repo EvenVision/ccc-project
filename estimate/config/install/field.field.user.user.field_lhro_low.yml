@@ -10,7 +10,7 @@ id: user.user.field_lhro_low
 field_name: field_lhro_low
 entity_type: user
 bundle: user
-label: 'Labor Hours / RO Low:'
+label: 'Labor Hours / RO Low'
 description: ''
 required: false
 translatable: false

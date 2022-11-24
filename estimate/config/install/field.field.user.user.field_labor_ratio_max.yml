@@ -1,22 +1,22 @@
-uuid: fd87b4de-f608-4695-b72e-9d85d601f22b
+uuid: ff6989af-d4e7-42db-8b38-6ccb822519f8
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.user.field_sq_foot_low
+    - field.storage.user.field_labor_ratio_max
   module:
     - user
-id: user.user.field_sq_foot_low
-field_name: field_sq_foot_low
+id: user.user.field_labor_ratio_max
+field_name: field_labor_ratio_max
 entity_type: user
 bundle: user
-label: 'Square Foot Efficiency Low'
+label: 'Labor Ratio Max'
 description: ''
 required: false
 translatable: false
 default_value:
   -
-    value: !!float 30
+    value: !!float 1
 default_value_callback: ''
 settings:
   min: null

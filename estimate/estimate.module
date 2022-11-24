@@ -20,6 +20,9 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  */
 
 const CUSTOM_USER_FIELDS = array(
+    'field_com_name_us',
+    'field_estimator_id',
+
     'field_throughput_low',
     'field_throughput_high',
     'field_sratio_low',
@@ -38,15 +41,44 @@ const CUSTOM_USER_FIELDS = array(
     'field_labor_ratio_high',
     'field_lhro_high',
     'field_lhro_low',
-    'field_estimator_id',
     'field_cycle_time_low',
     'field_cycle_time_high',
-    'field_com_name_us',
     'field_bhro_low',
     'field_bhro_high',
+
+    'field_throughput_min',
+    'field_throughput_max',
+    'field_sratio_min',
+    'field_sratio_max',
+    'field_sq_foot_min',
+    'field_sq_foot_max',
+    'field_severity_min',
+    'field_severity_max',
+    'field_rrratio_min',
+    'field_rrratio_max',
+    'field_parts_ratio_min',
+    'field_parts_ratio_max',
+    'field_phro_max',
+    'field_phro_min',
+    'field_labor_ratio_min',
+    'field_labor_ratio_max',
+    'field_lhro_max',
+    'field_lhro_min',
+    'field_estimator_id',
+    'field_cycle_time_min',
+    'field_cycle_time_max',
+    'field_com_name_us',
+    'field_bhro_min',
+    'field_bhro_max',
+    'field_newusedlkq_max',
+    'field_newusedlkq_min',
 );
 
 const NODE_CREATION_FIELD = 'field_com_name_es_node_field_data__node__field_creationdt.field_creationdt_value';
+function estimate_module_preinstall() {
+    //necessary to increase the work the script when installing the plugin
+    ini_set('max_execution_time', '900');
+}
 
 function estimate_node_presave(Drupal\node\NodeInterface $node) {
     // after editing field_pickup_dt saves the date to a field_pickup_date_time
@@ -64,20 +96,6 @@ function estimate_node_presave(Drupal\node\NodeInterface $node) {
 
 
 function estimate_modules_installed() {
-    foreach (\CUSTOM_USER_FIELDS as $key) {
-        if ($field_config_view = EntityViewDisplay::load('user.user.default')){
-            $field_config_view->setComponent($key, [
-                'region' => 'content',
-            ])->save();
-        }
-
-        if ($field_config_form = EntityFormDisplay::load('user.user.default')){
-            $field_config_form->setComponent($key, [
-                'region' => 'content',
-            ])->save();
-        }
-    }
-
     $module_path = \Drupal::service('extension.list.module')->getPath('estimate') . '/config/override';
     $file = new FileStorage($module_path);
     foreach ($file->listAll() as $id) {
@@ -155,8 +173,14 @@ function estimate_form_user_form_alter(&$form, FormStateInterface $form_state, $
 }
 
 function estimate_node_access(\Drupal\node\NodeInterface $node, $op, \Drupal\Core\Session\AccountInterface $account) {
+    $view = views_get_current_view();
+    $viewName = '';
+    if (isset($view->element['#name'])){
+        $viewName = $view->element['#name'];
+    }
+
     $type = $node->bundle();
-    if (($type == 'estimate' || $type == 'company') && !check_admin()) return AccessResult::forbidden();
+    if (($type == 'estimate' || $type == 'company') && !check_admin() && $viewName !== 'estimate_view') return AccessResult::forbidden();
 
     return AccessResult::neutral();
 }
@@ -207,7 +231,7 @@ function estimate_query_views_estimate_view_alter(AlterableInterface &$query){
 function estimate_form_views_exposed_form_alter(&$form, FormStateInterface $form_state) {
     if ($form['#id'] !== "views-exposed-form-estimate-view-admin-page-1" and $form['#id'] !== 'views-exposed-form-estimate-view-page-1') return;
 
-    if ($form['#id'] === 'views-exposed-form-estimate-view-page-1') {
+    if ($form['#id'] === 'views-exposed-form-estimate-view-page-1' || $form['#id'] === "views-exposed-form-estimate-view-admin-page-1") {
         // get all the company ids for user
         $companyIds = getUserCompanyIDs();
         foreach ($form['field_com_name_es_target_id_verf']['#options'] as $option => $value) {
@@ -582,15 +606,29 @@ function _calcResultUserView($view){
 
         $view->result[1] = clone $resultRow;
         $view->result[2] = clone $resultRow;
+        $view->result[3] = clone $resultRow;
+        $view->result[4] = clone $resultRow;
     }
 
     $fields = getUserFields();
 
     // add rows with min and max value
     foreach ($view->result as $key => $resultRow) {
-        if ($key === 0 || $key === 2) {
-            $value = ($key === 0) ? 'low' : 'high';
-
+        if ($key !== 2) {
+            switch ($key) {
+                case 0:
+                    $value = 'min';
+                    break;
+                case 1:
+                    $value = 'low';
+                    break;
+                case 3:
+                    $value = 'high';
+                    break;
+                case 4:
+                    $value = 'max';
+                    break;
+            }
             // Cycle Time
             $resultRow->field_com_name_es_node_field_data__node__field_arrival_dt_fi = $fields['field_cycle_time_' . $value];
 
@@ -613,7 +651,7 @@ function _calcResultUserView($view){
             $resultRow->field_com_name_es_node_field_data__node__field_op16_amount_f = $fields['field_sratio_' . $value];
 
             // New / Used / LKQ
-            $resultRow->field_com_name_es_node_field_data__node__field_esaltid_field = "";
+            $resultRow->field_com_name_es_node_field_data__node__field_esaltid_field = $fields['field_newusedlkq_' . $value] ?? "";
 
             // Body Hours / RO
             $resultRow->field_com_name_es_node_field_data__node__field_totalhours_b_ = $fields['field_bhro_' . $value];
@@ -828,15 +866,29 @@ function _calcResultAdminView($view){
 
         $view->result[1] = clone $resultRow;
         $view->result[2] = clone $resultRow;
+        $view->result[3] = clone $resultRow;
+        $view->result[4] = clone $resultRow;
     }
 
     $fields = getUserFields();
 
     // add rows with min and max value
     foreach ($view->result as $key => $resultRow) {
-        if ($key === 0 || $key === 2) {
-            $value = ($key === 0) ? 'low' : 'high';
-
+        if ($key !== 2) {
+            switch ($key) {
+                case 0:
+                    $value = 'min';
+                    break;
+                case 1:
+                    $value = 'low';
+                    break;
+                case 3:
+                    $value = 'high';
+                    break;
+                case 4:
+                    $value = 'max';
+                    break;
+            }
             // Cycle Time
             $resultRow->node__field_arrival_dt_field_arrival_dt_value = $fields['field_cycle_time_' . $value];
 
@@ -859,7 +911,7 @@ function _calcResultAdminView($view){
             $resultRow->node__field_op16_amount_field_op16_amount_value = $fields['field_sratio_' . $value];
 
             // New / Used / LKQ
-            $resultRow->node__field_esaltid_field_esaltid_value = "";
+            $resultRow->node__field_esaltid_field_esaltid_value = $fields['field_newusedlkq_' . $value] ?? '';
 
             // Body Hours / RO
             $resultRow->node__field_totalhours_b_field_totalhours_b_value = $fields['field_bhro_' . $value];

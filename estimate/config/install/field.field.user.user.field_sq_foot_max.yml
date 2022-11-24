@@ -1,22 +1,22 @@
-uuid: fd87b4de-f608-4695-b72e-9d85d601f22b
+uuid: dbb83692-a421-40bf-8eb4-897e3d0f2892
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.user.field_sq_foot_low
+    - field.storage.user.field_sq_foot_max
   module:
     - user
-id: user.user.field_sq_foot_low
-field_name: field_sq_foot_low
+id: user.user.field_sq_foot_max
+field_name: field_sq_foot_max
 entity_type: user
 bundle: user
-label: 'Square Foot Efficiency Low'
+label: 'Square Foot Efficiency Max'
 description: ''
 required: false
 translatable: false
 default_value:
   -
-    value: !!float 30
+    value: !!float 150
 default_value_callback: ''
 settings:
   min: null

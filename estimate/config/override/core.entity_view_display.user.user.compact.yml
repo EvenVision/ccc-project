@@ -6,28 +6,52 @@ dependencies:
     - core.entity_view_mode.user.compact
     - field.field.user.user.field_bhro_high
     - field.field.user.user.field_bhro_low
+    - field.field.user.user.field_bhro_max
+    - field.field.user.user.field_bhro_min
     - field.field.user.user.field_com_name_us
     - field.field.user.user.field_cycle_time_high
     - field.field.user.user.field_cycle_time_low
+    - field.field.user.user.field_cycle_time_max
+    - field.field.user.user.field_cycle_time_min
     - field.field.user.user.field_estimator_id
     - field.field.user.user.field_labor_ratio_high
     - field.field.user.user.field_labor_ratio_low
+    - field.field.user.user.field_labor_ratio_max
+    - field.field.user.user.field_labor_ratio_min
     - field.field.user.user.field_lhro_high
     - field.field.user.user.field_lhro_low
+    - field.field.user.user.field_lhro_max
+    - field.field.user.user.field_lhro_min
+    - field.field.user.user.field_newusedlkq_max
+    - field.field.user.user.field_newusedlkq_min
     - field.field.user.user.field_parts_ratio_high
     - field.field.user.user.field_parts_ratio_low
+    - field.field.user.user.field_parts_ratio_max
+    - field.field.user.user.field_parts_ratio_min
     - field.field.user.user.field_phro_high
     - field.field.user.user.field_phro_low
+    - field.field.user.user.field_phro_max
+    - field.field.user.user.field_phro_min
     - field.field.user.user.field_rrratio_high
     - field.field.user.user.field_rrratio_low
+    - field.field.user.user.field_rrratio_max
+    - field.field.user.user.field_rrratio_min
     - field.field.user.user.field_severity_high
     - field.field.user.user.field_severity_low
+    - field.field.user.user.field_severity_max
+    - field.field.user.user.field_severity_min
     - field.field.user.user.field_sq_foot_high
     - field.field.user.user.field_sq_foot_low
+    - field.field.user.user.field_sq_foot_max
+    - field.field.user.user.field_sq_foot_min
     - field.field.user.user.field_sratio_high
     - field.field.user.user.field_sratio_low
+    - field.field.user.user.field_sratio_max
+    - field.field.user.user.field_sratio_min
     - field.field.user.user.field_throughput_high
     - field.field.user.user.field_throughput_low
+    - field.field.user.user.field_throughput_max
+    - field.field.user.user.field_throughput_min
     - field.field.user.user.user_picture
     - image.style.thumbnail
   module:
@@ -54,26 +78,50 @@ content:
 hidden:
   field_bhro_high: true
   field_bhro_low: true
+  field_bhro_max: true
+  field_bhro_min: true
   field_com_name_us: true
   field_cycle_time_high: true
   field_cycle_time_low: true
+  field_cycle_time_max: true
+  field_cycle_time_min: true
   field_estimator_id: true
   field_labor_ratio_high: true
   field_labor_ratio_low: true
+  field_labor_ratio_max: true
+  field_labor_ratio_min: true
   field_lhro_high: true
   field_lhro_low: true
+  field_lhro_max: true
+  field_lhro_min: true
+  field_newusedlkq_max: true
+  field_newusedlkq_min: true
   field_parts_ratio_high: true
   field_parts_ratio_low: true
+  field_parts_ratio_max: true
+  field_parts_ratio_min: true
   field_phro_high: true
   field_phro_low: true
+  field_phro_max: true
+  field_phro_min: true
   field_rrratio_high: true
   field_rrratio_low: true
+  field_rrratio_max: true
+  field_rrratio_min: true
   field_severity_high: true
   field_severity_low: true
+  field_severity_max: true
+  field_severity_min: true
   field_sq_foot_high: true
   field_sq_foot_low: true
+  field_sq_foot_max: true
+  field_sq_foot_min: true
   field_sratio_high: true
   field_sratio_low: true
+  field_sratio_max: true
+  field_sratio_min: true
   field_throughput_high: true
   field_throughput_low: true
+  field_throughput_max: true
+  field_throughput_min: true
   member_for: true

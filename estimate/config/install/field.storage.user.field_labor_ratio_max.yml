@@ -1,0 +1,18 @@
+uuid: e291c9f2-71be-42f9-b44f-b5f464c47272
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+id: user.field_labor_ratio_max
+field_name: field_labor_ratio_max
+entity_type: user
+type: float
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

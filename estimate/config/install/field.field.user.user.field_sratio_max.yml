@@ -1,22 +1,22 @@
-uuid: fd87b4de-f608-4695-b72e-9d85d601f22b
+uuid: bb44798a-3f34-46a2-9cb9-c61b3149a764
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.user.field_sq_foot_low
+    - field.storage.user.field_sratio_max
   module:
     - user
-id: user.user.field_sq_foot_low
-field_name: field_sq_foot_low
+id: user.user.field_sratio_max
+field_name: field_sratio_max
 entity_type: user
 bundle: user
-label: 'Square Foot Efficiency Low'
+label: 'Sublet Ratio Max'
 description: ''
 required: false
 translatable: false
 default_value:
   -
-    value: !!float 30
+    value: !!float 1
 default_value_callback: ''
 settings:
   min: null

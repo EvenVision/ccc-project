@@ -1,22 +1,22 @@
-uuid: fd87b4de-f608-4695-b72e-9d85d601f22b
+uuid: 48c23c12-9c18-48bf-83d8-efb04d14fa76
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.user.field_sq_foot_low
+    - field.storage.user.field_bhro_max
   module:
     - user
-id: user.user.field_sq_foot_low
-field_name: field_sq_foot_low
+id: user.user.field_bhro_max
+field_name: field_bhro_max
 entity_type: user
 bundle: user
-label: 'Square Foot Efficiency Low'
+label: 'Body Hours / RO Max'
 description: ''
 required: false
 translatable: false
 default_value:
   -
-    value: !!float 30
+    value: !!float 50
 default_value_callback: ''
 settings:
   min: null

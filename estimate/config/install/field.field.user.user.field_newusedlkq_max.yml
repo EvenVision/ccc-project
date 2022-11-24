@@ -1,22 +1,22 @@
-uuid: fd87b4de-f608-4695-b72e-9d85d601f22b
+uuid: e4c17cd6-3333-4542-8b7c-eba08cbe2e15
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.user.field_sq_foot_low
+    - field.storage.user.field_newusedlkq_max
   module:
     - user
-id: user.user.field_sq_foot_low
-field_name: field_sq_foot_low
+id: user.user.field_newusedlkq_max
+field_name: field_newusedlkq_max
 entity_type: user
 bundle: user
-label: 'Square Foot Efficiency Low'
+label: 'New / Used / LKQ Max'
 description: ''
 required: false
 translatable: false
 default_value:
   -
-    value: !!float 30
+    value: !!float 1
 default_value_callback: ''
 settings:
   min: null

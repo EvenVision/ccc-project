@@ -16,7 +16,7 @@ required: false
 translatable: false
 default_value:
   -
-    value: !!float 5
+    value: !!float 30
 default_value_callback: ''
 settings:
   min: null

@@ -1,3 +1,4 @@
+uuid: null
 langcode: en
 status: true
 dependencies:
@@ -5,28 +6,52 @@ dependencies:
     - core.entity_form_mode.node.content_view_in_profile
     - field.field.user.user.field_bhro_high
     - field.field.user.user.field_bhro_low
+    - field.field.user.user.field_bhro_max
+    - field.field.user.user.field_bhro_min
     - field.field.user.user.field_com_name_us
     - field.field.user.user.field_cycle_time_high
     - field.field.user.user.field_cycle_time_low
+    - field.field.user.user.field_cycle_time_max
+    - field.field.user.user.field_cycle_time_min
     - field.field.user.user.field_estimator_id
     - field.field.user.user.field_labor_ratio_high
     - field.field.user.user.field_labor_ratio_low
+    - field.field.user.user.field_labor_ratio_max
+    - field.field.user.user.field_labor_ratio_min
     - field.field.user.user.field_lhro_high
     - field.field.user.user.field_lhro_low
+    - field.field.user.user.field_lhro_max
+    - field.field.user.user.field_lhro_min
+    - field.field.user.user.field_newusedlkq_max
+    - field.field.user.user.field_newusedlkq_min
     - field.field.user.user.field_parts_ratio_high
     - field.field.user.user.field_parts_ratio_low
+    - field.field.user.user.field_parts_ratio_max
+    - field.field.user.user.field_parts_ratio_min
     - field.field.user.user.field_phro_high
     - field.field.user.user.field_phro_low
+    - field.field.user.user.field_phro_max
+    - field.field.user.user.field_phro_min
     - field.field.user.user.field_rrratio_high
     - field.field.user.user.field_rrratio_low
+    - field.field.user.user.field_rrratio_max
+    - field.field.user.user.field_rrratio_min
     - field.field.user.user.field_severity_high
     - field.field.user.user.field_severity_low
+    - field.field.user.user.field_severity_max
+    - field.field.user.user.field_severity_min
     - field.field.user.user.field_sq_foot_high
     - field.field.user.user.field_sq_foot_low
+    - field.field.user.user.field_sq_foot_max
+    - field.field.user.user.field_sq_foot_min
     - field.field.user.user.field_sratio_high
     - field.field.user.user.field_sratio_low
+    - field.field.user.user.field_sratio_max
+    - field.field.user.user.field_sratio_min
     - field.field.user.user.field_throughput_high
     - field.field.user.user.field_throughput_low
+    - field.field.user.user.field_throughput_max
+    - field.field.user.user.field_throughput_min
     - field.field.user.user.user_picture
     - image.style.thumbnail
   module:
@@ -53,28 +78,52 @@ third_party_settings:
         required_fields: true
     group_thresholds:
       children:
-        - field_cycle_time_high
+        - field_cycle_time_min
         - field_cycle_time_low
-        - field_throughput_high
+        - field_cycle_time_high
+        - field_cycle_time_max
+        - field_throughput_min
         - field_throughput_low
-        - field_sq_foot_high
+        - field_throughput_high
+        - field_throughput_max
+        - field_sq_foot_min
         - field_sq_foot_low
-        - field_severity_high
+        - field_sq_foot_high
+        - field_sq_foot_max
+        - field_severity_min
         - field_severity_low
-        - field_lhro_high
+        - field_severity_high
+        - field_severity_max
+        - field_lhro_min
         - field_lhro_low
-        - field_parts_ratio_high
+        - field_lhro_high
+        - field_lhro_max
+        - field_parts_ratio_min
         - field_parts_ratio_low
-        - field_sratio_high
+        - field_parts_ratio_high
+        - field_parts_ratio_max
+        - field_sratio_min
         - field_sratio_low
-        - field_rrratio_high
+        - field_sratio_high
+        - field_sratio_max
+        - field_newusedlkq_min
+        - field_newusedlkq_max
+        - field_rrratio_min
         - field_rrratio_low
-        - field_labor_ratio_high
+        - field_rrratio_high
+        - field_rrratio_max
+        - field_labor_ratio_min
         - field_labor_ratio_low
-        - field_phro_high
+        - field_labor_ratio_high
+        - field_labor_ratio_max
+        - field_phro_min
         - field_phro_low
-        - field_bhro_high
+        - field_phro_high
+        - field_phro_max
+        - field_bhro_min
         - field_bhro_low
+        - field_bhro_high
+        - field_bhro_max
       label: Thresholds
       region: content
       parent_name: ''
@@ -121,14 +170,28 @@ content:
     third_party_settings: {  }
   field_bhro_high:
     type: number
-    weight: 46
+    weight: 94
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_bhro_low:
     type: number
-    weight: 47
+    weight: 93
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_bhro_max:
+    type: number
+    weight: 95
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_bhro_min:
+    type: number
+    weight: 92
     region: content
     settings:
       placeholder: ''
@@ -150,16 +213,37 @@ content:
       collapsed: false
       revision: false
     third_party_settings: {  }
+  field_cycle_time_:
+    type: number
+    weight: 51
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
   field_cycle_time_high:
     type: number
-    weight: 26
+    weight: 52
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_cycle_time_low:
     type: number
-    weight: 27
+    weight: 51
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_cycle_time_max:
+    type: number
+    weight: 53
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_cycle_time_min:
+    type: number
+    weight: 50
     region: content
     settings:
       placeholder: ''
@@ -183,126 +267,273 @@ content:
     third_party_settings: {  }
   field_labor_ratio_high:
     type: number
-    weight: 42
+    weight: 86
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_labor_ratio_low:
     type: number
-    weight: 43
+    weight: 85
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_labor_ratio_max:
+    type: number
+    weight: 87
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_labor_ratio_min:
+    type: number
+    weight: 84
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_lhro_high:
     type: number
-    weight: 34
+    weight: 68
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_lhro_low:
     type: number
-    weight: 35
+    weight: 67
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_lhro_max:
+    type: number
+    weight: 69
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_lhro_min:
+    type: number
+    weight: 66
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_newusedlkq_max:
+    type: number
+    weight: 79
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_newusedlkq_min:
+    type: number
+    weight: 78
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_parts_ratio_high:
     type: number
-    weight: 36
+    weight: 72
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_parts_ratio_low:
     type: number
-    weight: 37
+    weight: 71
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_parts_ratio_max:
+    type: number
+    weight: 73
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_parts_ratio_min:
+    type: number
+    weight: 70
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_phro_high:
     type: number
-    weight: 44
+    weight: 90
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_phro_low:
     type: number
-    weight: 45
+    weight: 89
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_phro_max:
+    type: number
+    weight: 91
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_phro_min:
+    type: number
+    weight: 88
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_rrratio_high:
     type: number
-    weight: 40
+    weight: 82
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_rrratio_low:
     type: number
-    weight: 41
+    weight: 81
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_rrratio_max:
+    type: number
+    weight: 83
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_rrratio_min:
+    type: number
+    weight: 80
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_severity:
+    type: number
+    weight: 64
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_severity_high:
     type: number
-    weight: 32
+    weight: 64
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_severity_low:
     type: number
-    weight: 33
+    weight: 63
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_severity_max:
+    type: number
+    weight: 65
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_severity_min:
+    type: number
+    weight: 62
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_sq_foot_high:
     type: number
-    weight: 30
+    weight: 60
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_sq_foot_low:
     type: number
-    weight: 31
+    weight: 59
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_sq_foot_max:
+    type: number
+    weight: 61
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_sq_foot_min:
+    type: number
+    weight: 58
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_sratio_high:
     type: number
-    weight: 38
+    weight: 76
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_sratio_low:
     type: number
-    weight: 39
+    weight: 75
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_sratio_max:
+    type: number
+    weight: 77
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_sratio_min:
+    type: number
+    weight: 74
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_throughput_high:
     type: number
-    weight: 28
+    weight: 56
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_throughput_low:
     type: number
-    weight: 29
+    weight: 55
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_throughput_max:
+    type: number
+    weight: 57
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_throughput_min:
+    type: number
+    weight: 54
     region: content
     settings:
       placeholder: ''
@@ -325,5 +556,4 @@ content:
       progress_indicator: throbber
       preview_image_style: thumbnail
     third_party_settings: {  }
-hidden:
-  langcode: true
+hidden: {  }

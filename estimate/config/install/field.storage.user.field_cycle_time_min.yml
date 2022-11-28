@@ -1,0 +1,18 @@
+uuid: a7fef808-e11b-49f1-8561-de6d10555024
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+id: user.field_cycle_time_min
+field_name: field_cycle_time_min
+entity_type: user
+type: float
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

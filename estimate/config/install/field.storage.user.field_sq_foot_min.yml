@@ -1,0 +1,18 @@
+uuid: f91eee38-075d-45b7-b2ce-fda7008f239c
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+id: user.field_sq_foot_min
+field_name: field_sq_foot_min
+entity_type: user
+type: float
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

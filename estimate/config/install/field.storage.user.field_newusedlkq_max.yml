@@ -1,0 +1,18 @@
+uuid: 0b331fa5-5880-4fac-ad53-32be7aafc2e3
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+id: user.field_newusedlkq_max
+field_name: field_newusedlkq_max
+entity_type: user
+type: float
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

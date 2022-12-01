@@ -70,8 +70,12 @@ const CUSTOM_USER_FIELDS = array(
     'field_com_name_us',
     'field_bhro_min',
     'field_bhro_max',
-    'field_newusedlkq_max',
-    'field_newusedlkq_min',
+    'field_new_max',
+    'field_used_max',
+    'field_lkq_max',
+    'field_new_min',
+    'field_used_min',
+    'field_lkq_min',
 );
 
 const NODE_CREATION_FIELD = 'field_com_name_es_node_field_data__node__field_creationdt.field_creationdt_value';
@@ -174,7 +178,7 @@ function estimate_form_user_form_alter(&$form, FormStateInterface $form_state, $
 
 function estimate_node_access(\Drupal\node\NodeInterface $node, $op, \Drupal\Core\Session\AccountInterface $account) {
     $view = views_get_current_view();
-    $viewName = '';
+    $viewName = "";
     if (isset($view->element['#name'])){
         $viewName = $view->element['#name'];
     }
@@ -234,12 +238,15 @@ function estimate_form_views_exposed_form_alter(&$form, FormStateInterface $form
     if ($form['#id'] === 'views-exposed-form-estimate-view-page-1' || $form['#id'] === "views-exposed-form-estimate-view-admin-page-1") {
         // get all the company ids for user
         $companyIds = getUserCompanyIDs();
-        foreach ($form['field_com_name_es_target_id_verf']['#options'] as $option => $value) {
-            if (in_array($option, $companyIds) or $option === 'All') {
-                continue;
+        $options['All'] = $form['field_com_name_es_target_id_verf']['#options']['All'];
+        if (!empty($companyIds)) {
+            foreach ($companyIds as $nid) {
+                if (array_key_exists($nid, $form['field_com_name_es_target_id_verf']['#options'])) {
+                    $options[$nid] = $form['field_com_name_es_target_id_verf']['#options'][$nid];
+                }
             }
-            unset($form['field_com_name_es_target_id_verf']['#options'][$option]);
         }
+        $form['field_com_name_es_target_id_verf']['#options'] = $options;
     }
     $userInput = $form_state->getUserInput();
     if (empty($userInput["current_period"]) || ($userInput["field_pickup_dt_value"] == 'All')) {
@@ -651,7 +658,10 @@ function _calcResultUserView($view){
             $resultRow->field_com_name_es_node_field_data__node__field_op16_amount_f = $fields['field_sratio_' . $value];
 
             // New / Used / LKQ
-            $resultRow->field_com_name_es_node_field_data__node__field_esaltid_field = $fields['field_newusedlkq_' . $value] ?? "";
+            $resultRow->field_com_name_es_node_field_data__node__field_esaltid_field = "";
+            if ($value == 'min' || $value == 'max') {
+                $resultRow->field_com_name_es_node_field_data__node__field_esaltid_field = $fields['field_new_' . $value] . '/' . $fields['field_used_' . $value] . '/' . $fields['field_lkq_' . $value];
+            }
 
             // Body Hours / RO
             $resultRow->field_com_name_es_node_field_data__node__field_totalhours_b_ = $fields['field_bhro_' . $value];
@@ -911,7 +921,10 @@ function _calcResultAdminView($view){
             $resultRow->node__field_op16_amount_field_op16_amount_value = $fields['field_sratio_' . $value];
 
             // New / Used / LKQ
-            $resultRow->node__field_esaltid_field_esaltid_value = $fields['field_newusedlkq_' . $value] ?? '';
+            $resultRow->node__field_esaltid_field_esaltid_value = "";
+            if ($value == 'min' || $value == 'max') {
+                $resultRow->node__field_esaltid_field_esaltid_value = $fields['field_new_' . $value] . '/' . $fields['field_used_' . $value] . '/' . $fields['field_lkq_' . $value];
+            }
 
             // Body Hours / RO
             $resultRow->node__field_totalhours_b_field_totalhours_b_value = $fields['field_bhro_' . $value];
@@ -1038,6 +1051,7 @@ function setValueFields() {
     $account->save();
 }
 function getUserCompanyIDs(){
+    // get user id
     static $ids = null;
     if (is_null($ids)) {
         $userId = \Drupal::currentUser()->id();

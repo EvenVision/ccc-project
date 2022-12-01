@@ -1,16 +1,16 @@
-uuid: 5eb000c2-efe4-4dee-b195-c8f98ea5920d
+uuid: 63a8ce2e-4add-4cf4-9ee7-31d221ccf316
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.user.field_newusedlkq_min
+    - field.storage.user.field_new_min
   module:
     - user
-id: user.user.field_newusedlkq_min
-field_name: field_newusedlkq_min
+id: user.user.field_new_min
+field_name: field_new_min
 entity_type: user
 bundle: user
-label: 'New / Used / LKQ Min'
+label: 'New Min'
 description: ''
 required: false
 translatable: false

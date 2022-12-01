@@ -1,0 +1,26 @@
+uuid: 1a12caeb-a7fc-44d3-8050-e9417c697657
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_new_max
+  module:
+    - user
+id: user.user.field_new_max
+field_name: field_new_max
+entity_type: user
+bundle: user
+label: 'New Max'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: !!float 1
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

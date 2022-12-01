@@ -1,0 +1,26 @@
+uuid: 53c8756e-cfba-4001-9b3a-a2320af7a7b2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_used_min
+  module:
+    - user
+id: user.user.field_used_min
+field_name: field_used_min
+entity_type: user
+bundle: user
+label: 'Used Min'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: !!float 0
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

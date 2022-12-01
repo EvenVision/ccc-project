@@ -1,0 +1,18 @@
+uuid: e55e5628-3535-43ab-9541-453c2ee34ce3
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+id: user.field_new_min
+field_name: field_new_min
+entity_type: user
+type: float
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,18 @@
+uuid: ca85d2af-67a8-4342-84b1-6dcd6014ad81
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+id: user.field_lkq_min
+field_name: field_lkq_min
+entity_type: user
+type: float
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -21,6 +21,10 @@ dependencies:
     - field.field.user.user.field_lhro_low
     - field.field.user.user.field_lhro_max
     - field.field.user.user.field_lhro_min
+    - field.field.user.user.field_lkq_max
+    - field.field.user.user.field_lkq_min
+    - field.field.user.user.field_new_max
+    - field.field.user.user.field_new_min
     - field.field.user.user.field_newusedlkq_max
     - field.field.user.user.field_newusedlkq_min
     - field.field.user.user.field_parts_ratio_high
@@ -51,6 +55,8 @@ dependencies:
     - field.field.user.user.field_throughput_low
     - field.field.user.user.field_throughput_max
     - field.field.user.user.field_throughput_min
+    - field.field.user.user.field_used_max
+    - field.field.user.user.field_used_min
     - field.field.user.user.user_picture
   module:
     - field_group
@@ -103,6 +109,8 @@ third_party_settings:
         - field_sratio_low
         - field_sratio_high
         - field_sratio_max
+        - group_new_used_lkq_min
+        - group_new_used_lkq_max
         - field_newusedlkq_min
         - field_newusedlkq_max
         - field_rrratio_min
@@ -139,7 +147,7 @@ third_party_settings:
       label: Estimators
       parent_name: ''
       region: content
-      weight: 5
+      weight: 4
       format_type: fieldset
       format_settings:
         classes: ''
@@ -148,6 +156,36 @@ third_party_settings:
         description: ''
         required_fields: true
         formatter: closed
+    group_new_used_lkq_max:
+      children:
+        - field_new_max
+        - field_used_max
+        - field_lkq_max
+      label: 'New / Used / LKQ Max'
+      parent_name: group_thresholds
+      region: content
+      weight: 79
+      format_type: fieldset
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        description: ''
+    group_new_used_lkq_min:
+      children:
+        - field_new_min
+        - field_used_min
+        - field_lkq_min
+      label: 'New / Used / LKQ Min'
+      parent_name: group_thresholds
+      region: content
+      weight: 78
+      format_type: fieldset
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        description: ''
 _core:
   default_config_hash: FaQ9Ptcpxpg30AtiqRDtl_8zbJArHP1LPfug_s59TOA
 id: user.user.default
@@ -174,7 +212,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 94
+    weight: 96
     region: content
   field_bhro_low:
     type: number_decimal
@@ -185,7 +223,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 93
+    weight: 95
     region: content
   field_bhro_max:
     type: number_decimal
@@ -196,7 +234,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 95
+    weight: 97
     region: content
   field_bhro_min:
     type: number_decimal
@@ -207,7 +245,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 92
+    weight: 94
     region: content
   field_com_name_us:
     type: entity_reference_label
@@ -289,7 +327,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 86
+    weight: 88
     region: content
   field_labor_ratio_low:
     type: number_decimal
@@ -300,7 +338,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 85
+    weight: 87
     region: content
   field_labor_ratio_max:
     type: number_decimal
@@ -311,7 +349,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 87
+    weight: 89
     region: content
   field_labor_ratio_min:
     type: number_decimal
@@ -322,7 +360,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 84
+    weight: 86
     region: content
   field_lhro_high:
     type: number_decimal
@@ -368,6 +406,50 @@ content:
     third_party_settings: {  }
     weight: 66
     region: content
+  field_lkq_max:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 7
+    region: content
+  field_lkq_min:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 10
+    region: content
+  field_new_max:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_new_min:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 8
+    region: content
   field_newusedlkq_max:
     type: number_decimal
     label: above
@@ -377,7 +459,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 79
+    weight: 81
     region: content
   field_newusedlkq_min:
     type: number_decimal
@@ -388,7 +470,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 78
+    weight: 80
     region: content
   field_parts_ratio_high:
     type: number_decimal
@@ -443,7 +525,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 90
+    weight: 92
     region: content
   field_phro_low:
     type: number_decimal
@@ -454,7 +536,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 89
+    weight: 91
     region: content
   field_phro_max:
     type: number_decimal
@@ -465,7 +547,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 91
+    weight: 93
     region: content
   field_phro_min:
     type: number_decimal
@@ -476,7 +558,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 88
+    weight: 90
     region: content
   field_rrratio_high:
     type: number_decimal
@@ -487,7 +569,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 82
+    weight: 84
     region: content
   field_rrratio_low:
     type: number_decimal
@@ -498,7 +580,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 81
+    weight: 83
     region: content
   field_rrratio_max:
     type: number_decimal
@@ -509,7 +591,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 83
+    weight: 85
     region: content
   field_rrratio_min:
     type: number_decimal
@@ -520,7 +602,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 80
+    weight: 82
     region: content
   field_severity:
     type: number_decimal
@@ -708,6 +790,28 @@ content:
       prefix_suffix: true
     third_party_settings: {  }
     weight: 54
+    region: content
+  field_used_max:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 6
+    region: content
+  field_used_min:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 9
     region: content
   language:
     settings: {  }

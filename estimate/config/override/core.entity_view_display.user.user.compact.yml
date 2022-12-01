@@ -22,8 +22,10 @@ dependencies:
     - field.field.user.user.field_lhro_low
     - field.field.user.user.field_lhro_max
     - field.field.user.user.field_lhro_min
-    - field.field.user.user.field_newusedlkq_max
-    - field.field.user.user.field_newusedlkq_min
+    - field.field.user.user.field_lkq_max
+    - field.field.user.user.field_lkq_min
+    - field.field.user.user.field_new_max
+    - field.field.user.user.field_new_min
     - field.field.user.user.field_parts_ratio_high
     - field.field.user.user.field_parts_ratio_low
     - field.field.user.user.field_parts_ratio_max
@@ -52,6 +54,8 @@ dependencies:
     - field.field.user.user.field_throughput_low
     - field.field.user.user.field_throughput_max
     - field.field.user.user.field_throughput_min
+    - field.field.user.user.field_used_max
+    - field.field.user.user.field_used_min
     - field.field.user.user.user_picture
     - image.style.thumbnail
   module:
@@ -94,8 +98,10 @@ hidden:
   field_lhro_low: true
   field_lhro_max: true
   field_lhro_min: true
-  field_newusedlkq_max: true
-  field_newusedlkq_min: true
+  field_lkq_max: true
+  field_lkq_min: true
+  field_new_max: true
+  field_new_min: true
   field_parts_ratio_high: true
   field_parts_ratio_low: true
   field_parts_ratio_max: true
@@ -124,4 +130,6 @@ hidden:
   field_throughput_low: true
   field_throughput_max: true
   field_throughput_min: true
+  field_used_max: true
+  field_used_min: true
   member_for: true

@@ -1,11 +1,11 @@
-uuid: 0b331fa5-5880-4fac-ad53-32be7aafc2e3
+uuid: 48b2bbc4-eb2b-42e0-886f-04147672b526
 langcode: en
 status: true
 dependencies:
   module:
     - user
-id: user.field_newusedlkq_max
-field_name: field_newusedlkq_max
+id: user.field_used_max
+field_name: field_used_max
 entity_type: user
 type: float
 settings: {  }

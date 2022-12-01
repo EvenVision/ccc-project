@@ -22,6 +22,10 @@ dependencies:
     - field.field.user.user.field_lhro_low
     - field.field.user.user.field_lhro_max
     - field.field.user.user.field_lhro_min
+    - field.field.user.user.field_lkq_max
+    - field.field.user.user.field_lkq_min
+    - field.field.user.user.field_new_max
+    - field.field.user.user.field_new_min
     - field.field.user.user.field_newusedlkq_max
     - field.field.user.user.field_newusedlkq_min
     - field.field.user.user.field_parts_ratio_high
@@ -52,6 +56,8 @@ dependencies:
     - field.field.user.user.field_throughput_low
     - field.field.user.user.field_throughput_max
     - field.field.user.user.field_throughput_min
+    - field.field.user.user.field_used_max
+    - field.field.user.user.field_used_min
     - field.field.user.user.user_picture
     - image.style.thumbnail
   module:
@@ -67,7 +73,7 @@ third_party_settings:
       label: Shops
       region: content
       parent_name: ''
-      weight: 7
+      weight: 6
       format_type: tab
       format_settings:
         classes: ''
@@ -106,6 +112,8 @@ third_party_settings:
         - field_sratio_low
         - field_sratio_high
         - field_sratio_max
+        - group_new_used_lkq_min
+        - group_new_used_lkq_max
         - field_newusedlkq_min
         - field_newusedlkq_max
         - field_rrratio_min
@@ -142,13 +150,45 @@ third_party_settings:
       label: Estimators
       region: content
       parent_name: ''
-      weight: 8
+      weight: 7
       format_type: tab
       format_settings:
         classes: ''
         show_empty_fields: false
         id: ''
         formatter: closed
+        description: ''
+        required_fields: true
+    group_new_used_lkq_max:
+      children:
+        - field_new_max
+        - field_used_max
+        - field_lkq_max
+      label: 'New / Used / LKQ Max'
+      region: content
+      parent_name: group_thresholds
+      weight: 79
+      format_type: fieldset
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        description: ''
+        required_fields: true
+    group_new_used_lkq_min:
+      children:
+        - field_new_min
+        - field_used_min
+        - field_lkq_min
+      label: 'New / Used / LKQ Min'
+      region: content
+      parent_name: group_thresholds
+      weight: 78
+      format_type: fieldset
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
         description: ''
         required_fields: true
 _core:
@@ -170,28 +210,28 @@ content:
     third_party_settings: {  }
   field_bhro_high:
     type: number
-    weight: 94
+    weight: 96
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_bhro_low:
     type: number
-    weight: 93
+    weight: 95
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_bhro_max:
     type: number
-    weight: 95
+    weight: 97
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_bhro_min:
     type: number
-    weight: 92
+    weight: 94
     region: content
     settings:
       placeholder: ''
@@ -267,28 +307,28 @@ content:
     third_party_settings: {  }
   field_labor_ratio_high:
     type: number
-    weight: 86
+    weight: 88
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_labor_ratio_low:
     type: number
-    weight: 85
+    weight: 87
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_labor_ratio_max:
     type: number
-    weight: 87
+    weight: 89
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_labor_ratio_min:
     type: number
-    weight: 84
+    weight: 86
     region: content
     settings:
       placeholder: ''
@@ -321,16 +361,44 @@ content:
     settings:
       placeholder: ''
     third_party_settings: {  }
+  field_lkq_max:
+    type: number
+    weight: 10
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_lkq_min:
+    type: number
+    weight: 13
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_new_max:
+    type: number
+    weight: 8
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_new_min:
+    type: number
+    weight: 11
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
   field_newusedlkq_max:
     type: number
-    weight: 79
+    weight: 81
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_newusedlkq_min:
     type: number
-    weight: 78
+    weight: 80
     region: content
     settings:
       placeholder: ''
@@ -365,56 +433,56 @@ content:
     third_party_settings: {  }
   field_phro_high:
     type: number
-    weight: 90
+    weight: 92
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_phro_low:
     type: number
-    weight: 89
+    weight: 91
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_phro_max:
     type: number
-    weight: 91
+    weight: 93
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_phro_min:
     type: number
-    weight: 88
+    weight: 90
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_rrratio_high:
     type: number
-    weight: 82
+    weight: 84
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_rrratio_low:
     type: number
-    weight: 81
+    weight: 83
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_rrratio_max:
     type: number
-    weight: 83
+    weight: 85
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_rrratio_min:
     type: number
-    weight: 80
+    weight: 82
     region: content
     settings:
       placeholder: ''
@@ -534,6 +602,20 @@ content:
   field_throughput_min:
     type: number
     weight: 54
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_used_max:
+    type: number
+    weight: 9
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_used_min:
+    type: number
+    weight: 12
     region: content
     settings:
       placeholder: ''

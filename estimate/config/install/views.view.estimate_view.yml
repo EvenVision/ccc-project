@@ -16,7 +16,7 @@ dependencies:
     - user
     - verf
 _core:
-  default_config_hash: XB0XVPrWLgDpJzaLJ0lJteAaeW8IuQfNSjPC8xd80mg
+  default_config_hash: UVNXDutQKmjV60QHHrnZ5oAW9TSIrP-kpVRw88-cv5U
 id: estimate_view
 label: estimate_view
 module: views
@@ -3657,6 +3657,19 @@ display:
           empty: true
           content:
             value: "<style>\r\n.path-estimate-view *[data-drupal-selector=\"edit-current-period-collapsible\"],\r\n.path-estimate-view *[data-drupal-selector=\"edit-field-pickup-date-time-value-wrapper\"]\r\n{display:none !important;}\r\n</style>"
+            format: full_html
+          tokenize: false
+        area_1:
+          id: area_1
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text
+          empty: true
+          content:
+            value: ''
             format: full_html
           tokenize: false
       display_extenders: {  }

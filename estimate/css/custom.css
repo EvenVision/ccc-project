@@ -1,0 +1,20 @@
+.allCanvas {
+    text-align: center;
+
+    margin-bottom: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.canvasSpan {
+    display: none;
+}
+
+.canvasBlock {
+    display: inline-block;
+    width: 300px;
+    height: 300px;
+}
+
+table {
+    background-color: #f9f9f9;
+}

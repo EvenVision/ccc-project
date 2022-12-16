@@ -390,6 +390,9 @@ function estimate_views_pre_render(ViewExecutable $view){
 }
 
 function _calcResultUserView($view){
+    // added style and js to dials
+    $view->element['#attached']['library'][] = 'estimate/dashboard_style';
+
     $time_period = $view->exposed_data['field_pickup_dt_value'];
     $holidays = array();
     $countDays = 0;
@@ -457,7 +460,7 @@ function _calcResultUserView($view){
                 $resultRow->node_field_data_user__field_com_name_us__node__field_square_ : 0;
 
             // Severity
-            $severity = $sales_collision_sum / $count_estimates;
+            $severity = round($sales_collision_sum / $count_estimates, 3);
 
             // Body Hours / RO
             $body_hourse = round($resultRow->field_com_name_es_node_field_data__node__field_totalhours_b_ / $count_estimates, 3);
@@ -582,7 +585,7 @@ function _calcResultUserView($view){
         $resultRow->field_com_name_es_node_field_data__node__field_pt_pag_field_ = $repair_ratio;
 
         // Cycle Time
-        $resultRow->field_com_name_es_node_field_data__node__field_arrival_dt_fi = ($resultRow->avgCycleTime ?? 0 / 86400);
+        $resultRow->field_com_name_es_node_field_data__node__field_arrival_dt_fi = round(($resultRow->avgCycleTime ?? 0 / 86400), 3);
 
         // Throughput
         $resultRow->field_com_name_es_node_field_data__node__field_creationdt_fi = round($uniqueIds->expression/ $countDays, 3);
@@ -675,13 +678,19 @@ function _calcResultUserView($view){
             // Repair / Replace Ratio
             $resultRow->field_com_name_es_node_field_data__node__field_pt_pag_field_ = $fields['field_rrratio_' . $value];
         }
+        $footer = $view->footer['area_1'];
+        if (!empty($footer)){
+            $footer->options['content']['value'] = createHtmlDial($fields);
+        }
     }
-
 
     return $view;
 }
 
 function _calcResultAdminView($view){
+    // added style and js to dials
+    $view->element['#attached']['library'][] = 'estimate/dashboard_style';
+
     $time_period = $view->exposed_data['field_pickup_dt_value'];
     $holidays = array();
     $countDays = 0;
@@ -745,7 +754,7 @@ function _calcResultAdminView($view){
                 $resultRow->node_field_data_node__field_com_name_es__node__field_square_ : 0;
 
             // Severity
-            $severity = $sales_collision_sum / $count_estimates;
+            $severity = round($sales_collision_sum / $count_estimates, 3);
 
             // Body Hours / RO
             $body_hourse = round($resultRow->node__field_totalhours_b_field_totalhours_b_value / $count_estimates, 3);
@@ -845,13 +854,13 @@ function _calcResultAdminView($view){
         $resultRow->node__field_op16_hours_field_op16_hours_value = $repair_ratio;
 
         // Cycle Time
-        $resultRow->node__field_arrival_dt_field_arrival_dt_value = ($resultRow->avgCycleTime ?? 0 / 86400);
+        $resultRow->node__field_arrival_dt_field_arrival_dt_value = round(($resultRow->avgCycleTime ?? 0 / 86400), 3);
 
         // Throughput
         $resultRow->node__field_creationdt_field_creationdt_value = round($uniqueIds->expression / $countDays, 3);
 
         //Square Foot Efficiency
-        $resultRow->node_field_data_node__field_com_name_es__node__field_square_ = $avgSquareFoot;
+        $resultRow->node_field_data_node__field_com_name_es__node__field_square_ = round($avgSquareFoot,3);
 
         // Severity
         $resultRow->node__field_totalamt_p_field_totalamt_p_value = $severity;
@@ -937,6 +946,10 @@ function _calcResultAdminView($view){
 
             // Repair / Replace Ratio
             $resultRow->node__field_op16_hours_field_op16_hours_value = $fields['field_rrratio_' . $value];
+        }
+        $footer = $view->footer['area_1'];
+        if (!empty($footer)){
+            $footer->options['content']['value'] = createHtmlDial($fields);
         }
     }
 
@@ -1065,4 +1078,136 @@ function getUserCompanyIDs(){
         }
     }
     return $ids;
+}
+
+// creating dials
+function createHtmlDial ($userFields){
+
+    $canvas8Min = ($userFields['field_new_min'] + $userFields['field_used_min'] + $userFields['field_lkq_min']) == 0 ? 0 : ($userFields['field_new_min'] + $userFields['field_used_min'] + $userFields['field_lkq_min'])/3;
+    $canvas8Max = ($userFields['field_new_max'] + $userFields['field_used_max'] + $userFields['field_lkq_max'])/3;
+
+    $html = '<div id="allCanvas" class="allCanvas">
+        <div class="canvasBlock">
+            <canvas id="canvas-1" width="300" height="300"></canvas>
+            <div>
+                <p class="canvasTitle">Cycle Time</p>
+            </div>
+        </div>
+            <span id="canvas-1-min" class="canvasSpan">'.$userFields['field_cycle_time_min'].'</span>
+            <span id="canvas-1-max" class="canvasSpan">'.$userFields['field_cycle_time_max'].'</span>
+            <span id="canvas-1-low" class="canvasSpan">'.$userFields['field_cycle_time_low'].'</span>
+            <span id="canvas-1-high" class="canvasSpan">'.$userFields['field_cycle_time_high'].'</span>
+        <div class="canvasBlock">
+            <canvas id="canvas-2" width="300" height="300"></canvas>
+            <div>
+                <p class="canvasTitle">Throughput</p>
+            </div>
+        </div>
+            <span id="canvas-2-min" class="canvasSpan">'.$userFields['field_throughput_min'].'</span>
+            <span id="canvas-2-max" class="canvasSpan">'.$userFields['field_throughput_max'].'</span>
+            <span id="canvas-2-low" class="canvasSpan">'.$userFields['field_throughput_low'].'</span>
+            <span id="canvas-2-high" class="canvasSpan">'.$userFields['field_throughput_high'].'</span>
+        <div class="canvasBlock">
+            <canvas id="canvas-3" width="300" height="300"></canvas>
+            <div>
+                <p class="canvasTitle">Square Foot Efficiency</p>
+            </div>
+        </div>
+            <span id="canvas-3-min" class="canvasSpan">'.$userFields['field_sq_foot_min'].'</span>
+            <span id="canvas-3-max" class="canvasSpan">'.$userFields['field_sq_foot_max'].'</span>
+            <span id="canvas-3-low" class="canvasSpan">'.$userFields['field_sq_foot_low'].'</span>
+            <span id="canvas-3-high" class="canvasSpan">'.$userFields['field_sq_foot_high'].'</span>
+        <div class="canvasBlock">
+            <canvas id="canvas-4" width="300" height="300"></canvas>
+            <div>
+                <p class="canvasTitle">Severenity</p>
+            </div>
+        </div>
+            <span id="canvas-4-low" class="canvasSpan">'.$userFields['field_severity_low'].'</span>
+            <span id="canvas-4-high" class="canvasSpan">'.$userFields['field_severity_high'].'</span>
+            <span id="canvas-4-min" class="canvasSpan">'.$userFields['field_severity_min'].'</span>
+            <span id="canvas-4-max" class="canvasSpan">'.$userFields['field_severity_max'].'</span>
+        <div class="canvasBlock">
+            <canvas id="canvas-5" width="300" height="300"></canvas>
+            <div>
+                <p class="canvasTitle">Labor Ratio</p>
+            </div>
+        </div>
+            <span id="canvas-5-low" class="canvasSpan">'.$userFields['field_labor_ratio_low'].'</span>
+            <span id="canvas-5-high" class="canvasSpan">'.$userFields['field_labor_ratio_high'].'</span>
+            <span id="canvas-5-min" class="canvasSpan">'.$userFields['field_labor_ratio_min'].'</span>
+            <span id="canvas-5-max" class="canvasSpan">'.$userFields['field_labor_ratio_max'].'</span>
+        <div class="canvasBlock">
+            <canvas id="canvas-6" width="300" height="300"></canvas>
+            <div>
+                <p class="canvasTitle">Parts Ratio</p>
+            </div>
+        </div>
+            <span id="canvas-6-min" class="canvasSpan">'.$userFields['field_parts_ratio_min'].'</span>
+            <span id="canvas-6-max" class="canvasSpan">'.$userFields['field_parts_ratio_max'].'</span>
+            <span id="canvas-6-low" class="canvasSpan">'.$userFields['field_parts_ratio_low'].'</span>
+            <span id="canvas-6-high" class="canvasSpan">'.$userFields['field_parts_ratio_high'].'</span>
+        <div class="canvasBlock">
+            <canvas id="canvas-7" width="300" height="300"></canvas>
+            <div>
+                <p class="canvasTitle">Sublet Ratio</p>
+            </div>
+        </div>
+            <span id="canvas-7-low" class="canvasSpan">'.$userFields['field_sratio_low'].'</span>
+            <span id="canvas-7-high" class="canvasSpan">'.$userFields['field_sratio_high'].'</span>
+            <span id="canvas-7-min" class="canvasSpan">'.$userFields['field_sratio_min'].'</span>
+            <span id="canvas-7-max" class="canvasSpan">'.$userFields['field_sratio_max'].'</span>
+        <div class="canvasBlock">
+            <canvas id="canvas-8" width="300" height="300"></canvas>
+            <div>
+                <p class="canvasTitle">New / Used / LKQ</p>
+            </div>
+        </div>
+            <span id="canvas-8-max" class="canvasSpan">'.$canvas8Max.'</span>
+            <span id="canvas-8-min" class="canvasSpan">'.$canvas8Min.'</span>
+            <span id="canvas-8-low" class="canvasSpan">0</span>
+            <span id="canvas-8-high" class="canvasSpan">0</span>
+        <div class="canvasBlock">
+            <canvas id="canvas-9" width="300" height="300"></canvas>
+            <div>
+                <p class="canvasTitle">Repair / Replace Ratio</p>
+            </div>
+        </div>
+            <span id="canvas-9-min" class="canvasSpan">'.$userFields['field_rrratio_min'].'</span>
+            <span id="canvas-9-max" class="canvasSpan">'.$userFields['field_rrratio_max'].'</span>
+            <span id="canvas-9-low" class="canvasSpan">'.$userFields['field_rrratio_low'].'</span>
+            <span id="canvas-9-high" class="canvasSpan">'.$userFields['field_rrratio_high'].'</span>
+        <div class="canvasBlock">
+            <canvas id="canvas-10" width="300" height="300"></canvas>
+            <div>
+                <p class="canvasTitle">Labor Hours / RO</p>
+            </div>
+        </div>
+            <span id="canvas-10-max" class="canvasSpan">'.$userFields['field_lhro_max'].'</span>
+            <span id="canvas-10-min" class="canvasSpan">'.$userFields['field_lhro_min'].'</span>
+            <span id="canvas-10-high" class="canvasSpan">'.$userFields['field_lhro_high'].'</span>
+            <span id="canvas-10-low" class="canvasSpan">'.$userFields['field_lhro_low'].'</span>
+        <div class="canvasBlock">
+            <canvas id="canvas-11" width="300" height="300"></canvas>
+            <div>
+                <p class="canvasTitle">Paint Hours / RO</p>
+            </div>
+        </div>
+            <span id="canvas-11-max" class="canvasSpan">'.$userFields['field_phro_max'].'</span>
+            <span id="canvas-11-min" class="canvasSpan">'.$userFields['field_phro_min'].'</span>
+            <span id="canvas-11-high" class="canvasSpan">'.$userFields['field_phro_high'].'</span>
+            <span id="canvas-11-low" class="canvasSpan">'.$userFields['field_phro_low'].'</span>
+        <div class="canvasBlock">
+            <canvas id="canvas-12" width="300" height="300"></canvas>
+            <div>
+                <p class="canvasTitle">Body Hours / RO</p>
+            </div>
+        </div>
+            <span id="canvas-12-low" class="canvasSpan">'.$userFields['field_bhro_low'].'</span>
+            <span id="canvas-12-high" class="canvasSpan">'.$userFields['field_bhro_high'].'</span>
+            <span id="canvas-12-min" class="canvasSpan">'.$userFields['field_bhro_min'].'</span>
+            <span id="canvas-12-max" class="canvasSpan">'.$userFields['field_bhro_max'].'</span>
+    </div>';
+
+    return $html;
 }

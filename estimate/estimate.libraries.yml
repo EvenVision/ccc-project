@@ -1,0 +1,7 @@
+dashboard_style:
+  version: 1
+  js:
+    js/dial.js: {}
+  css:
+    theme:
+      css/custom.css: {}

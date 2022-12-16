@@ -18,7 +18,7 @@ dependencies:
     - user
     - verf
 _core:
-  default_config_hash: h5cfN2i0hESYlpSC1WAMIm26xhrsJ9chRNJK_XNofZ8
+  default_config_hash: 1bPvUGt8gGop1yKLNgYmFIqTqgdUY72YsbqGFHyovl8
 id: estimate_view_admin
 label: estimate_view_admin
 module: views
@@ -3676,6 +3676,19 @@ display:
           empty: true
           content:
             value: "<style>\r\n.path-estimate-view-admin *[data-drupal-selector=\"edit-current-period-collapsible\"],\r\n.path-estimate-view-admin *[data-drupal-selector=\"edit-field-pickup-date-time-value-wrapper\"]\r\n{display:none !important;}\r\n</style>"
+            format: full_html
+          tokenize: false
+        area_1:
+          id: area_1
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text
+          empty: true
+          content:
+            value: ''
             format: full_html
           tokenize: false
       display_extenders: {  }

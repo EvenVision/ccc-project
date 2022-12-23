@@ -8,8 +8,6 @@ dependencies:
     - node.type.insurance_company
   module:
     - path
-_core:
-  default_config_hash: IOegwLtk5fPbT9Q43mZMZyhaBCy_fjbu2TwIYhPdrTA
 id: node.insurance_company.default
 targetEntityType: node
 bundle: insurance_company

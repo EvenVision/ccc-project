@@ -1,22 +1,22 @@
-uuid: ecb4004a-6990-45d5-95f2-f8bbd308a326
+uuid: 54c809ee-f07a-4492-8e7f-314f521ca1c0
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.user.field_used_max
+    - field.storage.user.field_lkq_low
   module:
     - user
-id: user.user.field_used_max
-field_name: field_used_max
+id: user.user.field_lkq_low
+field_name: field_lkq_low
 entity_type: user
 bundle: user
-label: 'Used Ratio Max'
+label: 'LKQ Ratio Low'
 description: ''
 required: false
 translatable: false
 default_value:
   -
-    value: !!float 1
+    value: 0.15
 default_value_callback: ''
 settings:
   min: null

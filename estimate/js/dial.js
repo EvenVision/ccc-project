@@ -26,97 +26,103 @@ function getElements(){
 
 function drawDials(arrayCanvas){
     arrayCanvas.forEach((canvas) => {
-        var bgColor = window.getComputedStyle(document.body, null).getPropertyValue('background-color');
-        var fontColor = window.getComputedStyle(document.body, null).getPropertyValue('color');
-        var fontFamily = window.getComputedStyle(document.body, null).getPropertyValue('font-family');
+        let bgColor = window.getComputedStyle(document.body, null).getPropertyValue('background-color');
+        let fontColor = window.getComputedStyle(document.body, null).getPropertyValue('color');
+        let fontFamily = window.getComputedStyle(document.body, null).getPropertyValue('font-family');
 
-        var ctx = canvas.getContext("2d");
+        const imgSrc = document.getElementById("arrow").getAttribute('src');
+
+        let ctx = canvas.getContext("2d");
 
         // general settings
-        var middleX = canvas.width / 2;
-        var middleY = canvas.height / 2;
-        var radius = canvas.width / 2.5 - canvas.width / 10;
+        let middleX = canvas.width / 2;
+        let middleY = canvas.height / 2;
+        let radius = canvas.width / 2.5 - canvas.width / 10;
         // beginning and ending of our arc. Sets by rad * pi
-        var startAngleIndex = 0.75;
-        var endAngleIndex = 2.25;
+        let startAngleIndex = 0.75;
+        let endAngleIndex = 2.25;
 
         // zones settings
-        var zoneLineWidth = canvas.width / 30;
+        let zoneLineWidth = canvas.width / 30;
         // clockwise
-        var counterClockwise = false;
+        let counterClockwise = false;
 
         // ticks settings
-        var tickWidth = canvas.width / 100;
-        var tickColor = "#746845";
-        var tickOffsetFromArc = canvas.width / 40;
-
+        let tickWidth = canvas.width / 100;
+        let tickColor = "#746845";
+        let tickOffsetFromArc = canvas.width / 40;
+        let digitsOffsetFromArc = canvas.width / 12;
 
         // Digits settings
-        var min = document.getElementById(canvas.id + "-min").textContent ?? 0;
-        var low = document.getElementById(canvas.id + "-low").textContent ?? 0;
-        var high = document.getElementById(canvas.id + "-high").textContent ?? 0;
-        var max = document.getElementById(canvas.id + "-max").textContent ?? 0;
+        let canvasMin = document.getElementById(canvas.id + "-min").textContent ?? 0;
+        let canvasLow = document.getElementById(canvas.id + "-low").textContent ?? 0;
+        let canvasHigh = document.getElementById(canvas.id + "-high").textContent ?? 0;
+        let canvasMax = document.getElementById(canvas.id + "-max").textContent ?? 0;
+        let canvasResult = document.getElementById(canvas.id + "-result").textContent ?? 0;
 
-        var digits = [min, low, high, max];
+        let zonesminlow = ((canvasLow / canvasMax * 100) * 75) / 100;
+        let zoneslowhigh = (((canvasHigh - canvasLow) / canvasMax * 100) * 75) / 100;
+        let zoneshighmax = (((canvasMax - canvasHigh) / canvasMax * 100) * 75) / 100;
 
-        var DrawZones = function () {
+        let blackZonesCount = ((2 * Math.PI * (25 / 100)));
+        let greenZonesCount = ((2 * Math.PI * (zonesminlow / 100)));
+        let yellowZonesCount = ((2 * Math.PI * (zoneslowhigh / 100)));
+        let redZonesCount = ((2 * Math.PI * (zoneshighmax / 100)));
 
-            var zonesminlow = ((low / max * 100) * 75) / 100;
-            var zoneslowhigh = (((high - low) / max * 100) * 75) / 100;
-            var zoneshighmax = (((max - high) / max * 100) * 75) / 100;
+        let startAngle = (startAngleIndex - 0.50) * Math.PI;
+        let endBlackAngle = startAngleIndex * Math.PI;
+        let endGreenAngle = endBlackAngle + greenZonesCount;
+        let endYellowAngle = endGreenAngle + yellowZonesCount;
+        let endRedAngle = endYellowAngle + redZonesCount;
 
-            var blackZonesCount = ((2 * Math.PI * (25 / 100)));
-            var greenZonesCount = ((2 * Math.PI * (zonesminlow / 100)));
-            var yellowZonesCount = ((2 * Math.PI * (zoneslowhigh / 100)));
-            var redZonesCount = ((2 * Math.PI * (zoneshighmax / 100)));
+        let sectionOptions = [
+            {
+                endBlackAngle : endBlackAngle,
+                startAngle: startAngle,
+                endAngle : endBlackAngle,
+                digit : canvasMin,
+                color: bgColor
+            },
+            {
+                endGreenAngle : endGreenAngle,
+                startAngle: endBlackAngle,
+                endAngle: endGreenAngle,
+                digit : canvasLow,
+                color: "#008000"
+            },
+            {
+                endGreenAngle : endGreenAngle,
+                startAngle: endGreenAngle,
+                endAngle: endYellowAngle,
+                digit : canvasHigh,
+                color: "#ffff00"
+            },
+            {
+                endRedAngle : endRedAngle,
+                startAngle: endYellowAngle,
+                endAngle: endRedAngle,
+                digit : canvasMax,
+                color: "#FF0000"
+            }
+        ];
 
-            var startAngle = (startAngleIndex - 0.50) * Math.PI;
-            var endBlackAngle = startAngleIndex * Math.PI;
-            var endGreenAngle = endBlackAngle + greenZonesCount;
-            var endYellowAngle = endGreenAngle + yellowZonesCount;
-            var endRedAngle = endYellowAngle + redZonesCount;
-
-            var sectionOptions = [
-                {
-                    startAngle: startAngle,
-                    endAngle: endBlackAngle,
-                    color: bgColor
-                },
-                {
-                    startAngle: endBlackAngle,
-                    endAngle: endGreenAngle,
-                    color: "#008000"
-                },
-                {
-                    startAngle: endGreenAngle,
-                    endAngle: endYellowAngle,
-                    color: "#ffff00"
-                },
-                {
-                    startAngle: endYellowAngle,
-                    endAngle: endRedAngle,
-                    color: "#FF0000"
-                }
-            ];
-
-            this.DrawZone = function (options) {
+        let DrawZones = function (startAngle,sectionOptions) {
+            sectionOptions.forEach((options) => {
                 ctx.beginPath();
                 ctx.arc(middleX, middleY, radius, options.startAngle, options.endAngle, counterClockwise);
                 ctx.lineWidth = zoneLineWidth;
                 ctx.strokeStyle = options.color;
                 ctx.lineCap = "butt";
                 ctx.stroke();
-            };
-
-            sectionOptions.forEach(function (options) {
-                DrawZone(options);
             });
+        }
 
-            this.DrawTick = function (angle) {
-                var fromX = middleX + (radius - tickOffsetFromArc) * Math.cos(angle);
-                var fromY = middleY + (radius - tickOffsetFromArc) * Math.sin(angle);
-                var toX = middleX + (radius + tickOffsetFromArc) * Math.cos(angle);
-                var toY = middleY + (radius + tickOffsetFromArc) * Math.sin(angle);
+        let DrawTick = function (sectionOptions) {
+            sectionOptions.forEach((options) => {
+                let fromX = middleX + (radius - tickOffsetFromArc) * Math.cos(options.endAngle);
+                let fromY = middleY + (radius - tickOffsetFromArc) * Math.sin(options.endAngle);
+                let toX = middleX + (radius + tickOffsetFromArc) * Math.cos(options.endAngle);
+                let toY = middleY + (radius + tickOffsetFromArc) * Math.sin(options.endAngle);
 
                 ctx.beginPath();
                 ctx.moveTo(fromX, fromY);
@@ -125,32 +131,60 @@ function drawDials(arrayCanvas){
                 ctx.lineCap = "round";
                 ctx.strokeStyle = tickColor;
                 ctx.stroke();
-            };
+            })
+        };
 
-            this.DrawTick(endBlackAngle);
-            this.DrawTick(endGreenAngle);
-            this.DrawTick(endYellowAngle);
-            this.DrawTick(endRedAngle);
-
-            this.DrawText = function (angle, digit) {
-
-                var x = middleX + (radius + canvas.width / 12) * Math.cos(angle);
-                var y = middleY + (radius + canvas.width / 12) * Math.sin(angle);
+        let DrawText = function (sectionOptions) {
+            sectionOptions.forEach((options) => {
+                let x = middleX + (radius + digitsOffsetFromArc) * Math.cos(options.endAngle);
+                let y = middleY + (radius + digitsOffsetFromArc) * Math.sin(options.endAngle);
 
                 ctx.font = "12px " + fontFamily;
                 ctx.fillStyle = fontColor;
                 ctx.textAlign = "center";
                 ctx.textBaseline = "middle";
-                ctx.fillText(digit, x, y);
-            };
+                ctx.fillText(options.digit, x, y);
+            });
+        }
 
-            this.DrawText(endBlackAngle, digits[0]);
-            this.DrawText(endGreenAngle, digits[1]);
-            this.DrawText(endYellowAngle, digits[2]);
-            this.DrawText(endRedAngle, digits[3]);
-        };
+        let DrawProgress = function (canvasResult) {
+            let angleIndex = 0.5;
+            let angle = angleIndex * Math.PI;
 
-        DrawZones();
+            let x = middleX + (radius + digitsOffsetFromArc) * Math.cos(angle);
+            let y = middleY + (radius + digitsOffsetFromArc) * Math.sin(angle);
+
+            ctx.font = "12px " + fontFamily;
+            ctx.fillStyle = fontColor;
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText(canvasResult, x, y - 50);
+
+        }
+
+        let DrawArrow = function (canvasResult,canvasMax) {
+            // Set the pointer to max if the result is greater than the max number
+            if (parseInt(canvasResult) >= parseInt(canvasMax) )
+            {
+                canvasResult = canvasMax;
+            }
+            let startStr = -0.25 * Math.PI;
+            let step = 1.5 * (((canvasResult / canvasMax ) * 100)/100);
+
+            let img = new Image();
+            img.src = imgSrc;
+            img.onload = () => {
+                 ctx.translate(middleX, middleY);
+                 ctx.rotate(startStr + (step * Math.PI));
+                 ctx.drawImage(img,-90, -8);
+            }
+        }
+
+        DrawZones(startAngle,sectionOptions);
+        DrawTick(sectionOptions);
+        DrawText(sectionOptions);
+        DrawProgress(canvasResult);
+        DrawArrow(canvasResult,canvasMax);
     })
 }
 

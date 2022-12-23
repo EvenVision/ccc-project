@@ -9,8 +9,6 @@ dependencies:
     - node.type.estimator
   module:
     - user
-_core:
-  default_config_hash: vKCrlhUw7tsfSlecJLt5HqrEiIBFr8O4DM6ZC1nBtMI
 id: node.estimator.default
 targetEntityType: node
 bundle: estimator

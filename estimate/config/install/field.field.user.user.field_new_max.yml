@@ -10,7 +10,7 @@ id: user.user.field_new_max
 field_name: field_new_max
 entity_type: user
 bundle: user
-label: 'New Max'
+label: 'New Ratio Max'
 description: ''
 required: false
 translatable: false

@@ -45,6 +45,12 @@ const CUSTOM_USER_FIELDS = array(
     'field_cycle_time_high',
     'field_bhro_low',
     'field_bhro_high',
+    'field_new_low',
+    'field_used_low',
+    'field_lkq_low',
+    'field_new_high',
+    'field_used_high',
+    'field_lkq_high',
 
     'field_throughput_min',
     'field_throughput_max',
@@ -450,6 +456,8 @@ function _calcResultUserView($view){
 
         $uniqueIds = $query->countQuery()->execute()->fetch();
 
+        $resultsOfCalculations = [];
+
         $count_estimates = $resultRow->field_com_name_es_node_field_data_nid;
         $sales_collision_sum = $resultRow->field_com_name_es_node_field_data__node__field_totalamt_fiel ?? 0;
 
@@ -579,40 +587,43 @@ function _calcResultUserView($view){
         }
 
         // New / Used / LKQ
-        $resultRow->field_com_name_es_node_field_data__node__field_esaltid_field = $parts_sum_new.'/'.$parts_sum_used.'/'.$parts_sum_lkq;
+        $resultsOfCalculations['new_used_lkq'] = $resultRow->field_com_name_es_node_field_data__node__field_esaltid_field = ($parts_sum_new / ($parts_sum_new + $parts_sum_used + $parts_sum_lkq)).'/'.($parts_sum_used / ($parts_sum_new + $parts_sum_used + $parts_sum_lkq)).'/'.($parts_sum_lkq / ($parts_sum_new + $parts_sum_used + $parts_sum_lkq));
+        $resultsOfCalculations['new'] = ($parts_sum_new / ($parts_sum_new + $parts_sum_used + $parts_sum_lkq));
+        $resultsOfCalculations['used'] = ($parts_sum_used / ($parts_sum_new + $parts_sum_used + $parts_sum_lkq));
+        $resultsOfCalculations['lkq'] = ($parts_sum_lkq / ($parts_sum_new + $parts_sum_used + $parts_sum_lkq));
 
         // Repair / Replace Ratio
-        $resultRow->field_com_name_es_node_field_data__node__field_pt_pag_field_ = $repair_ratio;
+        $resultsOfCalculations['field_rrratio'] = $resultRow->field_com_name_es_node_field_data__node__field_pt_pag_field_ = $repair_ratio;
 
         // Cycle Time
-        $resultRow->field_com_name_es_node_field_data__node__field_arrival_dt_fi = round(($resultRow->avgCycleTime ?? 0 / 86400), 3);
+        $resultsOfCalculations['field_cycle_time'] = $resultRow->field_com_name_es_node_field_data__node__field_arrival_dt_fi = round(($resultRow->avgCycleTime ?? 0 / 86400), 3);
 
         // Throughput
-        $resultRow->field_com_name_es_node_field_data__node__field_creationdt_fi = round($uniqueIds->expression/ $countDays, 3);
+        $resultsOfCalculations['field_throughput'] = $resultRow->field_com_name_es_node_field_data__node__field_creationdt_fi = round($uniqueIds->expression/ $countDays, 3);
 
         //Square Foot Efficiency
-        $resultRow->node_field_data_user__field_com_name_us__node__field_square_ = round($avgSquareFoot,3);
+        $resultsOfCalculations['field_sq_foot'] = $resultRow->node_field_data_user__field_com_name_us__node__field_square_ = round($avgSquareFoot,3);
 
         // Severity
-        $resultRow->field_com_name_es_node_field_data__node__field_totalamt_p_fi = $severity;
+        $resultsOfCalculations['field_severity'] = $resultRow->field_com_name_es_node_field_data__node__field_totalamt_p_fi = $severity;
 
         // Labor Ratio
-        $resultRow->field_com_name_es_node_field_data__node__field_op4_amount_fi = $labor_ratio;
+        $resultsOfCalculations['field_labor_ratio'] = $resultRow->field_com_name_es_node_field_data__node__field_op4_amount_fi = $labor_ratio;
 
         // Parts Ratio
-        $resultRow->field_com_name_es_node_field_data__node__field_pt_paa_field_ = $parts_ratio;
+        $resultsOfCalculations['field_parts_ratio'] = $resultRow->field_com_name_es_node_field_data__node__field_pt_paa_field_ = $parts_ratio;
 
         // Body Hours / RO
-        $resultRow->field_com_name_es_node_field_data__node__field_totalhours_b_ = $body_hourse;
+        $resultsOfCalculations['field_sratio'] = $resultRow->field_com_name_es_node_field_data__node__field_totalhours_b_ = $body_hourse;
 
         // Paint Hours / RO
-        $resultRow->field_com_name_es_node_field_data__node__field_totalhours_p_ = $paint_hourse;
+        $resultsOfCalculations['field_bhro'] = $resultRow->field_com_name_es_node_field_data__node__field_totalhours_p_ = $paint_hourse;
 
         // Labor Hours / RO
-        $resultRow->field_com_name_es_node_field_data__node__field_op4_hours_fie = $labor_hours;
+        $resultsOfCalculations['field_phro'] = $resultRow->field_com_name_es_node_field_data__node__field_op4_hours_fie = $labor_hours;
 
         // Sublet Ratio
-        $resultRow->field_com_name_es_node_field_data__node__field_op16_amount_f = $sublet_ratio;
+        $resultsOfCalculations['field_lhro'] = $resultRow->field_com_name_es_node_field_data__node__field_op16_amount_f = $sublet_ratio;
 
         $view->result[1] = clone $resultRow;
         $view->result[2] = clone $resultRow;
@@ -661,10 +672,7 @@ function _calcResultUserView($view){
             $resultRow->field_com_name_es_node_field_data__node__field_op16_amount_f = $fields['field_sratio_' . $value];
 
             // New / Used / LKQ
-            $resultRow->field_com_name_es_node_field_data__node__field_esaltid_field = "";
-            if ($value == 'min' || $value == 'max') {
-                $resultRow->field_com_name_es_node_field_data__node__field_esaltid_field = $fields['field_new_' . $value] . '/' . $fields['field_used_' . $value] . '/' . $fields['field_lkq_' . $value];
-            }
+            $resultRow->field_com_name_es_node_field_data__node__field_esaltid_field = $fields['field_new_' . $value] . '/' . $fields['field_used_' . $value] . '/' . $fields['field_lkq_' . $value];
 
             // Body Hours / RO
             $resultRow->field_com_name_es_node_field_data__node__field_totalhours_b_ = $fields['field_bhro_' . $value];
@@ -680,7 +688,7 @@ function _calcResultUserView($view){
         }
         $footer = $view->footer['area_1'];
         if (!empty($footer)){
-            $footer->options['content']['value'] = createHtmlDial($fields);
+            $footer->options['content']['value'] = createHtmlDial($fields,$resultsOfCalculations);
         }
     }
 
@@ -743,6 +751,8 @@ function _calcResultAdminView($view){
         $query->where("UNIX_TIMESTAMP(STR_TO_DATE([pdt].[field_pickup_date_time_value], '%Y-%m-%dT%H:%i:%s')) BETWEEN {$min} AND {$max}");
 
         $uniqueIds = $query->countQuery()->execute()->fetch();
+
+        $resultsOfCalculations = [];
 
         $count_estimates = $resultRow->nid;
         $sales_collision_sum = $resultRow->node__field_totalamt_field_totalamt_value ?? 0;
@@ -848,40 +858,43 @@ function _calcResultAdminView($view){
         }
 
         // New / Used / LKQ
-        $resultRow->node__field_esaltid_field_esaltid_value = $parts_sum_new.'/'.$parts_sum_used.'/'.$parts_sum_lkq;
+        $resultsOfCalculations['new_used_lkq'] = $resultRow->node__field_esaltid_field_esaltid_value = ($parts_sum_new / ($parts_sum_new + $parts_sum_used + $parts_sum_lkq)).'/'.($parts_sum_used / ($parts_sum_new + $parts_sum_used + $parts_sum_lkq)).'/'.($parts_sum_lkq / ($parts_sum_new + $parts_sum_used + $parts_sum_lkq));
+        $resultsOfCalculations['new'] = ($parts_sum_new / ($parts_sum_new + $parts_sum_used + $parts_sum_lkq));
+        $resultsOfCalculations['used'] = ($parts_sum_used / ($parts_sum_new + $parts_sum_used + $parts_sum_lkq));
+        $resultsOfCalculations['lkq'] = ($parts_sum_lkq / ($parts_sum_new + $parts_sum_used + $parts_sum_lkq));
 
         // Repair / Replace Ratio
-        $resultRow->node__field_op16_hours_field_op16_hours_value = $repair_ratio;
+        $resultsOfCalculations['field_rrratio'] = $resultRow->node__field_op16_hours_field_op16_hours_value = $repair_ratio;
 
         // Cycle Time
-        $resultRow->node__field_arrival_dt_field_arrival_dt_value = round(($resultRow->avgCycleTime ?? 0 / 86400), 3);
+        $resultsOfCalculations['field_cycle_time'] = $resultRow->node__field_arrival_dt_field_arrival_dt_value = round(($resultRow->avgCycleTime ?? 0 / 86400), 3);
 
         // Throughput
-        $resultRow->node__field_creationdt_field_creationdt_value = round($uniqueIds->expression / $countDays, 3);
+        $resultsOfCalculations['field_throughput'] = $resultRow->node__field_creationdt_field_creationdt_value = round($uniqueIds->expression / $countDays, 3);
 
         //Square Foot Efficiency
-        $resultRow->node_field_data_node__field_com_name_es__node__field_square_ = round($avgSquareFoot,3);
+        $resultsOfCalculations['field_sq_foot'] = $resultRow->node_field_data_node__field_com_name_es__node__field_square_ = round($avgSquareFoot,3);
 
         // Severity
-        $resultRow->node__field_totalamt_p_field_totalamt_p_value = $severity;
+        $resultsOfCalculations['field_severity'] = $resultRow->node__field_totalamt_p_field_totalamt_p_value = $severity;
 
         // Labor Ratio
-        $resultRow->node__field_op4_amount_field_op4_amount_value = $labor_ratio;
+        $resultsOfCalculations['field_labor_ratio'] = $resultRow->node__field_op4_amount_field_op4_amount_value = $labor_ratio;
 
         // Parts Ratio
-        $resultRow->node__field_pt_paa_field_pt_paa_value = $parts_ratio;
+        $resultsOfCalculations['field_parts_ratio'] = $resultRow->node__field_pt_paa_field_pt_paa_value = $parts_ratio;
 
         // Sublet Ratio
-        $resultRow->node__field_op16_amount_field_op16_amount_value = $sublet_ratio;
+        $resultsOfCalculations['field_sratio'] = $resultRow->node__field_op16_amount_field_op16_amount_value = $sublet_ratio;
 
         // Body Hours / RO
-        $resultRow->node__field_totalhours_b_field_totalhours_b_value = $body_hourse;
+        $resultsOfCalculations['field_bhro'] = $resultRow->node__field_totalhours_b_field_totalhours_b_value = $body_hourse;
 
         // Paint Hours / RO
-        $resultRow->node__field_totalhours_p_field_totalhours_p_value = $paint_hourse;
+        $resultsOfCalculations['field_phro'] = $resultRow->node__field_totalhours_p_field_totalhours_p_value = $paint_hourse;
 
         // Labor Hours / RO
-        $resultRow->node__field_op4_hours_field_op4_hours_value = $labor_hours;
+        $resultsOfCalculations['field_lhro'] = $resultRow->node__field_op4_hours_field_op4_hours_value = $labor_hours;
 
         $view->result[1] = clone $resultRow;
         $view->result[2] = clone $resultRow;
@@ -930,10 +943,7 @@ function _calcResultAdminView($view){
             $resultRow->node__field_op16_amount_field_op16_amount_value = $fields['field_sratio_' . $value];
 
             // New / Used / LKQ
-            $resultRow->node__field_esaltid_field_esaltid_value = "";
-            if ($value == 'min' || $value == 'max') {
-                $resultRow->node__field_esaltid_field_esaltid_value = $fields['field_new_' . $value] . '/' . $fields['field_used_' . $value] . '/' . $fields['field_lkq_' . $value];
-            }
+            $resultRow->node__field_esaltid_field_esaltid_value = $fields['field_new_' . $value] . '/' . $fields['field_used_' . $value] . '/' . $fields['field_lkq_' . $value];
 
             // Body Hours / RO
             $resultRow->node__field_totalhours_b_field_totalhours_b_value = $fields['field_bhro_' . $value];
@@ -949,7 +959,7 @@ function _calcResultAdminView($view){
         }
         $footer = $view->footer['area_1'];
         if (!empty($footer)){
-            $footer->options['content']['value'] = createHtmlDial($fields);
+            $footer->options['content']['value'] = createHtmlDial($fields,$resultsOfCalculations);
         }
     }
 
@@ -1080,13 +1090,26 @@ function getUserCompanyIDs(){
     return $ids;
 }
 
+function insert_base64_encoded_image(){
+    $img = \Drupal::service('extension.list.module')->getPath('estimate').'/img/arrow.png';
+    $imageSize = getimagesize(\Drupal::service('extension.list.module')->getPath('estimate').'/img/arrow.png');
+    $imageData = base64_encode(file_get_contents($img));
+    $imageHTML = "<img id='arrow' src='data:{$imageSize['mime']};base64,{$imageData}' {$imageSize[3]} />";
+    return $imageHTML;
+}
+
 // creating dials
-function createHtmlDial ($userFields){
+function createHtmlDial ($userFields,$resultsOfCalculations){
+    $getImgArrow = insert_base64_encoded_image();
 
     $canvas8Min = ($userFields['field_new_min'] + $userFields['field_used_min'] + $userFields['field_lkq_min']) == 0 ? 0 : ($userFields['field_new_min'] + $userFields['field_used_min'] + $userFields['field_lkq_min'])/3;
-    $canvas8Max = ($userFields['field_new_max'] + $userFields['field_used_max'] + $userFields['field_lkq_max'])/3;
+    $canvas8Low = round((($userFields['field_new_low'] + $userFields['field_used_low'] + $userFields['field_lkq_low'])/3),3);
+    $canvas8High = round((($userFields['field_new_high'] + $userFields['field_used_high'] + $userFields['field_lkq_high'])/3),3);
+    $canvas8Max = round((($userFields['field_new_max'] + $userFields['field_used_max'] + $userFields['field_lkq_max'])/3),3);
+    $canvas8result = round((($resultsOfCalculations['new'] + $resultsOfCalculations['used'] + $resultsOfCalculations['lkq'])/3),3);
 
     $html = '<div id="allCanvas" class="allCanvas">
+        <div style="visibility: hidden">'.$getImgArrow.'</div>
         <div class="canvasBlock">
             <canvas id="canvas-1" width="300" height="300"></canvas>
             <div>
@@ -1097,6 +1120,7 @@ function createHtmlDial ($userFields){
             <span id="canvas-1-max" class="canvasSpan">'.$userFields['field_cycle_time_max'].'</span>
             <span id="canvas-1-low" class="canvasSpan">'.$userFields['field_cycle_time_low'].'</span>
             <span id="canvas-1-high" class="canvasSpan">'.$userFields['field_cycle_time_high'].'</span>
+            <span id="canvas-1-result" class="canvasSpan">'.$resultsOfCalculations['field_cycle_time'].'</span>
         <div class="canvasBlock">
             <canvas id="canvas-2" width="300" height="300"></canvas>
             <div>
@@ -1107,6 +1131,7 @@ function createHtmlDial ($userFields){
             <span id="canvas-2-max" class="canvasSpan">'.$userFields['field_throughput_max'].'</span>
             <span id="canvas-2-low" class="canvasSpan">'.$userFields['field_throughput_low'].'</span>
             <span id="canvas-2-high" class="canvasSpan">'.$userFields['field_throughput_high'].'</span>
+            <span id="canvas-2-result" class="canvasSpan">'.$resultsOfCalculations['field_throughput'].'</span>
         <div class="canvasBlock">
             <canvas id="canvas-3" width="300" height="300"></canvas>
             <div>
@@ -1117,6 +1142,7 @@ function createHtmlDial ($userFields){
             <span id="canvas-3-max" class="canvasSpan">'.$userFields['field_sq_foot_max'].'</span>
             <span id="canvas-3-low" class="canvasSpan">'.$userFields['field_sq_foot_low'].'</span>
             <span id="canvas-3-high" class="canvasSpan">'.$userFields['field_sq_foot_high'].'</span>
+            <span id="canvas-3-result" class="canvasSpan">'.$resultsOfCalculations['field_sq_foot'].'</span>
         <div class="canvasBlock">
             <canvas id="canvas-4" width="300" height="300"></canvas>
             <div>
@@ -1127,6 +1153,7 @@ function createHtmlDial ($userFields){
             <span id="canvas-4-high" class="canvasSpan">'.$userFields['field_severity_high'].'</span>
             <span id="canvas-4-min" class="canvasSpan">'.$userFields['field_severity_min'].'</span>
             <span id="canvas-4-max" class="canvasSpan">'.$userFields['field_severity_max'].'</span>
+            <span id="canvas-4-result" class="canvasSpan">'.$resultsOfCalculations['field_severity'].'</span>
         <div class="canvasBlock">
             <canvas id="canvas-5" width="300" height="300"></canvas>
             <div>
@@ -1137,6 +1164,7 @@ function createHtmlDial ($userFields){
             <span id="canvas-5-high" class="canvasSpan">'.$userFields['field_labor_ratio_high'].'</span>
             <span id="canvas-5-min" class="canvasSpan">'.$userFields['field_labor_ratio_min'].'</span>
             <span id="canvas-5-max" class="canvasSpan">'.$userFields['field_labor_ratio_max'].'</span>
+            <span id="canvas-5-result" class="canvasSpan">'.$resultsOfCalculations['field_labor_ratio'].'</span>
         <div class="canvasBlock">
             <canvas id="canvas-6" width="300" height="300"></canvas>
             <div>
@@ -1147,6 +1175,7 @@ function createHtmlDial ($userFields){
             <span id="canvas-6-max" class="canvasSpan">'.$userFields['field_parts_ratio_max'].'</span>
             <span id="canvas-6-low" class="canvasSpan">'.$userFields['field_parts_ratio_low'].'</span>
             <span id="canvas-6-high" class="canvasSpan">'.$userFields['field_parts_ratio_high'].'</span>
+            <span id="canvas-6-result" class="canvasSpan">'.$resultsOfCalculations['field_parts_ratio'].'</span>
         <div class="canvasBlock">
             <canvas id="canvas-7" width="300" height="300"></canvas>
             <div>
@@ -1157,6 +1186,7 @@ function createHtmlDial ($userFields){
             <span id="canvas-7-high" class="canvasSpan">'.$userFields['field_sratio_high'].'</span>
             <span id="canvas-7-min" class="canvasSpan">'.$userFields['field_sratio_min'].'</span>
             <span id="canvas-7-max" class="canvasSpan">'.$userFields['field_sratio_max'].'</span>
+            <span id="canvas-7-result" class="canvasSpan">'.$resultsOfCalculations['field_sratio'].'</span>
         <div class="canvasBlock">
             <canvas id="canvas-8" width="300" height="300"></canvas>
             <div>
@@ -1165,8 +1195,9 @@ function createHtmlDial ($userFields){
         </div>
             <span id="canvas-8-max" class="canvasSpan">'.$canvas8Max.'</span>
             <span id="canvas-8-min" class="canvasSpan">'.$canvas8Min.'</span>
-            <span id="canvas-8-low" class="canvasSpan">0</span>
-            <span id="canvas-8-high" class="canvasSpan">0</span>
+            <span id="canvas-8-low" class="canvasSpan">'.$canvas8Low.'</span>
+            <span id="canvas-8-high" class="canvasSpan">'.$canvas8High.'</span>
+            <span id="canvas-8-result" class="canvasSpan">'.$canvas8result.'</span>
         <div class="canvasBlock">
             <canvas id="canvas-9" width="300" height="300"></canvas>
             <div>
@@ -1177,6 +1208,7 @@ function createHtmlDial ($userFields){
             <span id="canvas-9-max" class="canvasSpan">'.$userFields['field_rrratio_max'].'</span>
             <span id="canvas-9-low" class="canvasSpan">'.$userFields['field_rrratio_low'].'</span>
             <span id="canvas-9-high" class="canvasSpan">'.$userFields['field_rrratio_high'].'</span>
+            <span id="canvas-9-result" class="canvasSpan">'.$resultsOfCalculations['field_rrratio'].'</span>
         <div class="canvasBlock">
             <canvas id="canvas-10" width="300" height="300"></canvas>
             <div>
@@ -1187,6 +1219,7 @@ function createHtmlDial ($userFields){
             <span id="canvas-10-min" class="canvasSpan">'.$userFields['field_lhro_min'].'</span>
             <span id="canvas-10-high" class="canvasSpan">'.$userFields['field_lhro_high'].'</span>
             <span id="canvas-10-low" class="canvasSpan">'.$userFields['field_lhro_low'].'</span>
+            <span id="canvas-10-result" class="canvasSpan">'.$resultsOfCalculations['field_lhro'].'</span>
         <div class="canvasBlock">
             <canvas id="canvas-11" width="300" height="300"></canvas>
             <div>
@@ -1197,6 +1230,7 @@ function createHtmlDial ($userFields){
             <span id="canvas-11-min" class="canvasSpan">'.$userFields['field_phro_min'].'</span>
             <span id="canvas-11-high" class="canvasSpan">'.$userFields['field_phro_high'].'</span>
             <span id="canvas-11-low" class="canvasSpan">'.$userFields['field_phro_low'].'</span>
+            <span id="canvas-11-result" class="canvasSpan">'.$resultsOfCalculations['field_phro'].'</span>
         <div class="canvasBlock">
             <canvas id="canvas-12" width="300" height="300"></canvas>
             <div>
@@ -1207,6 +1241,7 @@ function createHtmlDial ($userFields){
             <span id="canvas-12-high" class="canvasSpan">'.$userFields['field_bhro_high'].'</span>
             <span id="canvas-12-min" class="canvasSpan">'.$userFields['field_bhro_min'].'</span>
             <span id="canvas-12-max" class="canvasSpan">'.$userFields['field_bhro_max'].'</span>
+            <span id="canvas-12-result" class="canvasSpan">'.$resultsOfCalculations['field_bhro'].'</span>
     </div>';
 
     return $html;

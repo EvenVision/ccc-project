@@ -209,8 +209,6 @@ third_party_settings:
         id: ''
         description: ''
         required_fields: true
-_core:
-  default_config_hash: hjS374KUYNMh1j8hp1RTE9lQiFWa08EoZMIXsubOL4M
 id: node.estimate.default
 targetEntityType: node
 bundle: estimate

@@ -10,7 +10,7 @@ id: user.user.field_lkq_max
 field_name: field_lkq_max
 entity_type: user
 bundle: user
-label: 'LKQ Max'
+label: 'LKQ Ratio Max'
 description: ''
 required: false
 translatable: false

@@ -1,0 +1,18 @@
+uuid: 04c18cd8-1ed0-45d1-9e02-665e47e73f39
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+id: user.field_new_low
+field_name: field_new_low
+entity_type: user
+type: float
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -9,8 +9,6 @@ third_party_settings:
     available_menus:
       - main
     parent: 'main:'
-_core:
-  default_config_hash: iWI4ru84v8fnTTnGv9fsWGmcjj3YPaL6GFtGCqqFAWM
 name: Estimate
 type: estimate
 description: 'Custom estimate content type'

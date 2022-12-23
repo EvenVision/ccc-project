@@ -22,8 +22,12 @@ dependencies:
     - field.field.user.user.field_lhro_low
     - field.field.user.user.field_lhro_max
     - field.field.user.user.field_lhro_min
+    - field.field.user.user.field_lkq_high
+    - field.field.user.user.field_lkq_low
     - field.field.user.user.field_lkq_max
     - field.field.user.user.field_lkq_min
+    - field.field.user.user.field_new_high
+    - field.field.user.user.field_new_low
     - field.field.user.user.field_new_max
     - field.field.user.user.field_new_min
     - field.field.user.user.field_parts_ratio_high
@@ -54,6 +58,8 @@ dependencies:
     - field.field.user.user.field_throughput_low
     - field.field.user.user.field_throughput_max
     - field.field.user.user.field_throughput_min
+    - field.field.user.user.field_used_high
+    - field.field.user.user.field_used_low
     - field.field.user.user.field_used_max
     - field.field.user.user.field_used_min
     - field.field.user.user.user_picture
@@ -61,8 +67,6 @@ dependencies:
   module:
     - image
     - user
-_core:
-  default_config_hash: 00zr_RBdTjPjBGITD3h4c1ESQZimjdVCcHGt1trLqIY
 id: user.user.compact
 targetEntityType: user
 bundle: user
@@ -98,8 +102,12 @@ hidden:
   field_lhro_low: true
   field_lhro_max: true
   field_lhro_min: true
+  field_lkq_high: true
+  field_lkq_low: true
   field_lkq_max: true
   field_lkq_min: true
+  field_new_high: true
+  field_new_low: true
   field_new_max: true
   field_new_min: true
   field_parts_ratio_high: true
@@ -130,6 +138,8 @@ hidden:
   field_throughput_low: true
   field_throughput_max: true
   field_throughput_min: true
+  field_used_high: true
+  field_used_low: true
   field_used_max: true
   field_used_min: true
   member_for: true

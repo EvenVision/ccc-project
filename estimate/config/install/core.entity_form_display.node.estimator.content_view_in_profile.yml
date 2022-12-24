@@ -8,8 +8,6 @@ dependencies:
     - field.field.node.estimator.field_est_id
     - field.field.node.estimator.field_est_last_name
     - node.type.estimator
-_core:
-  default_config_hash: MIAUCBV0gnKLnVHaLQte6DyeuDK3-rPEOpKQf-vD6HM
 id: node.estimator.content_view_in_profile
 targetEntityType: node
 bundle: estimator

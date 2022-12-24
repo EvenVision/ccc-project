@@ -9,8 +9,6 @@ dependencies:
     - node.type.company
   module:
     - user
-_core:
-  default_config_hash: z1CUULYbEPBq5CVGHYCfMNP0l3i71x-txBn0MdEptIE
 id: node.company.default
 targetEntityType: node
 bundle: company

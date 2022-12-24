@@ -17,8 +17,6 @@ dependencies:
     - node
     - user
     - verf
-_core:
-  default_config_hash: 1bPvUGt8gGop1yKLNgYmFIqTqgdUY72YsbqGFHyovl8
 id: estimate_view_admin
 label: estimate_view_admin
 module: views

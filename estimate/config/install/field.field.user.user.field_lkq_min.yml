@@ -10,7 +10,7 @@ id: user.user.field_lkq_min
 field_name: field_lkq_min
 entity_type: user
 bundle: user
-label: 'LKQ Min'
+label: 'LKQ Ratio Min'
 description: ''
 required: false
 translatable: false

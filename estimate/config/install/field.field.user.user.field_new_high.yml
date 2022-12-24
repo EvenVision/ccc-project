@@ -1,22 +1,22 @@
-uuid: ecb4004a-6990-45d5-95f2-f8bbd308a326
+uuid: b687374b-9a4d-4c74-a9ff-02790d50510f
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.user.field_used_max
+    - field.storage.user.field_new_high
   module:
     - user
-id: user.user.field_used_max
-field_name: field_used_max
+id: user.user.field_new_high
+field_name: field_new_high
 entity_type: user
 bundle: user
-label: 'Used Ratio Max'
+label: 'New Ratio High'
 description: ''
 required: false
 translatable: false
 default_value:
   -
-    value: !!float 1
+    value: 0.6
 default_value_callback: ''
 settings:
   min: null

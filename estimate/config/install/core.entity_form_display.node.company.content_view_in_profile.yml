@@ -7,8 +7,6 @@ dependencies:
     - field.field.node.company.field_com_id_com
     - field.field.node.company.field_square_footage
     - node.type.company
-_core:
-  default_config_hash: ajW_G0NPxjlntlxebdhbRzFeau9S0ZR-Fk3ynbIqL2I
 id: node.company.content_view_in_profile
 targetEntityType: node
 bundle: company

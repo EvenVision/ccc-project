@@ -10,7 +10,7 @@ id: user.user.field_new_min
 field_name: field_new_min
 entity_type: user
 bundle: user
-label: 'New Min'
+label: 'New Ratio Min'
 description: ''
 required: false
 translatable: false

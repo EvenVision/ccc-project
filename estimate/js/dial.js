@@ -15,7 +15,7 @@ jQuery( document ).ajaxComplete(function() {
 function getElements(){
     let arrayCanvas = [];
     let i = 1;
-    for (i;i <= 12;i++){
+    for (i;i <= 14;i++){
         let canvas = document.getElementById("canvas-" + i)
         if (canvas !== null){
             arrayCanvas.push(canvas);
@@ -58,7 +58,7 @@ function drawDials(arrayCanvas){
         let canvasLow = document.getElementById(canvas.id + "-low").textContent ?? 0;
         let canvasHigh = document.getElementById(canvas.id + "-high").textContent ?? 0;
         let canvasMax = document.getElementById(canvas.id + "-max").textContent ?? 0;
-        let canvasResult = document.getElementById(canvas.id + "-result").textContent ?? 0;
+        let canvasResult = document.getElementById(canvas.id + "-value").textContent ?? 0;
 
         let zonesminlow = ((canvasLow / canvasMax * 100) * 75) / 100;
         let zoneslowhigh = (((canvasHigh - canvasLow) / canvasMax * 100) * 75) / 100;

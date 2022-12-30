@@ -161,7 +161,7 @@ function drawDials(arrayCanvas){
             ctx.fillText(canvasResult, x, y - 50);
 
         }
-
+        let pattern;
         let DrawArrow = function (canvasResult,canvasMax) {
             // Set the pointer to max if the result is greater than the max number
             if (parseInt(canvasResult) >= parseInt(canvasMax) )
@@ -177,6 +177,8 @@ function drawDials(arrayCanvas){
                  ctx.translate(middleX, middleY);
                  ctx.rotate(startStr + (step * Math.PI));
                  ctx.drawImage(img,-90, -8);
+                 ctx.globalCompositeOperation = "source-atop";
+                 pattern = ctx.createPattern(img, "no-repeat");
             }
         }
 
@@ -185,6 +187,7 @@ function drawDials(arrayCanvas){
         DrawText(sectionOptions);
         DrawProgress(canvasResult);
         DrawArrow(canvasResult,canvasMax);
+        ctx.strokeStyle = pattern;
     })
 }
 

@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let arrayCanvas = getElements();
     if (!!arrayCanvas) {
         drawDials(arrayCanvas);
+        popupInfo();
     }
 }, false);
 
@@ -9,9 +10,48 @@ jQuery( document ).ajaxComplete(function() {
     let arrayCanvas = getElements();
     if (!!arrayCanvas) {
         drawDials(arrayCanvas);
+        popupInfo();
     }
 });
+function popupInfo(){
 
+    // Popup info button
+    let popupBg = document.querySelector('.popup__bg');
+    let popup = document.querySelector('.popup');
+    let openPopupButtons = document.querySelectorAll('.open-popup');
+    let closePopupButton = document.querySelector('.close-popup');
+
+    var buttonsInfo = document.querySelectorAll('.open-popup');
+    Array.from(buttonsInfo).forEach(function(button){
+        button.addEventListener('click', function(e) {
+            titlePopup.textContent = document.getElementById(e.target.className + "-title").textContent ?? 0;
+            descriptionPopup.textContent = document.getElementById(e.target.className+ "-description").textContent ?? 0;
+        })
+    });
+
+    if (!!openPopupButtons) {
+        openPopupButtons.forEach((button) => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                popupBg.classList.add('active');
+                popup.classList.add('active');
+            })
+        });
+    }
+    if (!!closePopupButton) {
+        closePopupButton.addEventListener('click', () => {
+            popupBg.classList.remove('active');
+            popup.classList.remove('active');
+        });
+    }
+
+    document.addEventListener('click', (e) => {
+        if(e.target === popupBg) {
+            popupBg.classList.remove('active');
+            popup.classList.remove('active');
+        }
+    });
+}
 function getElements(){
     let arrayCanvas = [];
     let i = 1;
@@ -48,8 +88,8 @@ function drawDials(arrayCanvas){
         let counterClockwise = false;
 
         // ticks settings
-        let tickWidth = canvas.width / 100;
-        let tickColor = "#746845";
+        let tickWidth = canvas.width / 200;
+        let tickColor = "#ffffff";
         let tickOffsetFromArc = canvas.width / 40;
         let digitsOffsetFromArc = canvas.width / 12;
 
@@ -81,28 +121,28 @@ function drawDials(arrayCanvas){
                 startAngle: startAngle,
                 endAngle : endBlackAngle,
                 digit : canvasMin,
-                color: bgColor
+                color: "#16213b"
             },
             {
                 endGreenAngle : endGreenAngle,
                 startAngle: endBlackAngle,
                 endAngle: endGreenAngle,
                 digit : canvasLow,
-                color: "#008000"
+                color: "#86d498"
             },
             {
                 endGreenAngle : endGreenAngle,
                 startAngle: endGreenAngle,
                 endAngle: endYellowAngle,
                 digit : canvasHigh,
-                color: "#ffff00"
+                color: "#ec944a"
             },
             {
                 endRedAngle : endRedAngle,
                 startAngle: endYellowAngle,
                 endAngle: endRedAngle,
                 digit : canvasMax,
-                color: "#FF0000"
+                color: "#d43445"
             }
         ];
 
@@ -139,7 +179,7 @@ function drawDials(arrayCanvas){
                 let x = middleX + (radius + digitsOffsetFromArc) * Math.cos(options.endAngle);
                 let y = middleY + (radius + digitsOffsetFromArc) * Math.sin(options.endAngle);
 
-                ctx.font = "12px " + fontFamily;
+                ctx.font = "10px " + fontFamily;
                 ctx.fillStyle = fontColor;
                 ctx.textAlign = "center";
                 ctx.textBaseline = "middle";
@@ -154,7 +194,7 @@ function drawDials(arrayCanvas){
             let x = middleX + (radius + digitsOffsetFromArc) * Math.cos(angle);
             let y = middleY + (radius + digitsOffsetFromArc) * Math.sin(angle);
 
-            ctx.font = "12px " + fontFamily;
+            ctx.font = "10px " + fontFamily;
             ctx.fillStyle = fontColor;
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
@@ -176,7 +216,7 @@ function drawDials(arrayCanvas){
             img.onload = () => {
                  ctx.translate(middleX, middleY);
                  ctx.rotate(startStr + (step * Math.PI));
-                 ctx.drawImage(img,-90, -8);
+                 ctx.drawImage(img,-90, -6);
                  ctx.globalCompositeOperation = "source-atop";
                  pattern = ctx.createPattern(img, "no-repeat");
             }

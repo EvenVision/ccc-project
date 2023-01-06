@@ -1,0 +1,45 @@
+uuid: 9cdad76a-3805-4192-99c3-14f7023d39f1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.metric.field_description
+    - node.type.metric
+  module:
+    - text
+_core:
+  default_config_hash: j-EBRi6jb41B7cNS-GNhf93qpbZNtMdYLL-1HnC5CbM
+id: node.metric.default
+targetEntityType: node
+bundle: metric
+mode: default
+content:
+  field_description:
+    type: text_textarea
+    weight: 1
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 2
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  path: true
+  promote: true
+  sticky: true
+  uid: true

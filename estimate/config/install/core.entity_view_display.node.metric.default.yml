@@ -1,0 +1,28 @@
+uuid: 0411c857-23a3-458b-8050-27b0a65b7d7d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.metric.field_description
+    - node.type.metric
+  module:
+    - text
+    - user
+id: node.metric.default
+targetEntityType: node
+bundle: metric
+mode: default
+content:
+  field_description:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden: {  }

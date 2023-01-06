@@ -1,0 +1,21 @@
+uuid: c28c3a77-c3dd-4ca5-9d62-7ba3c77fc8e1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_description
+    - node.type.metric
+  module:
+    - text
+id: node.metric.field_description
+field_name: field_description
+entity_type: node
+bundle: metric
+label: Description
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

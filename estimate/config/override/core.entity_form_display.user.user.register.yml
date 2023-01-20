@@ -1,9 +1,9 @@
-uuid: 60f77491-80d1-407b-974e-7fe9ad9a86ce
+uuid: null
 langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.user.compact
+    - core.entity_form_mode.user.register
     - field.field.user.user.field_bhro_high
     - field.field.user.user.field_bhro_low
     - field.field.user.user.field_bhro_max
@@ -68,42 +68,196 @@ dependencies:
     - field.field.user.user.field_used_min
     - field.field.user.user.user_picture
   module:
-    - image
+    - field_group
     - user
-id: user.user.compact
+third_party_settings:
+  field_group:
+    group_shops:
+      children:
+        - field_com_name_us
+      label: Shops
+      region: hidden
+      parent_name: ''
+      weight: 9
+      format_type: tab
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        formatter: closed
+        description: ''
+        required_fields: true
+    group_thresholds:
+      children:
+        - field_bhro_high
+        - field_sq_foot_max
+        - field_phro_min
+        - field_rrratio_high
+        - field_rrratio_low
+        - field_rrratio_max
+        - field_rrratio_min
+        - field_severity_high
+        - field_severity_low
+        - field_severity_max
+        - field_severity_min
+        - field_sq_foot_high
+        - field_sq_foot_low
+        - field_sq_foot_min
+        - field_phro_low
+        - field_sratio_high
+        - field_sratio_low
+        - field_sratio_max
+        - field_sratio_min
+        - field_throughput_high
+        - field_throughput_low
+        - field_throughput_max
+        - field_throughput_min
+        - field_used_high
+        - field_used_low
+        - field_used_max
+        - field_phro_max
+        - field_phro_high
+        - field_bhro_low
+        - field_lhro_low
+        - field_bhro_max
+        - field_bhro_min
+        - field_cycle_time_high
+        - field_cycle_time_low
+        - field_cycle_time_max
+        - field_cycle_time_min
+        - field_labor_ratio_high
+        - field_labor_ratio_low
+        - field_labor_ratio_max
+        - field_labor_ratio_min
+        - field_lhro_high
+        - field_lhro_max
+        - field_parts_ratio_min
+        - field_lhro_min
+        - field_lkq_high
+        - field_lkq_low
+        - field_lkq_max
+        - field_lkq_min
+        - field_new_high
+        - field_new_low
+        - field_new_max
+        - field_new_min
+        - field_parts_ratio_high
+        - field_parts_ratio_low
+        - field_parts_ratio_max
+        - field_used_min
+      label: Thresholds
+      region: hidden
+      parent_name: ''
+      weight: 10
+      format_type: tab
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        formatter: closed
+        description: ''
+        required_fields: true
+    group_estimators:
+      children:
+        - field_estimator_id
+      label: Estimators
+      region: hidden
+      parent_name: ''
+      weight: 11
+      format_type: tab
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        formatter: closed
+        description: ''
+        required_fields: true
+id: user.user.register
 targetEntityType: user
 bundle: user
-mode: compact
+mode: register
 content:
-  user_picture:
-    type: image
-    label: above
-    settings:
-      image_link: ''
-      image_style: ''
-      image_loading:
-        attribute: lazy
+  account:
+    weight: 2
+    region: content
+    settings: {  }
     third_party_settings: {  }
+  field_business_address:
+    type: string_textfield
+    weight: 3
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_cycle_time_:
+    type: number
+    weight: 51
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_first_name:
+    type: string_textfield
     weight: 0
     region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_last_name:
+    type: string_textfield
+    weight: 1
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_newusedlkq_max:
+    type: number
+    weight: 81
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_newusedlkq_min:
+    type: number
+    weight: 80
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_number_of_shops:
+    type: string_textfield
+    weight: 4
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_severity:
+    type: number
+    weight: 64
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
 hidden:
+  contact: true
   field_bhro_high: true
   field_bhro_low: true
   field_bhro_max: true
   field_bhro_min: true
-  field_business_address: true
   field_com_name_us: true
   field_cycle_time_high: true
   field_cycle_time_low: true
   field_cycle_time_max: true
   field_cycle_time_min: true
   field_estimator_id: true
-  field_first_name: true
   field_labor_ratio_high: true
   field_labor_ratio_low: true
   field_labor_ratio_max: true
   field_labor_ratio_min: true
-  field_last_name: true
   field_lhro_high: true
   field_lhro_low: true
   field_lhro_max: true
@@ -116,7 +270,6 @@ hidden:
   field_new_low: true
   field_new_max: true
   field_new_min: true
-  field_number_of_shops: true
   field_parts_ratio_high: true
   field_parts_ratio_low: true
   field_parts_ratio_max: true
@@ -149,4 +302,6 @@ hidden:
   field_used_low: true
   field_used_max: true
   field_used_min: true
-  member_for: true
+  language: true
+  timezone: true
+  user_picture: true

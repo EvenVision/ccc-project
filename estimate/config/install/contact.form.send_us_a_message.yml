@@ -1,0 +1,12 @@
+uuid: e2fe3b33-9d02-4ef4-ba3c-164ddc068d57
+langcode: en
+status: true
+dependencies: {  }
+id: send_us_a_message
+label: 'Send Us a Message'
+recipients:
+  - webmaster@example.com
+reply: ''
+weight: 0
+message: ''
+redirect: ''

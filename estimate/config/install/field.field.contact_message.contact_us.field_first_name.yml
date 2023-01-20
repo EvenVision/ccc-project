@@ -1,0 +1,19 @@
+uuid: 48084983-5923-49ac-9a32-11dd44f14533
+langcode: en
+status: true
+dependencies:
+  config:
+    - contact.form.contact_us
+    - field.storage.contact_message.field_first_name
+id: contact_message.contact_us.field_first_name
+field_name: field_first_name
+entity_type: contact_message
+bundle: contact_us
+label: 'First Name'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

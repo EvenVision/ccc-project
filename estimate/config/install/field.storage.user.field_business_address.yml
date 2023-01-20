@@ -1,0 +1,21 @@
+uuid: 584b3a8f-97cd-480f-9d42-0ef4a8d7e77c
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+id: user.field_business_address
+field_name: field_business_address
+entity_type: user
+type: string
+settings:
+  max_length: 255
+  case_sensitive: false
+  is_ascii: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

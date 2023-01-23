@@ -47,7 +47,7 @@ class EstimateConfiguration {
             <div class="block-body-text">
             <p>Send Us a Message</p>
             
-            <div><a class="estimate-button" href="'.$contact_form_send_us_a_message_url.'/contact/send_us_a_message">CALL NOW</a></div>
+            <div><a class="estimate-button" href="'.$contact_form_send_us_a_message_url.'">CALL NOW</a></div>
             </div>
             </div>
             </div>

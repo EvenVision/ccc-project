@@ -1,4 +1,4 @@
-uuid: e17f3b0f-288c-4dc0-95af-197a3495d91f
+uuid: b92a6270-8b3c-471a-92a7-a5e9d1147138
 langcode: en
 status: true
 dependencies:
@@ -7,11 +7,10 @@ dependencies:
 id: user.field_number_of_shops
 field_name: field_number_of_shops
 entity_type: user
-type: string
+type: integer
 settings:
-  max_length: 255
-  case_sensitive: false
-  is_ascii: false
+  unsigned: false
+  size: normal
 module: core
 locked: false
 cardinality: 1

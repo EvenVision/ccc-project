@@ -5,6 +5,7 @@ namespace Drupal\estimate;
 use Drupal\block\Entity\Block;
 use Drupal\block_content\Entity\BlockContent;
 use Drupal\block_content\Entity\BlockContentType;
+use Drupal\Core\Url;
 use Drupal\menu_link_content\Entity\MenuLinkContent;
 use Drupal\node\Entity\Node;
 
@@ -12,6 +13,10 @@ class EstimateConfiguration {
 
     public static function createPages ()
     {
+        // creating Url to contact form "Send us a message"
+        $url = new Url('entity.contact_form.canonical', ['contact_form' => "send_us_a_message"]);
+        $contact_form_send_us_a_message_url = $url->setAbsolute()->toString();
+
         // Create get support page
         $bodyHtmlGetSupport = '
             <div class="body-get-support">
@@ -42,7 +47,7 @@ class EstimateConfiguration {
             <div class="block-body-text">
             <p>Send Us a Message</p>
             
-            <div><a class="estimate-button" href="/contact/send_us_a_message">CALL NOW</a></div>
+            <div><a class="estimate-button" href="'.$contact_form_send_us_a_message_url.'/contact/send_us_a_message">CALL NOW</a></div>
             </div>
             </div>
             </div>

@@ -1,4 +1,4 @@
-uuid: null
+uuid: 3bf3d6ae-ec2f-4cc3-b2b2-4aa7b8afba9d
 langcode: en
 status: true
 dependencies:
@@ -78,7 +78,7 @@ third_party_settings:
       label: Shops
       region: hidden
       parent_name: ''
-      weight: 9
+      weight: 6
       format_type: tab
       format_settings:
         classes: ''
@@ -89,66 +89,66 @@ third_party_settings:
         required_fields: true
     group_thresholds:
       children:
-        - field_bhro_high
-        - field_sq_foot_max
-        - field_phro_min
-        - field_rrratio_high
-        - field_rrratio_low
-        - field_rrratio_max
-        - field_rrratio_min
-        - field_severity_high
-        - field_severity_low
-        - field_severity_max
-        - field_severity_min
-        - field_sq_foot_high
-        - field_sq_foot_low
-        - field_sq_foot_min
-        - field_phro_low
-        - field_sratio_high
-        - field_sratio_low
-        - field_sratio_max
-        - field_sratio_min
-        - field_throughput_high
-        - field_throughput_low
-        - field_throughput_max
-        - field_throughput_min
-        - field_used_high
-        - field_used_low
-        - field_used_max
-        - field_phro_max
-        - field_phro_high
-        - field_bhro_low
-        - field_lhro_low
-        - field_bhro_max
-        - field_bhro_min
-        - field_cycle_time_high
-        - field_cycle_time_low
-        - field_cycle_time_max
         - field_cycle_time_min
-        - field_labor_ratio_high
-        - field_labor_ratio_low
-        - field_labor_ratio_max
-        - field_labor_ratio_min
+        - field_cycle_time_low
+        - field_cycle_time_high
+        - field_cycle_time_max
+        - field_throughput_min
+        - field_throughput_low
+        - field_throughput_high
+        - field_throughput_max
+        - field_sq_foot_min
+        - field_sq_foot_low
+        - field_sq_foot_high
+        - field_sq_foot_max
+        - field_severity_min
+        - field_severity_low
+        - field_severity_high
+        - field_severity_max
+        - field_lhro_min
+        - field_lhro_low
         - field_lhro_high
         - field_lhro_max
         - field_parts_ratio_min
-        - field_lhro_min
-        - field_lkq_high
-        - field_lkq_low
-        - field_lkq_max
-        - field_lkq_min
-        - field_new_high
-        - field_new_low
-        - field_new_max
-        - field_new_min
-        - field_parts_ratio_high
         - field_parts_ratio_low
+        - field_parts_ratio_high
         - field_parts_ratio_max
+        - field_sratio_min
+        - field_sratio_low
+        - field_sratio_high
+        - field_sratio_max
+        - field_new_min
+        - field_new_low
+        - field_new_high
+        - field_new_max
         - field_used_min
+        - field_used_low
+        - field_used_high
+        - field_used_max
+        - field_lkq_min
+        - field_lkq_low
+        - field_lkq_high
+        - field_lkq_max
+        - field_rrratio_min
+        - field_rrratio_low
+        - field_rrratio_high
+        - field_rrratio_max
+        - field_labor_ratio_min
+        - field_labor_ratio_low
+        - field_labor_ratio_high
+        - field_labor_ratio_max
+        - field_phro_min
+        - field_phro_low
+        - field_phro_high
+        - field_phro_max
+        - field_bhro_min
+        - field_bhro_low
+        - field_bhro_high
+        - field_bhro_max
       label: Thresholds
       region: hidden
       parent_name: ''
-      weight: 10
+      weight: 5
       format_type: tab
       format_settings:
         classes: ''
@@ -163,7 +163,7 @@ third_party_settings:
       label: Estimators
       region: hidden
       parent_name: ''
-      weight: 11
+      weight: 7
       format_type: tab
       format_settings:
         classes: ''
@@ -228,11 +228,10 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_number_of_shops:
-    type: string_textfield
+    type: number
     weight: 4
     region: content
     settings:
-      size: 60
       placeholder: ''
     third_party_settings: {  }
   field_severity:

@@ -1498,3 +1498,11 @@ function createNodesMetric() {
         $nodeMetric->save();
     }
 }
+
+function estimate_menu_local_tasks_alter(&$data, $route_name)
+{
+    // hidden nav tab (Create new account, Reset your password, Log in)
+    if ($route_name === "user.register"){
+        unset($data['tabs']);
+    }
+}

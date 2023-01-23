@@ -3,7 +3,6 @@ langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_form_mode.node.content_view_in_profile
     - field.field.user.user.field_bhro_high
     - field.field.user.user.field_bhro_low
     - field.field.user.user.field_bhro_max
@@ -67,11 +66,9 @@ dependencies:
     - field.field.user.user.field_used_max
     - field.field.user.user.field_used_min
     - field.field.user.user.user_picture
-    - image.style.thumbnail
   module:
     - field_group
     - image
-    - inline_entity_form
     - user
 third_party_settings:
   field_group:
@@ -79,17 +76,17 @@ third_party_settings:
       children:
         - field_com_name_us
       label: Shops
-      region: content
       parent_name: ''
-      weight: 10
-      format_type: tab
+      region: content
+      weight: 7
+      format_type: fieldset
       format_settings:
         classes: ''
         show_empty_fields: false
         id: ''
-        formatter: closed
         description: ''
         required_fields: true
+        formatter: closed
     group_thresholds:
       children:
         - field_cycle_time_min
@@ -149,549 +146,780 @@ third_party_settings:
         - field_bhro_high
         - field_bhro_max
       label: Thresholds
-      region: content
       parent_name: ''
-      weight: 9
-      format_type: tab
+      region: content
+      weight: 5
+      format_type: fieldset
       format_settings:
         classes: ''
         show_empty_fields: false
         id: ''
-        formatter: closed
         description: ''
         required_fields: true
+        formatter: closed
     group_estimators:
       children:
         - field_estimator_id
       label: Estimators
-      region: content
       parent_name: ''
-      weight: 11
-      format_type: tab
+      region: content
+      weight: 8
+      format_type: fieldset
       format_settings:
         classes: ''
         show_empty_fields: false
         id: ''
-        formatter: closed
         description: ''
         required_fields: true
+        formatter: closed
 id: user.user.default
 targetEntityType: user
 bundle: user
 mode: default
 content:
   account:
+    settings: {  }
+    third_party_settings: {  }
     weight: 0
     region: content
-    settings: {  }
-    third_party_settings: {  }
   contact:
-    weight: 7
-    region: content
     settings: {  }
     third_party_settings: {  }
-  field_bhro_high:
-    type: number
-    weight: 104
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_bhro_low:
-    type: number
-    weight: 103
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_bhro_max:
-    type: number
-    weight: 105
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_bhro_min:
-    type: number
-    weight: 102
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_business_address:
-    type: string_textfield
-    weight: 4
-    region: content
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-  field_com_name_us:
-    type: inline_entity_form_complex
-    weight: 27
-    region: content
-    settings:
-      form_mode: content_view_in_profile
-      override_labels: false
-      label_singular: ''
-      label_plural: ''
-      allow_new: true
-      allow_existing: true
-      match_operator: CONTAINS
-      allow_duplicate: false
-      collapsible: false
-      collapsed: false
-      revision: false
-    third_party_settings: {  }
-  field_cycle_time_:
-    type: number
-    weight: 51
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_cycle_time_high:
-    type: number
-    weight: 52
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_cycle_time_low:
-    type: number
-    weight: 51
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_cycle_time_max:
-    type: number
-    weight: 53
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_cycle_time_min:
-    type: number
-    weight: 50
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_estimator_id:
-    type: inline_entity_form_complex
-    weight: 6
-    region: content
-    settings:
-      form_mode: content_view_in_profile
-      override_labels: false
-      label_singular: ''
-      label_plural: ''
-      allow_new: true
-      allow_existing: true
-      match_operator: CONTAINS
-      allow_duplicate: false
-      collapsible: false
-      collapsed: false
-      revision: false
-    third_party_settings: {  }
-  field_first_name:
-    type: string_textfield
-    weight: 2
-    region: content
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-  field_labor_ratio_high:
-    type: number
-    weight: 96
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_labor_ratio_low:
-    type: number
-    weight: 95
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_labor_ratio_max:
-    type: number
-    weight: 97
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_labor_ratio_min:
-    type: number
-    weight: 94
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_last_name:
-    type: string_textfield
     weight: 3
     region: content
+  field_bhro_high:
+    type: number_decimal
+    label: above
     settings:
-      size: 60
-      placeholder: ''
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
     third_party_settings: {  }
-  field_lhro_high:
-    type: number
-    weight: 68
+    weight: 104
     region: content
+  field_bhro_low:
+    type: number_decimal
+    label: above
     settings:
-      placeholder: ''
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
     third_party_settings: {  }
-  field_lhro_low:
-    type: number
-    weight: 67
+    weight: 103
     region: content
+  field_bhro_max:
+    type: number_decimal
+    label: above
     settings:
-      placeholder: ''
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
     third_party_settings: {  }
-  field_lhro_max:
-    type: number
-    weight: 69
+    weight: 105
     region: content
+  field_bhro_min:
+    type: number_decimal
+    label: above
     settings:
-      placeholder: ''
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
     third_party_settings: {  }
-  field_lhro_min:
-    type: number
-    weight: 66
+    weight: 102
     region: content
+  field_business_address:
+    type: string
+    label: above
     settings:
-      placeholder: ''
+      link_to_entity: false
     third_party_settings: {  }
-  field_lkq_high:
-    type: number
-    weight: 88
+    weight: 3
     region: content
+  field_com_name_us:
+    type: entity_reference_label
+    label: above
     settings:
-      placeholder: ''
+      link: true
     third_party_settings: {  }
-  field_lkq_low:
-    type: number
-    weight: 87
+    weight: 27
     region: content
+  field_cycle_time_:
+    type: number_decimal
+    label: above
     settings:
-      placeholder: ''
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
     third_party_settings: {  }
-  field_lkq_max:
-    type: number
-    weight: 89
+    weight: 51
     region: content
+  field_cycle_time_high:
+    type: number_decimal
+    label: above
     settings:
-      placeholder: ''
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
     third_party_settings: {  }
-  field_lkq_min:
-    type: number
-    weight: 86
+    weight: 52
     region: content
+  field_cycle_time_low:
+    type: number_decimal
+    label: above
     settings:
-      placeholder: ''
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
     third_party_settings: {  }
-  field_new_high:
-    type: number
-    weight: 80
+    weight: 51
     region: content
+  field_cycle_time_max:
+    type: number_decimal
+    label: above
     settings:
-      placeholder: ''
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
     third_party_settings: {  }
-  field_new_low:
-    type: number
-    weight: 79
+    weight: 53
     region: content
+  field_cycle_time_min:
+    type: number_decimal
+    label: above
     settings:
-      placeholder: ''
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
     third_party_settings: {  }
-  field_new_max:
-    type: number
-    weight: 81
+    weight: 50
     region: content
+  field_estimator_id:
+    type: entity_reference_label
+    label: above
     settings:
-      placeholder: ''
+      link: true
     third_party_settings: {  }
-  field_new_min:
-    type: number
-    weight: 78
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_newusedlkq_max:
-    type: number
-    weight: 81
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_newusedlkq_min:
-    type: number
-    weight: 80
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_number_of_shops:
-    type: string_textfield
-    weight: 5
-    region: content
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-  field_parts_ratio_high:
-    type: number
-    weight: 72
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_parts_ratio_low:
-    type: number
-    weight: 71
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_parts_ratio_max:
-    type: number
-    weight: 73
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_parts_ratio_min:
-    type: number
-    weight: 70
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_phro_high:
-    type: number
-    weight: 100
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_phro_low:
-    type: number
-    weight: 99
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_phro_max:
-    type: number
-    weight: 101
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_phro_min:
-    type: number
-    weight: 98
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_rrratio_high:
-    type: number
-    weight: 92
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_rrratio_low:
-    type: number
-    weight: 91
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_rrratio_max:
-    type: number
-    weight: 93
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_rrratio_min:
-    type: number
-    weight: 90
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_severity:
-    type: number
-    weight: 64
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_severity_high:
-    type: number
-    weight: 64
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_severity_low:
-    type: number
-    weight: 63
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_severity_max:
-    type: number
-    weight: 65
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_severity_min:
-    type: number
-    weight: 62
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_sq_foot_high:
-    type: number
-    weight: 60
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_sq_foot_low:
-    type: number
-    weight: 59
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_sq_foot_max:
-    type: number
-    weight: 61
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_sq_foot_min:
-    type: number
-    weight: 58
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_sratio_high:
-    type: number
-    weight: 76
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_sratio_low:
-    type: number
-    weight: 75
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_sratio_max:
-    type: number
-    weight: 77
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_sratio_min:
-    type: number
-    weight: 74
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_throughput_high:
-    type: number
-    weight: 56
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_throughput_low:
-    type: number
-    weight: 55
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_throughput_max:
-    type: number
-    weight: 57
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_throughput_min:
-    type: number
-    weight: 54
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_used_high:
-    type: number
-    weight: 84
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_used_low:
-    type: number
-    weight: 83
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_used_max:
-    type: number
-    weight: 85
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_used_min:
-    type: number
-    weight: 82
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  language:
     weight: 6
     region: content
-    settings: {  }
+  field_first_name:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
     third_party_settings: {  }
-  timezone:
-    weight: 8
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  user_picture:
-    type: image_image
     weight: 1
     region: content
+  field_labor_ratio_high:
+    type: number_decimal
+    label: above
     settings:
-      progress_indicator: throbber
-      preview_image_style: thumbnail
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
     third_party_settings: {  }
+    weight: 96
+    region: content
+  field_labor_ratio_low:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 95
+    region: content
+  field_labor_ratio_max:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 97
+    region: content
+  field_labor_ratio_min:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 94
+    region: content
+  field_last_name:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_lhro_high:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 68
+    region: content
+  field_lhro_low:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 67
+    region: content
+  field_lhro_max:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 69
+    region: content
+  field_lhro_min:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 66
+    region: content
+  field_lkq_high:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 88
+    region: content
+  field_lkq_low:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 87
+    region: content
+  field_lkq_max:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 89
+    region: content
+  field_lkq_min:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 86
+    region: content
+  field_new_high:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 80
+    region: content
+  field_new_low:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 79
+    region: content
+  field_new_max:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 81
+    region: content
+  field_new_min:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 78
+    region: content
+  field_newusedlkq_max:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 81
+    region: content
+  field_newusedlkq_min:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 80
+    region: content
+  field_number_of_shops:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_parts_ratio_high:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 72
+    region: content
+  field_parts_ratio_low:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 71
+    region: content
+  field_parts_ratio_max:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 73
+    region: content
+  field_parts_ratio_min:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 70
+    region: content
+  field_phro_high:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 100
+    region: content
+  field_phro_low:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 99
+    region: content
+  field_phro_max:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  field_phro_min:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 98
+    region: content
+  field_rrratio_high:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 92
+    region: content
+  field_rrratio_low:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 91
+    region: content
+  field_rrratio_max:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 93
+    region: content
+  field_rrratio_min:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 90
+    region: content
+  field_severity:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 64
+    region: content
+  field_severity_high:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 64
+    region: content
+  field_severity_low:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 63
+    region: content
+  field_severity_max:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 65
+    region: content
+  field_severity_min:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 62
+    region: content
+  field_sq_foot_high:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 60
+    region: content
+  field_sq_foot_low:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 59
+    region: content
+  field_sq_foot_max:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 61
+    region: content
+  field_sq_foot_min:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 58
+    region: content
+  field_sratio_high:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 76
+    region: content
+  field_sratio_low:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 75
+    region: content
+  field_sratio_max:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 77
+    region: content
+  field_sratio_min:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 74
+    region: content
+  field_throughput_high:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 56
+    region: content
+  field_throughput_low:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 55
+    region: content
+  field_throughput_max:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 57
+    region: content
+  field_throughput_min:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 54
+    region: content
+  field_used_high:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 84
+    region: content
+  field_used_low:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 83
+    region: content
+  field_used_max:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 85
+    region: content
+  field_used_min:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 82
+    region: content
+  language:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  member_for:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 6
+    region: content
+  timezone:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  user_picture:
+    type: image
+    label: above
+    settings:
+      image_link: ''
+      image_style: ''
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 0
+    region: content
 hidden: {  }

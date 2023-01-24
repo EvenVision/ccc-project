@@ -1,0 +1,57 @@
+uuid: ac3e991d-340e-450a-a075-22e2f25d9353
+langcode: en
+status: true
+dependencies:
+  config:
+    - contact.form.send_us_a_message
+    - field.field.contact_message.send_us_a_message.field_email
+    - field.field.contact_message.send_us_a_message.field_name
+    - field.field.contact_message.send_us_a_message.field_phone
+    - field.field.contact_message.send_us_a_message.field_shop_name
+id: contact_message.send_us_a_message.default
+targetEntityType: contact_message
+bundle: send_us_a_message
+mode: default
+content:
+  field_email:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_name:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_phone:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_shop_name:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  message:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 4
+    region: content
+hidden: {  }

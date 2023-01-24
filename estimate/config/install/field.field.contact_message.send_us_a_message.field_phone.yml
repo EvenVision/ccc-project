@@ -1,0 +1,23 @@
+uuid: 20db2801-d359-483f-9195-8de4da3321c6
+langcode: en
+status: true
+dependencies:
+  config:
+    - contact.form.send_us_a_message
+    - field.storage.contact_message.field_phone
+id: contact_message.send_us_a_message.field_phone
+field_name: field_phone
+entity_type: contact_message
+bundle: send_us_a_message
+label: Phone
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

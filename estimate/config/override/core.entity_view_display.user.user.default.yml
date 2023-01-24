@@ -7,16 +7,19 @@ dependencies:
     - field.field.user.user.field_bhro_low
     - field.field.user.user.field_bhro_max
     - field.field.user.user.field_bhro_min
+    - field.field.user.user.field_business_address
     - field.field.user.user.field_com_name_us
     - field.field.user.user.field_cycle_time_high
     - field.field.user.user.field_cycle_time_low
     - field.field.user.user.field_cycle_time_max
     - field.field.user.user.field_cycle_time_min
     - field.field.user.user.field_estimator_id
+    - field.field.user.user.field_first_name
     - field.field.user.user.field_labor_ratio_high
     - field.field.user.user.field_labor_ratio_low
     - field.field.user.user.field_labor_ratio_max
     - field.field.user.user.field_labor_ratio_min
+    - field.field.user.user.field_last_name
     - field.field.user.user.field_lhro_high
     - field.field.user.user.field_lhro_low
     - field.field.user.user.field_lhro_max
@@ -29,6 +32,7 @@ dependencies:
     - field.field.user.user.field_new_low
     - field.field.user.user.field_new_max
     - field.field.user.user.field_new_min
+    - field.field.user.user.field_number_of_shops
     - field.field.user.user.field_parts_ratio_high
     - field.field.user.user.field_parts_ratio_low
     - field.field.user.user.field_parts_ratio_max
@@ -74,7 +78,7 @@ third_party_settings:
       label: Shops
       parent_name: ''
       region: content
-      weight: 3
+      weight: 7
       format_type: fieldset
       format_settings:
         classes: ''
@@ -144,7 +148,7 @@ third_party_settings:
       label: Thresholds
       parent_name: ''
       region: content
-      weight: 1
+      weight: 5
       format_type: fieldset
       format_settings:
         classes: ''
@@ -159,7 +163,7 @@ third_party_settings:
       label: Estimators
       parent_name: ''
       region: content
-      weight: 4
+      weight: 8
       format_type: fieldset
       format_settings:
         classes: ''
@@ -226,6 +230,14 @@ content:
       prefix_suffix: true
     third_party_settings: {  }
     weight: 102
+    region: content
+  field_business_address:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 3
     region: content
   field_com_name_us:
     type: entity_reference_label
@@ -298,6 +310,14 @@ content:
     third_party_settings: {  }
     weight: 6
     region: content
+  field_first_name:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
   field_labor_ratio_high:
     type: number_decimal
     label: above
@@ -341,6 +361,14 @@ content:
       prefix_suffix: true
     third_party_settings: {  }
     weight: 94
+    region: content
+  field_last_name:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 2
     region: content
   field_lhro_high:
     type: number_decimal
@@ -495,6 +523,15 @@ content:
       prefix_suffix: true
     third_party_settings: {  }
     weight: 80
+    region: content
+  field_number_of_shops:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 4
     region: content
   field_parts_ratio_high:
     type: number_decimal
@@ -867,7 +904,7 @@ content:
   member_for:
     settings: {  }
     third_party_settings: {  }
-    weight: 2
+    weight: 6
     region: content
   timezone:
     settings: {  }

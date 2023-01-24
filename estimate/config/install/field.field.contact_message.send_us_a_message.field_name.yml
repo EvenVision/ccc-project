@@ -1,0 +1,19 @@
+uuid: 10025000-57fc-40a5-84d5-20e136677231
+langcode: en
+status: true
+dependencies:
+  config:
+    - contact.form.send_us_a_message
+    - field.storage.contact_message.field_name
+id: contact_message.send_us_a_message.field_name
+field_name: field_name
+entity_type: contact_message
+bundle: send_us_a_message
+label: Name
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

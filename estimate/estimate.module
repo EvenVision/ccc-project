@@ -15,6 +15,7 @@ use Drupal\user\Entity\User;
 use Drupal\views\ViewExecutable;
 
 use Drupal\estimate\EstimateParseXML as XML;
+use Drupal\estimate\EstimateConfiguration;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -84,6 +85,10 @@ const METRICS = array(
 const CUSTOM_USER_FIELDS = array(
     'field_com_name_us',
     'field_estimator_id',
+    'field_last_name',
+    'field_first_name',
+    'field_business_address',
+    'field_number_of_shops',
 
     'field_throughput_low',
     'field_throughput_high',
@@ -178,6 +183,11 @@ function estimate_modules_installed() {
 
     // adds default value in custom fields for admin account
     setValueFields();
+
+    EstimateConfiguration::createPages();
+    EstimateConfiguration::createMenu();
+    EstimateConfiguration::createCustomBlock();
+
     // create nodes for info button
     createNodesMetric();
 }
@@ -214,6 +224,10 @@ function estimate_uninstall(){
         }
     }
 
+    EstimateConfiguration::removeCustomBlock();
+    EstimateConfiguration::removeMenu();
+    EstimateConfiguration::removeForm();
+
     //Purging fields data after uninstalling module.
     if (!empty(\Drupal::state()->get('field.storage.deleted'))){
         field_purge_batch(1000);
@@ -238,11 +252,24 @@ function check_admin(){
     return in_array('administrator', $account->getRoles());
 }
 
+function estimate_form_alter(&$form, FormStateInterface $form_state, $form_id){
+    if ($form_id == "contact_message_contact_us_form"){
+        $form['actions']['submit']['#value'] = t("Submit");
+    }
+}
+
+function estimate_form_user_register_form_alter(&$form, FormStateInterface $form_state, $form_id){
+    $form['actions']['submit']['#value'] = t("Submit");
+    unset($form['account']['mail']['#description']);
+}
+
 function estimate_form_user_form_alter(&$form, FormStateInterface $form_state, $form_id){
     if (check_admin()) return;
 
     foreach (\CUSTOM_USER_FIELDS as $form_field){
-        $form[$form_field]['#access'] = false;
+        if ($form_field !== 'field_estimator_id' && $form_field !== 'field_com_name_us' && $form_field !== 'field_last_name' && $form_field !== 'field_first_name' && $form_field !== 'field_business_address' && $form_field !== 'field_number_of_shops') {
+            $form[$form_field]['#access'] = false;
+        }
     }
 }
 
@@ -1127,7 +1154,7 @@ function setValueFields() {
     $definitions = \Drupal::service('entity_field.manager')->getFieldDefinitions('user', 'user');
 
     foreach (\CUSTOM_USER_FIELDS as $field) {
-        if ($field !== 'field_estimator_id' and $field !== 'field_com_name_us') {
+        if ($field !== 'field_estimator_id' && $field !== 'field_com_name_us' && $field !== 'field_last_name' && $field !== 'field_first_name' && $field !== 'field_business_address' && $field !== 'field_number_of_shops') {
             if (isset($definitions[$field])) {
                 $result = $definitions[$field]->getDefaultValueLiteral();
                 $account->set($field, $result[0]['value']);
@@ -1469,5 +1496,13 @@ function createNodesMetric() {
         ]);
         $nodeMetric->set('path', $metric['path']);
         $nodeMetric->save();
+    }
+}
+
+function estimate_menu_local_tasks_alter(&$data, $route_name)
+{
+    // hidden nav tab (Create new account, Reset your password, Log in)
+    if ($route_name === "user.register"){
+        unset($data['tabs']);
     }
 }

@@ -13,45 +13,45 @@ class EstimateConfiguration {
 
     public static function createPages ()
     {
-        // creating Url to contact form "Send us a message"
-        $url = new Url('entity.contact_form.canonical', ['contact_form' => "send_us_a_message"]);
-        $contact_form_send_us_a_message_url = $url->setAbsolute()->toString();
-
         // Create get support page
+        // Create Url to contact form "Send us a message"
+        $url_contact_form = new Url('entity.contact_form.canonical', ['contact_form' => "send_us_a_message"]);
+        $contact_form_send_us_a_message_url = $url_contact_form->setAbsolute()->toString();
+
         $bodyHtmlGetSupport = '
-            <div class="body-get-support">
-            <div class="container-get-support">
-            <div class="block-image">
-            <div class="bg-image">
-            <div class="image-phone">&nbsp;</div>
-            </div>
-            </div>
+                <div class="body-get-support">
+                    <div class="container-get-support">
+                        <div class="block-image">
+                            <div class="bg-image">
+                                <div class="image-email"></div>
+                            </div>
+                        </div>
+                
+                        <div class="block-body">
+                            <div class="block-body-text">
+                                <p>Send Us a Message</p>
+                
+                                <div><a class="estimate-button" href="'.$contact_form_send_us_a_message_url.'">Send a Message</a></div>
+                            </div>
+                        </div>
+                    </div>
             
-            <div class="block-body">
-            <div class="block-body-text">
-            <p>Give Us a Call</p>
-            
-            <div><a class="estimate-button" href="tel:2066501008">CALL NOW</a></div>
-            </div>
-            </div>
-            </div>
-            
-            <div class="container-get-support">
-            <div class="block-image">
-            <div class="bg-image">
-            <div class="image-email">&nbsp;</div>
-            </div>
-            </div>
-            
-            <div class="block-body">
-            <div class="block-body-text">
-            <p>Send Us a Message</p>
-            
-            <div><a class="estimate-button" href="'.$contact_form_send_us_a_message_url.'">CALL NOW</a></div>
-            </div>
-            </div>
-            </div>
-            </div>
+                    <div class="container-get-support">
+                        <div class="block-image">
+                            <div class="bg-image">
+                                <div class="image-phone"></div>
+                            </div>
+                        </div>
+                
+                        <div class="block-body">
+                            <div class="block-body-text">
+                                <p>Give Us a Call</p>
+                
+                                <div><a class="estimate-button" href="tel:2066501008">Give Us a Call</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>   
         ';
         $body1[] = [
             'value' => $bodyHtmlGetSupport,
@@ -67,6 +67,10 @@ class EstimateConfiguration {
         $nodeGetSupportPage->save();
 
         // Create home page
+        // Create URL to page
+        $url_register_page = new Url('user.register');
+        $user_register_page_url = $url_register_page->setAbsolute()->toString();
+
         $bodyHtmlHomePage = '
             <div class="container">
             <div class="region_head_text">
@@ -74,7 +78,7 @@ class EstimateConfiguration {
             </div>
             <div class="list_item">
             <div class="list_number">1</div>
-            <div class="list_text">See the metrics insurers use to grade your shop and optimize them.</div>
+            <div class="list_text">See the metrics insurers use to grade your shop, so you can optimize them.</div>
             </div>
             <div class="list_item">
             <div class="list_number">2</div>
@@ -84,7 +88,7 @@ class EstimateConfiguration {
             <div class="list_number">3</div>
             <div class="list_text">See actionable efficiency measures for your employees &amp; operation so you can stop leaking cash fast &amp; grow your profits.</div>
             </div>
-            <div class="region_button"><a class="estimate-button" href="/user/register">REGISTER NOW</a>&nbsp;</div>
+            <div class="region_button"><a class="estimate-button" href="'.$user_register_page_url.'">GET A DEMO</a>&nbsp;</div>
             </div>
             ';
         $body2[] = [
@@ -123,7 +127,7 @@ class EstimateConfiguration {
             'type' => 'estimate',
             'langcode' => 'en',
             'body' => [
-                'value' => '<p>Copyright &copy; Collision Dashboard 2022</p>',
+                'value' => '<p>Copyright &copy; Collision Dashboard '.date("Y").'</p>',
                 'format' => 'full_html',
             ],
         ]);
@@ -145,7 +149,7 @@ class EstimateConfiguration {
             'type' => 'estimate',
             'langcode' => 'en',
             'body' => [
-                'value' => '<p>Created by EvenVision</p>',
+                'value' => '<p><a href="https://www.evenvision.com">Created by EvenVision</a></p>',
                 'format' => 'full_html',
             ],
         ]);
@@ -162,6 +166,9 @@ class EstimateConfiguration {
         $placed_block2->save();
 
         // create block Home Page Title
+        $url_register_page = new Url('user.register');
+        $user_register_page_url = $url_register_page->setAbsolute()->toString();
+
         $blockHomePageTitle = BlockContent::create([
             'info' => 'Home Page Title',
             'type' => 'estimate',
@@ -172,7 +179,7 @@ class EstimateConfiguration {
                     <div class="block-right">
                     <div class="body-title-register">
                     <h1>Find opportunities for more profit in your shop. Grow your income now.</h1>
-                    <p><a class="estimate-button" href="/user/register">REGISTER NOW</a></p>
+                    <p><a class="estimate-button" href="'.$user_register_page_url.'">GET A DEMO</a></p>
                     </div>
                     </div>
                     </div>',
@@ -209,9 +216,9 @@ class EstimateConfiguration {
                     <div class="block-left">&nbsp;</div>
                     <div class="block-right">
                     <div class="body-title-register">
-                    <h1>Register</h1>
+                    <h1>Get a Demo</h1>
                     <p>Collision Dashboard will give you clear actionable metrics that allow you to grow your income, find &amp; smooth out friction points in your operation, and improve the most important numbers that insurers use to evaluate your shop.</p>
-                    <p>Register below to get started!</p>
+                    <p>How to get started!</p>
                     </div>
                     </div>
                     </div>',
@@ -365,7 +372,7 @@ class EstimateConfiguration {
         $menu_link_1->save();
 
         $menu_link_2 = MenuLinkContent::create([
-            'title' => 'Register Now',
+            'title' => 'Get a Demo',
             'link' => ['uri' => 'internal:/user/register'],
             'menu_name' => 'estimate-main-navigation-menu',
             'expanded' => TRUE,

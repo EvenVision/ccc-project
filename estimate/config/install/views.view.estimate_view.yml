@@ -3215,7 +3215,7 @@ display:
             placeholder: null
           is_grouped: true
           group_info:
-            label: 'PickUp Date/Time '
+            label: 'Date Range'
             description: ''
             identifier: field_pickup_dt_value
             optional: true
@@ -3424,7 +3424,7 @@ display:
           exposed: true
           expose:
             operator_id: field_com_name_es_target_id_verf_op
-            label: 'Company Name '
+            label: Shop
             description: ''
             use_operator: false
             operator: field_com_name_es_target_id_verf_op
@@ -3458,6 +3458,7 @@ display:
             estimate: '0'
             estimator: '0'
             insurance_company: '0'
+            metric: '0'
             page: '0'
         field_insurance_company_target_id_verf:
           id: field_insurance_company_target_id_verf
@@ -3642,6 +3643,19 @@ display:
           content:
             value: 'All date'
             format: basic_html
+          tokenize: false
+        area_1:
+          id: area_1
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: 'hidden content'
+          plugin_id: text
+          empty: false
+          content:
+            value: "<style>\r\n.view-content {\r\n border: 0; clip: rect(0 0 0 0); height: 1px; margin: -1px; overflow: hidden; padding: 0; position: absolute; width: 1px;\r\n}\r\n</style>"
+            format: full_html
           tokenize: false
       footer:
         area:

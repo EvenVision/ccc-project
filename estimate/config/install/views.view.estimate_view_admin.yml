@@ -3280,7 +3280,7 @@ display:
             placeholder: null
           is_grouped: true
           group_info:
-            label: 'PickUp Date/Time'
+            label: 'Date Range'
             description: ''
             identifier: field_pickup_dt_value
             optional: true
@@ -3465,7 +3465,7 @@ display:
           exposed: true
           expose:
             operator_id: field_com_name_es_target_id_verf_op
-            label: 'Company Name '
+            label: Shop
             description: ''
             use_operator: false
             operator: field_com_name_es_target_id_verf_op
@@ -3498,8 +3498,9 @@ display:
             article: '0'
             estimate: '0'
             estimator: '0'
-            page: '0'
             insurance_company: '0'
+            metric: '0'
+            page: '0'
         field_insurance_company_target_id_verf:
           id: field_insurance_company_target_id_verf
           table: node__field_insurance_company

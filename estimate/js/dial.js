@@ -211,8 +211,7 @@ function drawDials(arrayCanvas){
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
 
-            let textProgress = canvasResult + " units";
-            ctx.fillText(textProgress, x, y - 25);
+            ctx.fillText(canvasResult, x, y - 25);
 
         }
         let pattern;

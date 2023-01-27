@@ -253,9 +253,28 @@ function check_admin(){
 }
 
 function estimate_form_alter(&$form, FormStateInterface $form_state, $form_id){
-    if ($form_id == "contact_message_contact_us_form"){
-        $form['actions']['submit']['#value'] = t("Submit");
+    switch ($form_id) {
+        case 'user_login_form':
+            // Alter login form and add own custom submit handler.
+            $form['#submit'][] = '_estimate_user_login_form_submit';
+            break;
+        case 'contact_message_contact_us_form':
+            // Change the name button to "Submit"
+            $form['actions']['submit']['#value'] = t("Submit");
+            break;
+        case 'entity.user.edit_form':
+            // setRedirect
+            $form['#submit'][] = $form_state->setRedirect('entity.user.edit_form');
+            break;
     }
+}
+
+/**
+ * Custom submit handler for login form.
+ */
+function _estimate_user_login_form_submit($form, FormStateInterface $form_state) {
+    // Set redirect to log in form.
+    $form_state->setRedirect('view.estimate_view_admin.page_1');
 }
 
 function estimate_form_user_register_form_alter(&$form, FormStateInterface $form_state, $form_id){
@@ -267,10 +286,12 @@ function estimate_form_user_form_alter(&$form, FormStateInterface $form_state, $
     if (check_admin()) return;
 
     foreach (\CUSTOM_USER_FIELDS as $form_field){
-        if ($form_field !== 'field_estimator_id' && $form_field !== 'field_com_name_us' && $form_field !== 'field_last_name' && $form_field !== 'field_first_name' && $form_field !== 'field_business_address' && $form_field !== 'field_number_of_shops') {
+        if ($form_field !== 'field_last_name' && $form_field !== 'field_first_name' && $form_field !== 'field_business_address' && $form_field !== 'field_number_of_shops') {
             $form[$form_field]['#access'] = false;
         }
     }
+    $form['user_picture']['#access'] = false;
+    $form['contact']['#access'] = false;
 }
 
 function estimate_node_access(\Drupal\node\NodeInterface $node, $op, \Drupal\Core\Session\AccountInterface $account) {
@@ -1501,8 +1522,35 @@ function createNodesMetric() {
 
 function estimate_menu_local_tasks_alter(&$data, $route_name)
 {
-    // hidden nav tab (Create new account, Reset your password, Log in)
-    if ($route_name === "user.register"){
+    // hidden tabs on page register and user edit
+    if ($route_name === "user.register" || $route_name === "entity.user.edit_form"){
         unset($data['tabs']);
+    }
+}
+
+/**
+ *  Redirect from "My account" to "Edit User"
+ */
+function estimate_link_alter(&$variables) {
+    if ($variables['text'] === "My account"){
+        $account = \Drupal::currentUser();
+        $user_edit_url = new Drupal\Core\Url('entity.user.edit_form',['user' => $account->id()]);
+        $variables['url'] = $user_edit_url;
+    }
+}
+
+/**
+ *  Hide registration link and log in for the authenticated user.
+ */
+function estimate_preprocess_menu(&$variables) {
+    $items = $variables['items'];
+    foreach ($items as $key => &$item) {
+        // Hide  links if the user is logged in.
+        if ($item['url']->getRouteName() == 'user.register' && \Drupal::currentUser()->isAuthenticated()) {
+            unset($variables['items'][$key]);
+        }
+        if ($item['url']->getRouteName() == 'user.login' && \Drupal::currentUser()->isAuthenticated()) {
+            unset($variables['items'][$key]);
+        }
     }
 }

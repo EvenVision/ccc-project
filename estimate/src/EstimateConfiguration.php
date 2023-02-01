@@ -29,8 +29,6 @@ class EstimateConfiguration {
                 
                         <div class="block-body">
                             <div class="block-body-text">
-                                <p>Send Us a Message</p>
-                
                                 <div><a class="estimate-button" href="'.$contact_form_send_us_a_message_url.'">Send a Message</a></div>
                             </div>
                         </div>
@@ -44,9 +42,7 @@ class EstimateConfiguration {
                         </div>
                 
                         <div class="block-body">
-                            <div class="block-body-text">
-                                <p>Give Us a Call</p>
-                
+                            <div class="block-body-text">              
                                 <div><a class="estimate-button" href="tel:2066501008">Give Us a Call</a></div>
                             </div>
                         </div>
@@ -178,8 +174,8 @@ class EstimateConfiguration {
                     <div class="section-title-home-page height-title-530px align-items-center">
                     <div class="block-right">
                     <div class="body-title-register">
-                    <h1>Find opportunities for more profit in your shop. Grow your income now.</h1>
-                    <p><a class="estimate-button" href="'.$user_register_page_url.'">GET A DEMO</a></p>
+                    <h1>Collision Dashboard will give you clear actionable metrics that allow you to grow your income, find & smooth out friction points in your operation, and improve the most important numbers that insurers use to evaluate your shop. Complete the form below to get a demo!</h1>
+                    <p><a class="estimate-button" href="'.$user_register_page_url.'">Get a Demo</a></p>
                     </div>
                     </div>
                     </div>',

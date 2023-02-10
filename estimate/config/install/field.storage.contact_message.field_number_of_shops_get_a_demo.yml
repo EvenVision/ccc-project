@@ -1,14 +1,16 @@
-uuid: 6f7bae49-7153-438e-bbef-9d088de336d6
+uuid: ceb4d395-9b9c-4449-872b-6213fbd3b427
 langcode: en
 status: true
 dependencies:
   module:
     - contact
-id: contact_message.field_email
-field_name: field_email
+id: contact_message.field_number_of_shops_get_a_demo
+field_name: field_number_of_shops_get_a_demo
 entity_type: contact_message
-type: email
-settings: {  }
+type: integer
+settings:
+  unsigned: false
+  size: normal
 module: core
 locked: false
 cardinality: 1

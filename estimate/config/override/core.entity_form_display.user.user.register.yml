@@ -8,19 +8,16 @@ dependencies:
     - field.field.user.user.field_bhro_low
     - field.field.user.user.field_bhro_max
     - field.field.user.user.field_bhro_min
-    - field.field.user.user.field_business_address
     - field.field.user.user.field_com_name_us
     - field.field.user.user.field_cycle_time_high
     - field.field.user.user.field_cycle_time_low
     - field.field.user.user.field_cycle_time_max
     - field.field.user.user.field_cycle_time_min
     - field.field.user.user.field_estimator_id
-    - field.field.user.user.field_first_name
     - field.field.user.user.field_labor_ratio_high
     - field.field.user.user.field_labor_ratio_low
     - field.field.user.user.field_labor_ratio_max
     - field.field.user.user.field_labor_ratio_min
-    - field.field.user.user.field_last_name
     - field.field.user.user.field_lhro_high
     - field.field.user.user.field_lhro_low
     - field.field.user.user.field_lhro_max
@@ -33,7 +30,6 @@ dependencies:
     - field.field.user.user.field_new_low
     - field.field.user.user.field_new_max
     - field.field.user.user.field_new_min
-    - field.field.user.user.field_number_of_shops
     - field.field.user.user.field_parts_ratio_high
     - field.field.user.user.field_parts_ratio_low
     - field.field.user.user.field_parts_ratio_max
@@ -89,62 +85,62 @@ third_party_settings:
         required_fields: true
     group_thresholds:
       children:
-        - field_cycle_time_min
-        - field_cycle_time_low
-        - field_cycle_time_high
-        - field_cycle_time_max
-        - field_throughput_min
-        - field_throughput_low
-        - field_throughput_high
-        - field_throughput_max
-        - field_sq_foot_min
-        - field_sq_foot_low
-        - field_sq_foot_high
+        - field_bhro_high
         - field_sq_foot_max
-        - field_severity_min
-        - field_severity_low
+        - field_phro_min
+        - field_rrratio_high
+        - field_rrratio_low
+        - field_rrratio_max
+        - field_rrratio_min
         - field_severity_high
+        - field_severity_low
         - field_severity_max
-        - field_lhro_min
+        - field_severity_min
+        - field_sq_foot_high
+        - field_sq_foot_low
+        - field_sq_foot_min
+        - field_phro_low
+        - field_sratio_high
+        - field_sratio_low
+        - field_sratio_max
+        - field_sratio_min
+        - field_throughput_high
+        - field_throughput_low
+        - field_throughput_max
+        - field_throughput_min
+        - field_used_high
+        - field_used_low
+        - field_used_max
+        - field_phro_max
+        - field_phro_high
+        - field_bhro_low
         - field_lhro_low
+        - field_bhro_max
+        - field_bhro_min
+        - field_cycle_time_high
+        - field_cycle_time_low
+        - field_cycle_time_max
+        - field_cycle_time_min
+        - field_labor_ratio_high
+        - field_labor_ratio_low
+        - field_labor_ratio_max
+        - field_labor_ratio_min
         - field_lhro_high
         - field_lhro_max
         - field_parts_ratio_min
-        - field_parts_ratio_low
-        - field_parts_ratio_high
-        - field_parts_ratio_max
-        - field_sratio_min
-        - field_sratio_low
-        - field_sratio_high
-        - field_sratio_max
-        - field_new_min
-        - field_new_low
-        - field_new_high
-        - field_new_max
-        - field_used_min
-        - field_used_low
-        - field_used_high
-        - field_used_max
-        - field_lkq_min
-        - field_lkq_low
+        - field_lhro_min
         - field_lkq_high
+        - field_lkq_low
         - field_lkq_max
-        - field_rrratio_min
-        - field_rrratio_low
-        - field_rrratio_high
-        - field_rrratio_max
-        - field_labor_ratio_min
-        - field_labor_ratio_low
-        - field_labor_ratio_high
-        - field_labor_ratio_max
-        - field_phro_min
-        - field_phro_low
-        - field_phro_high
-        - field_phro_max
-        - field_bhro_min
-        - field_bhro_low
-        - field_bhro_high
-        - field_bhro_max
+        - field_lkq_min
+        - field_new_high
+        - field_new_low
+        - field_new_max
+        - field_new_min
+        - field_parts_ratio_high
+        - field_parts_ratio_low
+        - field_parts_ratio_max
+        - field_used_min
       label: Thresholds
       region: hidden
       parent_name: ''
@@ -182,35 +178,11 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_business_address:
-    type: string_textfield
-    weight: 3
-    region: content
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
   field_cycle_time_:
     type: number
     weight: 51
     region: content
     settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_first_name:
-    type: string_textfield
-    weight: 0
-    region: content
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-  field_last_name:
-    type: string_textfield
-    weight: 1
-    region: content
-    settings:
-      size: 60
       placeholder: ''
     third_party_settings: {  }
   field_newusedlkq_max:
@@ -223,13 +195,6 @@ content:
   field_newusedlkq_min:
     type: number
     weight: 80
-    region: content
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-  field_number_of_shops:
-    type: number
-    weight: 4
     region: content
     settings:
       placeholder: ''

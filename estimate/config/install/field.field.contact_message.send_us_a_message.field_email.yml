@@ -9,15 +9,11 @@ id: contact_message.send_us_a_message.field_email
 field_name: field_email
 entity_type: contact_message
 bundle: send_us_a_message
-label: Email
+label: 'Email Address'
 description: ''
-required: true
+required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
-settings:
-  min: null
-  max: null
-  prefix: ''
-  suffix: ''
-field_type: integer
+settings: {  }
+field_type: email

@@ -1,0 +1,23 @@
+uuid: a62129c2-3e19-471b-8542-f73e8c694f53
+langcode: en
+status: true
+dependencies:
+  config:
+    - contact.form.get_a_demo
+    - field.storage.contact_message.field_number_of_shops_get_a_demo
+id: contact_message.get_a_demo.field_number_of_shops_get_a_demo
+field_name: field_number_of_shops_get_a_demo
+entity_type: contact_message
+bundle: get_a_demo
+label: 'Number of Shops'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

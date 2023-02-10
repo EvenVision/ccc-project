@@ -85,10 +85,6 @@ const METRICS = array(
 const CUSTOM_USER_FIELDS = array(
     'field_com_name_us',
     'field_estimator_id',
-    'field_last_name',
-    'field_first_name',
-    'field_business_address',
-    'field_number_of_shops',
 
     'field_throughput_low',
     'field_throughput_high',
@@ -261,12 +257,19 @@ function estimate_form_alter(&$form, FormStateInterface $form_state, $form_id){
         case 'contact_message_contact_us_form':
             // Change the name button to "Submit"
             $form['actions']['submit']['#value'] = t("Submit");
+            _add_confirm_popup($form);
+        case 'contact_message_send_us_a_message_form':
+            _add_confirm_popup($form);
             break;
         case 'entity.user.edit_form':
             // setRedirect
             $form['#submit'][] = $form_state->setRedirect('entity.user.edit_form');
             break;
     }
+}
+
+function _add_confirm_popup (&$form) {
+    $form['#attached']['library'][] = 'estimate/form_style';
 }
 
 /**
@@ -286,9 +289,7 @@ function estimate_form_user_form_alter(&$form, FormStateInterface $form_state, $
     if (check_admin()) return;
 
     foreach (\CUSTOM_USER_FIELDS as $form_field){
-        if ($form_field !== 'field_last_name' && $form_field !== 'field_first_name' && $form_field !== 'field_business_address' && $form_field !== 'field_number_of_shops') {
             $form[$form_field]['#access'] = false;
-        }
     }
     $form['user_picture']['#access'] = false;
     $form['contact']['#access'] = false;
@@ -1175,7 +1176,7 @@ function setValueFields() {
     $definitions = \Drupal::service('entity_field.manager')->getFieldDefinitions('user', 'user');
 
     foreach (\CUSTOM_USER_FIELDS as $field) {
-        if ($field !== 'field_estimator_id' && $field !== 'field_com_name_us' && $field !== 'field_last_name' && $field !== 'field_first_name' && $field !== 'field_business_address' && $field !== 'field_number_of_shops') {
+        if ($field !== 'field_estimator_id' && $field !== 'field_com_name_us') {
             if (isset($definitions[$field])) {
                 $result = $definitions[$field]->getDefaultValueLiteral();
                 $account->set($field, $result[0]['value']);

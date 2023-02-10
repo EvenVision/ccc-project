@@ -1,0 +1,19 @@
+uuid: fc97e19f-51e9-477d-8b15-156ecc987ee4
+langcode: en
+status: true
+dependencies:
+  config:
+    - contact.form.get_a_demo
+    - field.storage.contact_message.field_business_address_get_a_dem
+id: contact_message.get_a_demo.field_business_address_get_a_dem
+field_name: field_business_address_get_a_dem
+entity_type: contact_message
+bundle: get_a_demo
+label: 'Business Address'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,11 +1,11 @@
-uuid: 6f7bae49-7153-438e-bbef-9d088de336d6
+uuid: e189358c-c345-452f-bf23-a8d13dc150a6
 langcode: en
 status: true
 dependencies:
   module:
     - contact
-id: contact_message.field_email
-field_name: field_email
+id: contact_message.field_email_address_get_a_demo
+field_name: field_email_address_get_a_demo
 entity_type: contact_message
 type: email
 settings: {  }

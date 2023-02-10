@@ -1,0 +1,19 @@
+uuid: f61738f3-8753-4406-8143-de31a9ab1831
+langcode: en
+status: true
+dependencies:
+  config:
+    - contact.form.get_a_demo
+    - field.storage.contact_message.field_business_name_get_a_demo
+id: contact_message.get_a_demo.field_business_name_get_a_demo
+field_name: field_business_name_get_a_demo
+entity_type: contact_message
+bundle: get_a_demo
+label: 'Business Name'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -3400,7 +3400,7 @@ display:
                 operator: '!='
                 value: 111Next
               2:
-                title: Prev
+                title: Previous
                 operator: '!='
                 value: 111Prev
               3:

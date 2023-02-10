@@ -162,9 +162,9 @@ class EstimateConfiguration {
         $placed_block2->save();
 
         // create block Home Page Title
-        $url_register_page = new Url('user.register');
-        $user_register_page_url = $url_register_page->setAbsolute()->toString();
-
+        // Create URL to page
+        $url_contact_form_get_a_demo = new Url('entity.contact_form.canonical', ['contact_form' => "get_a_demo"]);
+        $contact_form_get_a_demo_url = $url_contact_form_get_a_demo->setAbsolute()->toString();
         $blockHomePageTitle = BlockContent::create([
             'info' => 'Home Page Title',
             'type' => 'estimate',
@@ -175,7 +175,7 @@ class EstimateConfiguration {
                     <div class="block-right">
                     <div class="body-title-register">
                     <h1>Collision Dashboard will give you clear actionable metrics that allow you to grow your income, find & smooth out friction points in your operation, and improve the most important numbers that insurers use to evaluate your shop. Complete the form below to get a demo!</h1>
-                    <p><a class="estimate-button" href="'.$user_register_page_url.'">Get a Demo</a></p>
+                    <p><a class="estimate-button" href="'.$contact_form_get_a_demo_url.'">Get a Demo</a></p>
                     </div>
                     </div>
                     </div>',

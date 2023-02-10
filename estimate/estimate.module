@@ -258,6 +258,7 @@ function estimate_form_alter(&$form, FormStateInterface $form_state, $form_id){
             // Change the name button to "Submit"
             $form['actions']['submit']['#value'] = t("Submit");
             _add_confirm_popup($form);
+            break;
         case 'contact_message_send_us_a_message_form':
             _add_confirm_popup($form);
             break;
@@ -265,6 +266,15 @@ function estimate_form_alter(&$form, FormStateInterface $form_state, $form_id){
             // setRedirect
             $form['#submit'][] = $form_state->setRedirect('entity.user.edit_form');
             break;
+        case 'views_exposed_form':
+            if ($form['#id'] === 'views-exposed-form-estimate-view-admin-page-1' || $form['#id'] === 'views-exposed-form-estimate-view-page-1'){
+                $form['actions']['submit']['#attributes']['class'][] = 'views-exposed-form-estimate-view-apply';
+
+                $form['field_pickup_dt_value']['#attributes']['class'][] = 'views-exposed-form-estimate-view-field';
+                $form['change_period']['#attributes']['class'][2] = 'views-exposed-form-estimate-view-field views-exposed-form-estimate-view-field-change-period';
+                $form['field_com_name_es_target_id_verf']['#attributes']['class'][] = 'views-exposed-form-estimate-view-field';
+                $form['field_insurance_company_target_id_verf']['#attributes']['class'][] = 'views-exposed-form-estimate-view-field';
+            }
     }
 }
 
@@ -1205,10 +1215,9 @@ function getUserCompanyIDs(){
 
 function insert_base64_encoded_image($path){
     $img = \Drupal::service('extension.list.module')->getPath('estimate').$path;
-    $imageSize = getimagesize(\Drupal::service('extension.list.module')->getPath('estimate').$path);
-    $imageData = base64_encode(file_get_contents($img));
-
-    return "data:{$imageSize['mime']};base64,{$imageData}";
+    $type = pathinfo($img, PATHINFO_EXTENSION);
+    $data = file_get_contents($img);
+    return 'data:image/' . $type . ';base64,' . base64_encode($data);
 }
 
 // creating dials

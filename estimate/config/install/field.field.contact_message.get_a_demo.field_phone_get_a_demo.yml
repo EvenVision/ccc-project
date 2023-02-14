@@ -1,0 +1,23 @@
+uuid: b7192634-9a43-429a-a6d4-0d322d8df2ed
+langcode: en
+status: true
+dependencies:
+  config:
+    - contact.form.get_a_demo
+    - field.storage.contact_message.field_phone_get_a_demo
+id: contact_message.get_a_demo.field_phone_get_a_demo
+field_name: field_phone_get_a_demo
+entity_type: contact_message
+bundle: get_a_demo
+label: Phone
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

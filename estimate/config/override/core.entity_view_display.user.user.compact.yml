@@ -8,19 +8,16 @@ dependencies:
     - field.field.user.user.field_bhro_low
     - field.field.user.user.field_bhro_max
     - field.field.user.user.field_bhro_min
-    - field.field.user.user.field_business_address
     - field.field.user.user.field_com_name_us
     - field.field.user.user.field_cycle_time_high
     - field.field.user.user.field_cycle_time_low
     - field.field.user.user.field_cycle_time_max
     - field.field.user.user.field_cycle_time_min
     - field.field.user.user.field_estimator_id
-    - field.field.user.user.field_first_name
     - field.field.user.user.field_labor_ratio_high
     - field.field.user.user.field_labor_ratio_low
     - field.field.user.user.field_labor_ratio_max
     - field.field.user.user.field_labor_ratio_min
-    - field.field.user.user.field_last_name
     - field.field.user.user.field_lhro_high
     - field.field.user.user.field_lhro_low
     - field.field.user.user.field_lhro_max
@@ -33,7 +30,6 @@ dependencies:
     - field.field.user.user.field_new_low
     - field.field.user.user.field_new_max
     - field.field.user.user.field_new_min
-    - field.field.user.user.field_number_of_shops
     - field.field.user.user.field_parts_ratio_high
     - field.field.user.user.field_parts_ratio_low
     - field.field.user.user.field_parts_ratio_max
@@ -91,19 +87,16 @@ hidden:
   field_bhro_low: true
   field_bhro_max: true
   field_bhro_min: true
-  field_business_address: true
   field_com_name_us: true
   field_cycle_time_high: true
   field_cycle_time_low: true
   field_cycle_time_max: true
   field_cycle_time_min: true
   field_estimator_id: true
-  field_first_name: true
   field_labor_ratio_high: true
   field_labor_ratio_low: true
   field_labor_ratio_max: true
   field_labor_ratio_min: true
-  field_last_name: true
   field_lhro_high: true
   field_lhro_low: true
   field_lhro_max: true
@@ -116,7 +109,6 @@ hidden:
   field_new_low: true
   field_new_max: true
   field_new_min: true
-  field_number_of_shops: true
   field_parts_ratio_high: true
   field_parts_ratio_low: true
   field_parts_ratio_max: true

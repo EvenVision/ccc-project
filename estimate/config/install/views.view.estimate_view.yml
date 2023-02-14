@@ -3345,7 +3345,7 @@ display:
                   value: 111Next
                   type: date
               2:
-                title: Prev
+                title: Previous
                 operator: '!='
                 value:
                   min: ''

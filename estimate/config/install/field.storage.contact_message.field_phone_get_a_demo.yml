@@ -1,12 +1,12 @@
-uuid: b92a6270-8b3c-471a-92a7-a5e9d1147138
+uuid: a9eb8181-726d-47c9-8feb-d85cfc4f019c
 langcode: en
 status: true
 dependencies:
   module:
-    - user
-id: user.field_number_of_shops
-field_name: field_number_of_shops
-entity_type: user
+    - contact
+id: contact_message.field_phone_get_a_demo
+field_name: field_phone_get_a_demo
+entity_type: contact_message
 type: integer
 settings:
   unsigned: false

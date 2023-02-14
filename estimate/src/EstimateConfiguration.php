@@ -15,8 +15,8 @@ class EstimateConfiguration {
     {
         // Create get support page
         // Create Url to contact form "Send us a message"
-        $url_contact_form = new Url('entity.contact_form.canonical', ['contact_form' => "send_us_a_message"]);
-        $contact_form_send_us_a_message_url = $url_contact_form->setAbsolute()->toString();
+        $url_contact_form_send_us_a_message = new Url('entity.contact_form.canonical', ['contact_form' => "send_us_a_message"]);
+        $contact_form_send_us_a_message_url = $url_contact_form_send_us_a_message->setAbsolute()->toString();
 
         $bodyHtmlGetSupport = '
                 <div class="body-get-support">
@@ -29,8 +29,6 @@ class EstimateConfiguration {
                 
                         <div class="block-body">
                             <div class="block-body-text">
-                                <p>Send Us a Message</p>
-                
                                 <div><a class="estimate-button" href="'.$contact_form_send_us_a_message_url.'">Send a Message</a></div>
                             </div>
                         </div>
@@ -44,9 +42,7 @@ class EstimateConfiguration {
                         </div>
                 
                         <div class="block-body">
-                            <div class="block-body-text">
-                                <p>Give Us a Call</p>
-                
+                            <div class="block-body-text">              
                                 <div><a class="estimate-button" href="tel:2066501008">Give Us a Call</a></div>
                             </div>
                         </div>
@@ -68,8 +64,8 @@ class EstimateConfiguration {
 
         // Create home page
         // Create URL to page
-        $url_register_page = new Url('user.register');
-        $user_register_page_url = $url_register_page->setAbsolute()->toString();
+        $url_contact_form_get_a_demo = new Url('entity.contact_form.canonical', ['contact_form' => "get_a_demo"]);
+        $contact_form_get_a_demo_url = $url_contact_form_get_a_demo->setAbsolute()->toString();
 
         $bodyHtmlHomePage = '
             <div class="container">
@@ -88,7 +84,7 @@ class EstimateConfiguration {
             <div class="list_number">3</div>
             <div class="list_text">See actionable efficiency measures for your employees &amp; operation so you can stop leaking cash fast &amp; grow your profits.</div>
             </div>
-            <div class="region_button"><a class="estimate-button" href="'.$user_register_page_url.'">GET A DEMO</a>&nbsp;</div>
+            <div class="region_button"><a class="estimate-button" href="'.$contact_form_get_a_demo_url.'">GET A DEMO</a>&nbsp;</div>
             </div>
             ';
         $body2[] = [
@@ -166,9 +162,9 @@ class EstimateConfiguration {
         $placed_block2->save();
 
         // create block Home Page Title
-        $url_register_page = new Url('user.register');
-        $user_register_page_url = $url_register_page->setAbsolute()->toString();
-
+        // Create URL to page
+        $url_contact_form_get_a_demo = new Url('entity.contact_form.canonical', ['contact_form' => "get_a_demo"]);
+        $contact_form_get_a_demo_url = $url_contact_form_get_a_demo->setAbsolute()->toString();
         $blockHomePageTitle = BlockContent::create([
             'info' => 'Home Page Title',
             'type' => 'estimate',
@@ -178,8 +174,8 @@ class EstimateConfiguration {
                     <div class="section-title-home-page height-title-530px align-items-center">
                     <div class="block-right">
                     <div class="body-title-register">
-                    <h1>Find opportunities for more profit in your shop. Grow your income now.</h1>
-                    <p><a class="estimate-button" href="'.$user_register_page_url.'">GET A DEMO</a></p>
+                    <h1>Collision Dashboard will give you clear actionable metrics that allow you to grow your income, find & smooth out friction points in your operation, and improve the most important numbers that insurers use to evaluate your shop. Complete the form below to get a demo!</h1>
+                    <p><a class="estimate-button" href="'.$contact_form_get_a_demo_url.'">Get a Demo</a></p>
                     </div>
                     </div>
                     </div>',
@@ -205,14 +201,14 @@ class EstimateConfiguration {
         ]);
         $placed_block3->save();
 
-        // create block Register Page Title
-        $blockRegisterPageTitle = BlockContent::create([
-            'info' => 'Register Page Title',
+        // create block Get a Demo Page Title
+        $blockGetADemoPageTitle = BlockContent::create([
+            'info' => 'Get a Demo Page Title',
             'type' => 'estimate',
             'langcode' => 'en',
             'body' => [
                 'value' => '
-                    <div class="section-title-register-page height-title-530px align-items-center">
+                    <div class="section-title-get-a-demo-page height-title-530px align-items-center">
                     <div class="block-left">&nbsp;</div>
                     <div class="block-right">
                     <div class="body-title-register">
@@ -225,7 +221,7 @@ class EstimateConfiguration {
                 'format' => 'full_html',
             ],
         ]);
-        $blockRegisterPageTitle->save();
+        $blockGetADemoPageTitle->save();
 
         $placed_block4 = Block::create([
             'id' => 'estimate_theme_register_page_title',
@@ -233,12 +229,12 @@ class EstimateConfiguration {
             'weight' => 0,
             'status' => TRUE,
             'region' => 'title',
-            'plugin' => 'block_content:' . $blockRegisterPageTitle->uuid(),
+            'plugin' => 'block_content:' . $blockGetADemoPageTitle->uuid(),
             'visibility' => [
                 'request_path' => [
                     'id' => 'request_path',
                     'negate' => FALSE,
-                    'pages' => '/user/register',
+                    'pages' => '/contact/get_a_demo',
                 ],
             ],
         ]);
@@ -251,7 +247,7 @@ class EstimateConfiguration {
             'langcode' => 'en',
             'body' => [
                 'value' => '
-                    <div class="section-title-register-page height-title-358px align-items-center">
+                    <div class="section-title-get-support height-title-358px align-items-center">
                     <div class="block-right">
                     <h1>Get Support</h1>
                     </div>
@@ -373,7 +369,7 @@ class EstimateConfiguration {
 
         $menu_link_2 = MenuLinkContent::create([
             'title' => 'Get a Demo',
-            'link' => ['uri' => 'internal:/user/register'],
+            'link' => ['uri' => 'internal:/contact/get_a_demo'],
             'menu_name' => 'estimate-main-navigation-menu',
             'expanded' => TRUE,
             'weight' => 1,
@@ -509,7 +505,7 @@ class EstimateConfiguration {
 
     public static function removeForm ()
     {
-        $formIds = array('contact_us','send_us_a_message');
+        $formIds = array('contact_us','send_us_a_message','get_a_demo');
         foreach ($formIds as $formid){
             $content_type = \Drupal::entityTypeManager()->getStorage('contact_form')->load($formid);
             if ($content_type){

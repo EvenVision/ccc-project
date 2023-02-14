@@ -1,0 +1,19 @@
+uuid: b566b14c-e777-4f19-86fb-baf0e557ec07
+langcode: en
+status: true
+dependencies:
+  config:
+    - contact.form.get_a_demo
+    - field.storage.contact_message.field_email_address_get_a_demo
+id: contact_message.get_a_demo.field_email_address_get_a_demo
+field_name: field_email_address_get_a_demo
+entity_type: contact_message
+bundle: get_a_demo
+label: 'Email Address'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: email

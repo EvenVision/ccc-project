@@ -5,3 +5,7 @@ dashboard_style:
   css:
     theme:
       css/custom.css: {}
+form_style:
+  version: 1
+  js:
+    js/confirm-popup.js: { }

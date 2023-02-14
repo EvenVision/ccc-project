@@ -1,0 +1,12 @@
+uuid: e6195b2a-c238-4659-92b9-b2757fdc5913
+langcode: en
+status: true
+dependencies: {  }
+id: get_a_demo
+label: 'Get a Demo'
+recipients:
+  - info@collisiondashboard.com
+reply: 'Message is received & that staff will follow up with them soon.'
+weight: 0
+message: ''
+redirect: ''

@@ -1,0 +1,18 @@
+uuid: a39643c7-8bef-4cca-b998-582b77834ec4
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+id: user.field_repratio_high
+field_name: field_repratio_high
+entity_type: user
+type: float
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

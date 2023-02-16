@@ -22,6 +22,11 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 /**
  * Implements hook_unistall().
  */
+const CONTACT_FORMS = array(
+    'get_a_demo',
+    'send_us_a_message',
+    'contact_us'
+);
 
 const METRICS = array(
     1 => [
@@ -65,18 +70,22 @@ const METRICS = array(
         'path' => '/lkq-ratio'
     ],
     11 => [
-        'title' => 'Repair / Replace Ratio',
-        'path' => '/repair-replace-ratio'
+        'title' => 'Repair Ratio',
+        'path' => '/repair-ratio'
     ],
     12 => [
+        'title' => 'Replace Ratio',
+        'path' => '/replace-ratio'
+    ],
+    13 => [
         'title' => 'Labor Hours / RO',
         'path' => '/labor-hours-ro'
     ],
-    13 => [
+    14 => [
         'title' => 'Paint Hours / RO',
         'path' => '/paint-hours-ro'
     ],
-    14 => [
+    15 => [
         'title' => 'Body Hours / RO',
         'path' => '/body-hours-ro'
     ],
@@ -114,6 +123,8 @@ const CUSTOM_USER_FIELDS = array(
     'field_new_high',
     'field_used_high',
     'field_lkq_high',
+    'field_repratio_high',
+    'field_repratio_low',
 
     'field_throughput_min',
     'field_throughput_max',
@@ -145,12 +156,17 @@ const CUSTOM_USER_FIELDS = array(
     'field_new_min',
     'field_used_min',
     'field_lkq_min',
+    'field_repratio_max',
+    'field_repratio_min'
 );
 
 const NODE_CREATION_FIELD = 'field_com_name_es_node_field_data__node__field_creationdt.field_creationdt_value';
 function estimate_module_preinstall() {
     //necessary to increase the work the script when installing the plugin
     ini_set('max_execution_time', '900');
+
+    // removing content type "Get Support" and "Home page"
+    EstimateConfiguration::removeContentType();
 }
 
 function estimate_node_presave(Drupal\node\NodeInterface $node) {
@@ -223,6 +239,9 @@ function estimate_uninstall(){
     EstimateConfiguration::removeCustomBlock();
     EstimateConfiguration::removeMenu();
     EstimateConfiguration::removeForm();
+
+    // removing content type "Get Support" and "Home page"
+    EstimateConfiguration::removeContentType();
 
     //Purging fields data after uninstalling module.
     if (!empty(\Drupal::state()->get('field.storage.deleted'))){
@@ -676,7 +695,8 @@ function _calcResultUserView($view){
                 }
             }
         }
-        $repair_ratio = $labor_sum_op11 > 0 ? round($labor_sum_op9_op10/ $labor_sum_op11,3) : 0;
+        $repair_ratio = $labor_sum_op11 > 0 ? round(($labor_sum_op9_op10) / ($labor_sum_op9_op10 + $labor_sum_op11),3) : 0;
+        $replace_ration = $labor_sum_op11 > 0 ? round($labor_sum_op11 / ($labor_sum_op9_op10 + $labor_sum_op11),3) : 0;
 
         // New / Used / LKQ
         $parts_sum_new = $parts_sum_used = $parts_sum_lkq = 0;
@@ -715,8 +735,11 @@ function _calcResultUserView($view){
         $valuesOfCalculations['used'] = round(($parts_sum_used / ($parts_sum_new + $parts_sum_used + $parts_sum_lkq)),3);
         $valuesOfCalculations['lkq'] = round(($parts_sum_lkq / ($parts_sum_new + $parts_sum_used + $parts_sum_lkq)),3);
 
-        // Repair / Replace Ratio
+        // Repair Ratio
         $valuesOfCalculations['field_rrratio'] = $resultRow->field_com_name_es_node_field_data__node__field_pt_pag_field_ = $repair_ratio;
+
+        // Replace Ratio
+        $valuesOfCalculations['field_repratio'] = $resultRow->field_com_name_es_node_field_data__node__field_op10_amount_f = $replace_ration;
 
         // Cycle Time
         $valuesOfCalculations['field_cycle_time'] = $resultRow->field_com_name_es_node_field_data__node__field_arrival_dt_fi = round(($resultRow->avgCycleTime ?? 0 / 86400), 3);
@@ -806,8 +829,11 @@ function _calcResultUserView($view){
             // Labor Hours / RO
             $resultRow->field_com_name_es_node_field_data__node__field_op4_hours_fie = $fields['field_lhro_' . $value];
 
-            // Repair / Replace Ratio
+            // Repair Ratio
             $resultRow->field_com_name_es_node_field_data__node__field_pt_pag_field_ = $fields['field_rrratio_' . $value];
+
+            // Replace Ratio
+            $resultRow->field_com_name_es_node_field_data__node__field_op10_amount_f = $fields['field_repratio_' . $value];
         }
         $footer = $view->footer['area_1'];
         if (!empty($footer)){
@@ -951,7 +977,8 @@ function _calcResultAdminView($view){
                 }
             }
         }
-        $repair_ratio = $labor_sum_op11 > 0 ? round($labor_sum_op9_op10/ $labor_sum_op11,3) : 0;
+        $repair_ratio = $labor_sum_op11 > 0 ? round(($labor_sum_op9_op10) / ($labor_sum_op9_op10 + $labor_sum_op11),3) : 0;
+        $replace_ration = $labor_sum_op11 > 0 ? round($labor_sum_op11 / ($labor_sum_op9_op10 + $labor_sum_op11),3) : 0;
 
         // New / Used / LKQ
         $parts_sum_new = $parts_sum_used = $parts_sum_lkq = 0;
@@ -986,8 +1013,11 @@ function _calcResultAdminView($view){
         $valuesOfCalculations['used'] = round(($parts_sum_used / ($parts_sum_new + $parts_sum_used + $parts_sum_lkq)),3);
         $valuesOfCalculations['lkq'] = round(($parts_sum_lkq / ($parts_sum_new + $parts_sum_used + $parts_sum_lkq)),3);
 
-        // Repair / Replace Ratio
+        // Repair Ratio
         $valuesOfCalculations['field_rrratio'] = $resultRow->node__field_op16_hours_field_op16_hours_value = $repair_ratio;
+
+        // Replace Ratio
+        $valuesOfCalculations['field_repratio'] = $resultRow->node__field_op10_amount_field_op10_amount_value = $replace_ration;
 
         // Cycle Time
         $valuesOfCalculations['field_cycle_time'] = $resultRow->node__field_arrival_dt_field_arrival_dt_value = round(($resultRow->avgCycleTime ?? 0 / 86400), 3);
@@ -1077,8 +1107,11 @@ function _calcResultAdminView($view){
             // Labor Hours / RO
             $resultRow->node__field_op4_hours_field_op4_hours_value = $fields['field_lhro_' . $value];
 
-            // Repair / Replace Ratio
+            // Repair Ratio
             $resultRow->node__field_op16_hours_field_op16_hours_value = $fields['field_rrratio_' . $value];
+
+            // Replace Ratio
+            $resultRow->node__field_op10_amount_field_op10_amount_value = $fields['field_repratio_' . $value];
         }
         $footer = $view->footer['area_1'];
         if (!empty($footer)){
@@ -1447,7 +1480,7 @@ function createHtmlDial ($userFields, $valuesOfCalculations){
                 </a> 
             </div>
             <div>
-                <p class="canvasTitle">Repair / Replace Ratio</p>
+                <p class="canvasTitle">Repair Ratio</p>
             </div>
             <canvas id="canvas-11" width="300" height="300"></canvas>
         </div>
@@ -1456,8 +1489,8 @@ function createHtmlDial ($userFields, $valuesOfCalculations){
             <span id="canvas-11-low" class="canvasSpan">'.$userFields['field_rrratio_low'].'</span>
             <span id="canvas-11-high" class="canvasSpan">'.$userFields['field_rrratio_high'].'</span>
             <span id="canvas-11-value" class="canvasSpan">'.$valuesOfCalculations['field_rrratio'].'</span>
-            <span id="canvas-11-title" class="canvasSpan">'.$nodes['Repair / Replace Ratio']['title'].'</span>
-            <span id="canvas-11-description" class="canvasSpan">'.$nodes['Repair / Replace Ratio']['description'][0]['value'].'</span>
+            <span id="canvas-11-title" class="canvasSpan">'.$nodes['Repair Ratio']['title'].'</span>
+            <span id="canvas-11-description" class="canvasSpan">'.$nodes['Repair Ratio']['description'][0]['value'].'</span>
         <div class="canvasBlock">
             <div class="infoBlock">
                 <a href="#" class="open-popup">
@@ -1465,17 +1498,17 @@ function createHtmlDial ($userFields, $valuesOfCalculations){
                 </a> 
             </div>
             <div>
-                <p class="canvasTitle">Labor Hours / RO</p>
+                <p class="canvasTitle">Replace Ratio</p>
             </div>
             <canvas id="canvas-12" width="300" height="300"></canvas>
         </div>
-            <span id="canvas-12-max" class="canvasSpan">'.$userFields['field_lhro_max'].'</span>
-            <span id="canvas-12-min" class="canvasSpan">'.$userFields['field_lhro_min'].'</span>
-            <span id="canvas-12-high" class="canvasSpan">'.$userFields['field_lhro_high'].'</span>
-            <span id="canvas-12-low" class="canvasSpan">'.$userFields['field_lhro_low'].'</span>
-            <span id="canvas-12-value" class="canvasSpan">'.$valuesOfCalculations['field_lhro'].'</span>
-            <span id="canvas-12-title" class="canvasSpan">'.$nodes['Labor Hours / RO']['title'].'</span>
-            <span id="canvas-12-description" class="canvasSpan">'.$nodes['Labor Hours / RO']['description'][0]['value'].'</span>
+            <span id="canvas-12-min" class="canvasSpan">'.$userFields['field_repratio_min'].'</span>
+            <span id="canvas-12-max" class="canvasSpan">'.$userFields['field_repratio_max'].'</span>
+            <span id="canvas-12-low" class="canvasSpan">'.$userFields['field_repratio_low'].'</span>
+            <span id="canvas-12-high" class="canvasSpan">'.$userFields['field_repratio_high'].'</span>
+            <span id="canvas-12-value" class="canvasSpan">'.$valuesOfCalculations['field_repratio'].'</span>
+            <span id="canvas-12-title" class="canvasSpan">'.$nodes['Replace Ratio']['title'].'</span>
+            <span id="canvas-12-description" class="canvasSpan">'.$nodes['Replace Ratio']['description'][0]['value'].'</span>
         <div class="canvasBlock">
             <div class="infoBlock">
                 <a href="#" class="open-popup">
@@ -1483,17 +1516,17 @@ function createHtmlDial ($userFields, $valuesOfCalculations){
                 </a> 
             </div>
             <div>
-                <p class="canvasTitle">Paint Hours / RO</p>
+                <p class="canvasTitle">Labor Hours / RO</p>
             </div>
             <canvas id="canvas-13" width="300" height="300"></canvas>
         </div>
-            <span id="canvas-13-max" class="canvasSpan">'.$userFields['field_phro_max'].'</span>
-            <span id="canvas-13-min" class="canvasSpan">'.$userFields['field_phro_min'].'</span>
-            <span id="canvas-13-high" class="canvasSpan">'.$userFields['field_phro_high'].'</span>
-            <span id="canvas-13-low" class="canvasSpan">'.$userFields['field_phro_low'].'</span>
-            <span id="canvas-13-value" class="canvasSpan">'.$valuesOfCalculations['field_phro'].'</span>
-            <span id="canvas-13-title" class="canvasSpan">'.$nodes['Paint Hours / RO']['title'].'</span>
-            <span id="canvas-13-description" class="canvasSpan">'.$nodes['Paint Hours / RO']['description'][0]['value'].'</span>
+            <span id="canvas-13-max" class="canvasSpan">'.$userFields['field_lhro_max'].'</span>
+            <span id="canvas-13-min" class="canvasSpan">'.$userFields['field_lhro_min'].'</span>
+            <span id="canvas-13-high" class="canvasSpan">'.$userFields['field_lhro_high'].'</span>
+            <span id="canvas-13-low" class="canvasSpan">'.$userFields['field_lhro_low'].'</span>
+            <span id="canvas-13-value" class="canvasSpan">'.$valuesOfCalculations['field_lhro'].'</span>
+            <span id="canvas-13-title" class="canvasSpan">'.$nodes['Labor Hours / RO']['title'].'</span>
+            <span id="canvas-13-description" class="canvasSpan">'.$nodes['Labor Hours / RO']['description'][0]['value'].'</span>
         <div class="canvasBlock">
             <div class="infoBlock">
                 <a href="#" class="open-popup">
@@ -1501,17 +1534,35 @@ function createHtmlDial ($userFields, $valuesOfCalculations){
                 </a> 
             </div>
             <div>
-                <p class="canvasTitle">Body Hours / RO</p>
+                <p class="canvasTitle">Paint Hours / RO</p>
             </div>
             <canvas id="canvas-14" width="300" height="300"></canvas>
         </div>
-            <span id="canvas-14-low" class="canvasSpan">'.$userFields['field_bhro_low'].'</span>
-            <span id="canvas-14-high" class="canvasSpan">'.$userFields['field_bhro_high'].'</span>
-            <span id="canvas-14-min" class="canvasSpan">'.$userFields['field_bhro_min'].'</span>
-            <span id="canvas-14-max" class="canvasSpan">'.$userFields['field_bhro_max'].'</span>
-            <span id="canvas-14-value" class="canvasSpan">'.$valuesOfCalculations['field_bhro'].'</span>
-            <span id="canvas-14-title" class="canvasSpan">'.$nodes['Body Hours / RO']['title'].'</span>
-            <span id="canvas-14-description" class="canvasSpan">'.$nodes['Body Hours / RO']['description'][0]['value'].'</span>
+            <span id="canvas-14-max" class="canvasSpan">'.$userFields['field_phro_max'].'</span>
+            <span id="canvas-14-min" class="canvasSpan">'.$userFields['field_phro_min'].'</span>
+            <span id="canvas-14-high" class="canvasSpan">'.$userFields['field_phro_high'].'</span>
+            <span id="canvas-14-low" class="canvasSpan">'.$userFields['field_phro_low'].'</span>
+            <span id="canvas-14-value" class="canvasSpan">'.$valuesOfCalculations['field_phro'].'</span>
+            <span id="canvas-14-title" class="canvasSpan">'.$nodes['Paint Hours / RO']['title'].'</span>
+            <span id="canvas-14-description" class="canvasSpan">'.$nodes['Paint Hours / RO']['description'][0]['value'].'</span>
+        <div class="canvasBlock">
+            <div class="infoBlock">
+                <a href="#" class="open-popup">
+                <img id="image-info" class="canvas-15" src="'.$imageInfo.'">
+                </a> 
+            </div>
+            <div>
+                <p class="canvasTitle">Body Hours / RO</p>
+            </div>
+            <canvas id="canvas-15" width="300" height="300"></canvas>
+        </div>
+            <span id="canvas-15-low" class="canvasSpan">'.$userFields['field_bhro_low'].'</span>
+            <span id="canvas-15-high" class="canvasSpan">'.$userFields['field_bhro_high'].'</span>
+            <span id="canvas-15-min" class="canvasSpan">'.$userFields['field_bhro_min'].'</span>
+            <span id="canvas-15-max" class="canvasSpan">'.$userFields['field_bhro_max'].'</span>
+            <span id="canvas-15-value" class="canvasSpan">'.$valuesOfCalculations['field_bhro'].'</span>
+            <span id="canvas-15-title" class="canvasSpan">'.$nodes['Body Hours / RO']['title'].'</span>
+            <span id="canvas-15-description" class="canvasSpan">'.$nodes['Body Hours / RO']['description'][0]['value'].'</span>
     </div>';
 
     return $html;
@@ -1563,4 +1614,26 @@ function estimate_preprocess_menu(&$variables) {
             unset($variables['items'][$key]);
         }
     }
+}
+
+function estimate_mail_alter(&$message) {
+    if ($message['id'] !== "contact_page_autoreply") return;
+
+    $contact_form = $message['params']['contact_form'];
+    if (!empty(CONTACT_FORMS[$contact_form->id()])) return;
+
+    switch ($contact_form->id()) {
+        case "get_a_demo":
+            // Get a Demo
+            $message['subject'] = "Collision Dashboard Demo Request";
+            $message['body'][0] = "<p>Hi {$_POST['field_first_name_get_a_demo'][0]['value']}, thank you for requesting a demo of Collision Dashboard! Staff will contact you shortly to arrange a time to provide a demo.</p><br /> <p>Best Regards,<br /> Dashboard Staff</p>";
+            break;
+        case "send_us_a_message":
+            // Send us a message
+            $message['subject'] = "Collision Dashboard Support Request";
+            $message['body'][0] = "<p>Hi {$_POST['field_name'][0]['value']}, thank you for contacting Collision Dashboard! Staff will follow up with you shortly.</p><br /> <p>Best Regards,<br /> Dashboard Staff</p>";
+            break;
+    }
+
+    $message['to'] = $_POST['field_email_address_get_a_demo'][0]['value'];
 }

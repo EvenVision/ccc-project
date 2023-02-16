@@ -513,4 +513,26 @@ class EstimateConfiguration {
             }
         }
     }
+
+    public static function removeContentType ()
+    {
+        $nids = \Drupal::entityQuery("node")
+            ->condition("type", "page")
+            // If the update is being executed via drush entityQuery will only
+            // return the content uid 0 have access to. To return all set
+            // accessCheck to false since it defaults to TRUE.
+            ->accessCheck(FALSE)
+            ->execute();
+
+        $storage_handler = \Drupal::entityTypeManager()->getStorage("node");
+        if (!empty($nids)) {
+            $entities = $storage_handler->loadMultiple($nids);
+            foreach ($entities as $entity){
+                $title = $entity->label();
+                if ($title === "Get Support" || $title === "Home Page"){
+                    $entity->delete();
+                }
+            }
+        }
+    }
 }

@@ -10,7 +10,7 @@ id: user.user.field_rrratio_max
 field_name: field_rrratio_max
 entity_type: user
 bundle: user
-label: 'Repair / Replace Ratio Max'
+label: 'Repair Ratio Max'
 description: ''
 required: false
 translatable: false

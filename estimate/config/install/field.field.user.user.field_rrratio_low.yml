@@ -10,7 +10,7 @@ id: user.user.field_rrratio_low
 field_name: field_rrratio_low
 entity_type: user
 bundle: user
-label: 'Repair / Replace Ratio Low'
+label: 'Repair Ratio Low'
 description: ''
 required: false
 translatable: false

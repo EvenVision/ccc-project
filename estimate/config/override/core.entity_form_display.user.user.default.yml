@@ -38,6 +38,10 @@ dependencies:
     - field.field.user.user.field_phro_low
     - field.field.user.user.field_phro_max
     - field.field.user.user.field_phro_min
+    - field.field.user.user.field_repratio_high
+    - field.field.user.user.field_repratio_low
+    - field.field.user.user.field_repratio_max
+    - field.field.user.user.field_repratio_min
     - field.field.user.user.field_rrratio_high
     - field.field.user.user.field_rrratio_low
     - field.field.user.user.field_rrratio_max
@@ -77,7 +81,7 @@ third_party_settings:
       label: Shops
       region: content
       parent_name: ''
-      weight: 10
+      weight: 6
       format_type: tab
       format_settings:
         classes: ''
@@ -132,6 +136,10 @@ third_party_settings:
         - field_rrratio_low
         - field_rrratio_high
         - field_rrratio_max
+        - field_repratio_min
+        - field_repratio_low
+        - field_repratio_high
+        - field_repratio_max
         - field_labor_ratio_min
         - field_labor_ratio_low
         - field_labor_ratio_high
@@ -147,7 +155,7 @@ third_party_settings:
       label: Thresholds
       region: content
       parent_name: ''
-      weight: 9
+      weight: 5
       format_type: tab
       format_settings:
         classes: ''
@@ -162,7 +170,7 @@ third_party_settings:
       label: Estimators
       region: content
       parent_name: ''
-      weight: 11
+      weight: 7
       format_type: tab
       format_settings:
         classes: ''
@@ -182,34 +190,34 @@ content:
     settings: {  }
     third_party_settings: {  }
   contact:
-    weight: 7
+    weight: 3
     region: content
     settings: {  }
     third_party_settings: {  }
   field_bhro_high:
     type: number
-    weight: 104
+    weight: 108
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_bhro_low:
     type: number
-    weight: 103
+    weight: 107
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_bhro_max:
     type: number
-    weight: 105
+    weight: 109
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_bhro_min:
     type: number
-    weight: 102
+    weight: 106
     region: content
     settings:
       placeholder: ''
@@ -301,28 +309,28 @@ content:
     third_party_settings: {  }
   field_labor_ratio_high:
     type: number
-    weight: 96
+    weight: 100
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_labor_ratio_low:
     type: number
-    weight: 95
+    weight: 99
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_labor_ratio_max:
     type: number
-    weight: 97
+    weight: 101
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_labor_ratio_min:
     type: number
-    weight: 94
+    weight: 98
     region: content
     settings:
       placeholder: ''
@@ -470,28 +478,63 @@ content:
     third_party_settings: {  }
   field_phro_high:
     type: number
-    weight: 100
+    weight: 104
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_phro_low:
     type: number
-    weight: 99
+    weight: 103
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_phro_max:
     type: number
-    weight: 101
+    weight: 105
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_phro_min:
     type: number
-    weight: 98
+    weight: 102
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_replratio_max:
+    type: number
+    weight: 109
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_repratio_high:
+    type: number
+    weight: 96
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_repratio_low:
+    type: number
+    weight: 95
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_repratio_max:
+    type: number
+    weight: 97
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_repratio_min:
+    type: number
+    weight: 94
     region: content
     settings:
       placeholder: ''
@@ -672,12 +715,12 @@ content:
       placeholder: ''
     third_party_settings: {  }
   language:
-    weight: 6
+    weight: 2
     region: content
     settings: {  }
     third_party_settings: {  }
   timezone:
-    weight: 8
+    weight: 4
     region: content
     settings: {  }
     third_party_settings: {  }

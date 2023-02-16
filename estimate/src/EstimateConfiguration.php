@@ -213,7 +213,7 @@ class EstimateConfiguration {
                     <div class="block-right">
                     <div class="body-title-register">
                     <h1>Get a Demo</h1>
-                    <p>Collision Dashboard will give you clear actionable metrics that allow you to grow your income, find &amp; smooth out friction points in your operation, and improve the most important numbers that insurers use to evaluate your shop.</p>
+                    <p>Collision Dashboard will give you clear actionable metrics that allow you to grow your income, find & smooth out friction points in your operation, and improve the most important numbers that insurers use to evaluate your shop. Complete the form below to get a demo!</p>
                     <p>How to get started!</p>
                     </div>
                     </div>

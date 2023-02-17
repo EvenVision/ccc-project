@@ -37,6 +37,10 @@ dependencies:
     - field.field.user.user.field_phro_low
     - field.field.user.user.field_phro_max
     - field.field.user.user.field_phro_min
+    - field.field.user.user.field_repratio_high
+    - field.field.user.user.field_repratio_low
+    - field.field.user.user.field_repratio_max
+    - field.field.user.user.field_repratio_min
     - field.field.user.user.field_rrratio_high
     - field.field.user.user.field_rrratio_low
     - field.field.user.user.field_rrratio_max
@@ -129,6 +133,10 @@ third_party_settings:
         - field_rrratio_low
         - field_rrratio_high
         - field_rrratio_max
+        - field_repratio_min
+        - field_repratio_low
+        - field_repratio_high
+        - field_repratio_max
         - field_labor_ratio_min
         - field_labor_ratio_low
         - field_labor_ratio_high
@@ -192,7 +200,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 104
+    weight: 108
     region: content
   field_bhro_low:
     type: number_decimal
@@ -203,7 +211,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 103
+    weight: 107
     region: content
   field_bhro_max:
     type: number_decimal
@@ -214,7 +222,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 105
+    weight: 109
     region: content
   field_bhro_min:
     type: number_decimal
@@ -225,7 +233,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 102
+    weight: 106
     region: content
   field_business_address:
     type: string
@@ -323,7 +331,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 96
+    weight: 100
     region: content
   field_labor_ratio_low:
     type: number_decimal
@@ -334,7 +342,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 95
+    weight: 99
     region: content
   field_labor_ratio_max:
     type: number_decimal
@@ -345,7 +353,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 97
+    weight: 101
     region: content
   field_labor_ratio_min:
     type: number_decimal
@@ -356,7 +364,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 94
+    weight: 98
     region: content
   field_last_name:
     type: string
@@ -582,7 +590,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 100
+    weight: 104
     region: content
   field_phro_low:
     type: number_decimal
@@ -593,7 +601,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 99
+    weight: 103
     region: content
   field_phro_max:
     type: number_decimal
@@ -604,7 +612,7 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 101
+    weight: 105
     region: content
   field_phro_min:
     type: number_decimal
@@ -615,7 +623,62 @@ content:
       scale: 2
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 98
+    weight: 102
+    region: content
+  field_replratio_max:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 109
+    region: content
+  field_repratio_high:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 96
+    region: content
+  field_repratio_low:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 95
+    region: content
+  field_repratio_max:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 97
+    region: content
+  field_repratio_min:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 94
     region: content
   field_rrratio_high:
     type: number_decimal

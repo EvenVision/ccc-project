@@ -1,0 +1,82 @@
+uuid: 5892b1aa-42b8-4061-b476-48845f061b0d
+langcode: en
+status: true
+dependencies:
+  config:
+    - contact.form.get_a_demo
+    - field.field.contact_message.get_a_demo.field_business_address_get_a_dem
+    - field.field.contact_message.get_a_demo.field_business_name_get_a_demo
+    - field.field.contact_message.get_a_demo.field_email_address_get_a_demo
+    - field.field.contact_message.get_a_demo.field_first_name_get_a_demo
+    - field.field.contact_message.get_a_demo.field_last_name_get_a_demo
+    - field.field.contact_message.get_a_demo.field_number_of_shops_get_a_demo
+    - field.field.contact_message.get_a_demo.field_phone_get_a_demo
+id: contact_message.get_a_demo.default
+targetEntityType: contact_message
+bundle: get_a_demo
+mode: default
+content:
+  field_business_address_get_a_dem:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_business_name_get_a_demo:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_email_address_get_a_demo:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_first_name_get_a_demo:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_last_name_get_a_demo:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_number_of_shops_get_a_demo:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_phone_get_a_demo:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 6
+    region: content
+  message:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 7
+    region: content
+hidden: {  }

@@ -213,7 +213,7 @@ class EstimateConfiguration {
                     <div class="block-right">
                     <div class="body-title-register">
                     <h1>Get a Demo</h1>
-                    <p>Collision Dashboard will give you clear actionable metrics that allow you to grow your income, find &amp; smooth out friction points in your operation, and improve the most important numbers that insurers use to evaluate your shop.</p>
+                    <p>Collision Dashboard will give you clear actionable metrics that allow you to grow your income, find & smooth out friction points in your operation, and improve the most important numbers that insurers use to evaluate your shop. Complete the form below to get a demo!</p>
                     <p>How to get started!</p>
                     </div>
                     </div>
@@ -510,6 +510,28 @@ class EstimateConfiguration {
             $content_type = \Drupal::entityTypeManager()->getStorage('contact_form')->load($formid);
             if ($content_type){
                 $content_type->delete();
+            }
+        }
+    }
+
+    public static function removeContentType ()
+    {
+        $nids = \Drupal::entityQuery("node")
+            ->condition("type", "page")
+            // If the update is being executed via drush entityQuery will only
+            // return the content uid 0 have access to. To return all set
+            // accessCheck to false since it defaults to TRUE.
+            ->accessCheck(FALSE)
+            ->execute();
+
+        $storage_handler = \Drupal::entityTypeManager()->getStorage("node");
+        if (!empty($nids)) {
+            $entities = $storage_handler->loadMultiple($nids);
+            foreach ($entities as $entity){
+                $title = $entity->label();
+                if ($title === "Get Support" || $title === "Home Page"){
+                    $entity->delete();
+                }
             }
         }
     }

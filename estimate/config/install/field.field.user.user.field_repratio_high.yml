@@ -1,16 +1,16 @@
-uuid: 4fb4a754-bf8f-468e-9eb7-8570ce4db9df
+uuid: 3c02c94c-260f-4128-b12f-38caffae5944
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.user.field_rrratio_high
+    - field.storage.user.field_repratio_high
   module:
     - user
-id: user.user.field_rrratio_high
-field_name: field_rrratio_high
+id: user.user.field_repratio_high
+field_name: field_repratio_high
 entity_type: user
 bundle: user
-label: 'Repair Ratio High'
+label: 'Replace Ratio High'
 description: ''
 required: false
 translatable: false

@@ -1,22 +1,22 @@
-uuid: 4fb4a754-bf8f-468e-9eb7-8570ce4db9df
+uuid: 2863a072-2eb8-4d77-a4d8-319fe57cf742
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.user.field_rrratio_high
+    - field.storage.user.field_repratio_max
   module:
     - user
-id: user.user.field_rrratio_high
-field_name: field_rrratio_high
+id: user.user.field_repratio_max
+field_name: field_repratio_max
 entity_type: user
 bundle: user
-label: 'Repair Ratio High'
+label: 'Replace Ratio Max'
 description: ''
 required: false
 translatable: false
 default_value:
   -
-    value: 0.8
+    value: !!float 1
 default_value_callback: ''
 settings:
   min: null

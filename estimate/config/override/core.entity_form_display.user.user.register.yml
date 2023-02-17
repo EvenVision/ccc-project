@@ -38,6 +38,10 @@ dependencies:
     - field.field.user.user.field_phro_low
     - field.field.user.user.field_phro_max
     - field.field.user.user.field_phro_min
+    - field.field.user.user.field_repratio_high
+    - field.field.user.user.field_repratio_low
+    - field.field.user.user.field_repratio_max
+    - field.field.user.user.field_repratio_min
     - field.field.user.user.field_rrratio_high
     - field.field.user.user.field_rrratio_low
     - field.field.user.user.field_rrratio_max
@@ -242,6 +246,10 @@ hidden:
   field_phro_low: true
   field_phro_max: true
   field_phro_min: true
+  field_repratio_high: true
+  field_repratio_low: true
+  field_repratio_max: true
+  field_repratio_min: true
   field_rrratio_high: true
   field_rrratio_low: true
   field_rrratio_max: true

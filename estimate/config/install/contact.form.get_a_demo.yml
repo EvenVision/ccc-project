@@ -8,5 +8,5 @@ recipients:
   - info@collisiondashboard.com
 reply: 'Message is received & that staff will follow up with them soon.'
 weight: 0
-message: ''
-redirect: ''
+message: 'Thank you for contacting us, we will follow up with you shortly!'
+redirect: '/contact/get_a_demo'

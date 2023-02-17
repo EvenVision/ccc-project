@@ -55,7 +55,7 @@ function popupInfo(){
 function getElements(){
     let arrayCanvas = [];
     let i = 1;
-    for (i;i <= 14;i++){
+    for (i;i <= 15;i++){
         let canvas = document.getElementById("canvas-" + i)
         if (canvas !== null){
             arrayCanvas.push(canvas);

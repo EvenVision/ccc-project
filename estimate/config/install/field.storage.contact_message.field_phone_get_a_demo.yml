@@ -1,17 +1,16 @@
-uuid: a9eb8181-726d-47c9-8feb-d85cfc4f019c
+uuid: f3d58d5d-69b4-4b32-a2c7-70efc945a254
 langcode: en
 status: true
 dependencies:
   module:
     - contact
+    - telephone
 id: contact_message.field_phone_get_a_demo
 field_name: field_phone_get_a_demo
 entity_type: contact_message
-type: integer
-settings:
-  unsigned: false
-  size: normal
-module: core
+type: telephone
+settings: {  }
+module: telephone
 locked: false
 cardinality: 1
 translatable: true

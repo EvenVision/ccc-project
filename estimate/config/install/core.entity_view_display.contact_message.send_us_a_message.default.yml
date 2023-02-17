@@ -31,13 +31,11 @@ content:
     weight: 0
     region: content
   field_phone:
-    type: number_integer
+    type: basic_string
     label: above
-    settings:
-      thousand_separator: ''
-      prefix_suffix: true
+    settings: {  }
     third_party_settings: {  }
-    weight: 1
+    weight: 5
     region: content
   field_shop_name:
     type: string

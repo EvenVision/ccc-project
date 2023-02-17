@@ -8,17 +8,21 @@ dependencies:
     - field.field.contact_message.send_us_a_message.field_name
     - field.field.contact_message.send_us_a_message.field_phone
     - field.field.contact_message.send_us_a_message.field_shop_name
+  module:
+    - mask
+    - telephone
 id: contact_message.send_us_a_message.default
 targetEntityType: contact_message
 bundle: send_us_a_message
 mode: default
 content:
   field_email:
-    type: number
+    type: email_default
     weight: 2
     region: content
     settings:
       placeholder: ''
+      size: 60
     third_party_settings: {  }
   field_name:
     type: string_textfield
@@ -29,12 +33,19 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_phone:
-    type: number
-    weight: 1
+    type: telephone_default
+    weight: 5
     region: content
     settings:
       placeholder: ''
-    third_party_settings: {  }
+    third_party_settings:
+      mask:
+        value: '(000) 000-0000'
+        translation_help:
+          table: ''
+        reverse: 0
+        clearifnotmatch: 0
+        selectonfocus: 0
   field_shop_name:
     type: string_textfield
     weight: 3

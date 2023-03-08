@@ -11,6 +11,9 @@ dependencies:
     - field.field.contact_message.get_a_demo.field_last_name_get_a_demo
     - field.field.contact_message.get_a_demo.field_number_of_shops_get_a_demo
     - field.field.contact_message.get_a_demo.field_phone_get_a_demo
+  module:
+    - mask
+    - telephone
 id: contact_message.get_a_demo.default
 targetEntityType: contact_message
 bundle: get_a_demo
@@ -64,12 +67,19 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_phone_get_a_demo:
-    type: number
+    type: telephone_default
     weight: 6
     region: content
     settings:
       placeholder: ''
-    third_party_settings: {  }
+    third_party_settings:
+      mask:
+        value: '(000) 000-0000'
+        translation_help:
+          table: ''
+        reverse: 0
+        clearifnotmatch: 0
+        selectonfocus: 0
 hidden:
   copy: true
   mail: true

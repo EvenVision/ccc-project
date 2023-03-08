@@ -65,12 +65,11 @@ content:
     weight: 5
     region: content
   field_phone_get_a_demo:
-    type: string
+    type: basic_string
     label: above
-    settings:
-      link_to_entity: false
+    settings: {  }
     third_party_settings: {  }
-    weight: 6
+    weight: 8
     region: content
   message:
     type: basic_string

@@ -9,3 +9,6 @@ dependencies:
   - drupal:verf
   - drupal:better_exposed_filters
   - drupal:jquery_ui_slider
+  - drupal:smtp
+  - drupal:mask
+  - drupal:telephone

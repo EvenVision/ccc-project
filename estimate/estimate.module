@@ -169,6 +169,11 @@ function estimate_module_preinstall() {
     EstimateConfiguration::removeContentType();
 }
 
+function estimate_module_preuninstall($module) {
+    //necessary to increase the work the script when uninstalling the plugin
+    ini_set('max_execution_time', '900');
+}
+
 function estimate_node_presave(Drupal\node\NodeInterface $node) {
     // after editing field_pickup_dt saves the date to a field_pickup_date_time
     // field_pickup_date_time is used for filter in the views

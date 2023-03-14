@@ -12,3 +12,4 @@ dependencies:
   - drupal:smtp
   - drupal:mask
   - drupal:telephone
+  - drupal:responsive_favicons

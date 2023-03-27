@@ -363,7 +363,7 @@ class EstimateConfiguration {
             'link' => ['uri' => 'internal:/get-support'],
             'menu_name' => 'estimate-main-navigation-menu',
             'expanded' => TRUE,
-            'weight' => 0,
+            'weight' => 3,
         ]);
         $menu_link_1->save();
 
@@ -381,7 +381,7 @@ class EstimateConfiguration {
             'link' => ['uri' => 'internal:/user/login'],
             'menu_name' => 'estimate-main-navigation-menu',
             'expanded' => TRUE,
-            'weight' => 2,
+            'weight' => 0,
         ]);
         $menu_link_3->save();
 
@@ -434,10 +434,10 @@ class EstimateConfiguration {
         $EstimateUserAccountMenu = array(
             'id' => 'estimate-user-account-menu',
             'plugin' => 'system_menu_block:estimate-user-account-menu',
-            'region' => 'navigation_additional',
+            'region' => 'navigation_main',
             'theme' => 'estimate_theme',
             'visibility' => array(),
-            'weight' => 0,
+            'weight' => -8,
         );
 
         $blockEstimateUserAccountMenu = \Drupal\block\Entity\Block::create($EstimateUserAccountMenu);

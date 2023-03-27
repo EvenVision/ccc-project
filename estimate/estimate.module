@@ -1612,11 +1612,22 @@ function estimate_preprocess_menu(&$variables) {
     $items = $variables['items'];
     foreach ($items as $key => &$item) {
         // Hide  links if the user is logged in.
-        if ($item['url']->getRouteName() == 'user.register' && \Drupal::currentUser()->isAuthenticated()) {
+        if ($item['url']->getRouteName() == 'entity.contact_form.canonical' && $item['url']->getRouteParameters() == ['contact_form' => "get_a_demo"] && \Drupal::currentUser()->isAuthenticated()) {
             unset($variables['items'][$key]);
         }
         if ($item['url']->getRouteName() == 'user.login' && \Drupal::currentUser()->isAuthenticated()) {
             unset($variables['items'][$key]);
+        }
+
+        if($variables['menu_name'] !== "estimate-user-account-menu" && $variables['menu_name'] !== "estimate-main-navigation-menu") return;
+        if (\Drupal::service('path.current')->getPath() === ('/'.$item['url']->getInternalPath())){
+            $item['attributes']['class'] = 'active-link';
+        }
+        if ((\Drupal::service('path.current')->getPath() === '/estimate-view-admin') && ($item['url']->getInternalPath() === "estimate-view")){
+            $item['attributes']['class'] = 'active-link';
+        }
+        if (strripos(\Drupal::service('path.current')->getPath(), $item['url']->getInternalPath())){
+            $item['attributes']['class'] = 'active-link';
         }
     }
 }

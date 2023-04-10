@@ -37,6 +37,7 @@ class EstimateController extends ControllerBase {
       try {
         $result = new EstimateParseXML($postdata);
         $result = $result->parseXML();
+        $check_duplicate = is_duplicate_estimate($result) ? 0 : 1;
 
         $targetIdCompany = $targetIdInsuranceCompany = $targetIdEstimator = "";
         $types = array("CompanyID", "EstimatorID", "InsuranceCompanyIDNum");
@@ -104,6 +105,8 @@ class EstimateController extends ControllerBase {
         $nodeEstimate = Node::create([
           'type'                                => 'estimate',
           'title'                               => 'Estimate',
+          'status'                              => $check_duplicate,
+
           'field_esaltid'                       => ['value' => $result['EstimateAltID']],
           'field_totalamt'                      => ['value' => $result['TotalAmt1']],
           'field_totalamt_b'                    => ['value' => $result['LABTotalAmt2']],

@@ -1653,3 +1653,26 @@ function estimate_mail_alter(&$message) {
 
     $message['to'] = $_POST['field_email_address_get_a_demo'][0]['value'];
 }
+
+/**
+ * Checks if the estimate is a duplicate.
+ *
+ * @param array $data
+ *
+ * @return bool
+ *   Returns true if the file is a duplicate and false if not.
+ */
+function is_duplicate_estimate($data)
+{
+    $query = \Drupal::database()->select('node__field_esaltid', 'aid');
+    $query->fields('aid',   ['field_esaltid_value']);
+    $query->join('node__field_roclosed', 'rc', 'rc.entity_id = aid.entity_id');
+    $query->join('node_field_data', 'fd', 'fd.nid = aid.entity_id');
+    $query->condition('aid.field_esaltid_value', $data['EstimateAltID']);
+    $query->condition('rc.field_roclosed_value', 1);
+    $query->condition('fd.status', 1);
+
+    $result = $query->execute()->fetchField();
+
+    return !empty($result);
+}

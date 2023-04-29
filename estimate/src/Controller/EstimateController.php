@@ -37,7 +37,12 @@ class EstimateController extends ControllerBase {
       try {
         $result = new EstimateParseXML($postdata);
         $result = $result->parseXML();
-        $check_duplicate = is_duplicate_estimate($result) ? 0 : 1;
+
+        // get status for estimate
+        $status = 1;
+        if (!is_duplicate_estimate($result) && $result['ROClosed']){
+            $status = 0;
+        }
 
         $targetIdCompany = $targetIdInsuranceCompany = $targetIdEstimator = "";
         $types = array("CompanyID", "EstimatorID", "InsuranceCompanyIDNum");
@@ -98,14 +103,19 @@ class EstimateController extends ControllerBase {
             }
         }
 
-        $CreationDateTime = str_replace(' - ',' ',$result['ActualPickUpDateTime']);
-        $date_time = new DrupalDateTime($CreationDateTime, new \DateTimeZone('UTC'));
-        $pickUpDate = $date_time->format('Y-m-d\TH:i:s');
+          if ($result['ActualPickUpDateTime']){
+              $CreationDateTime = str_replace(' - ', ' ', $result['ActualPickUpDateTime']);
+              $date_time = new DrupalDateTime($CreationDateTime, new \DateTimeZone('UTC'));
+              $pickUpDate = $date_time->format('Y-m-d\TH:i:s');
+          } else {
+              $pickUpDate = '';
+              $result['ActualPickUpDateTime'] = '';
+          }
 
         $nodeEstimate = Node::create([
           'type'                                => 'estimate',
           'title'                               => 'Estimate',
-          'status'                              => $check_duplicate,
+          'status'                              => $status,
 
           'field_esaltid'                       => ['value' => $result['EstimateAltID']],
           'field_totalamt'                      => ['value' => $result['TotalAmt1']],

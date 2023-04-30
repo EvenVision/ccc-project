@@ -143,7 +143,7 @@ class EstimateParseXML {
     }
     if($this->xml->AdminInfo && $this->xml->AdminInfo->RepairFacility && $this->xml->AdminInfo->RepairFacility->Party->OrgInfo) {
       $other_info = $this->xml->AdminInfo->RepairFacility->Party->OrgInfo;
-      $this->result['CompanyID'] = $this->_searchFieldXML($other_info->IDInfo, 'IDQualifierCode');
+      $this->result['CompanyID'] = $this->_searchFieldXML($other_info->IDInfo, 'IDNum');
     }
   }
 

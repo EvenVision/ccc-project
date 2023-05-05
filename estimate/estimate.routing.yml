@@ -7,3 +7,7 @@ estimate.webhook:
     _access: 'TRUE'
 estimate.link.view:
   path: '/estimate-view'
+estimate.get.support:
+  path: '/get-support'
+estimate.home.page:
+  path: '/home-page'

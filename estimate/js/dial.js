@@ -25,7 +25,7 @@ function popupInfo(){
     Array.from(buttonsInfo).forEach(function(button){
         button.addEventListener('click', function(e) {
             titlePopup.textContent = document.getElementById(e.target.className + "-title").textContent ?? 0;
-            descriptionPopup.textContent = document.getElementById(e.target.className+ "-description").textContent ?? 0;
+            descriptionPopup.innerHTML = document.getElementById(e.target.className+ "-description").innerHTML ?? 0;
         })
     });
 

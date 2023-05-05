@@ -8,6 +8,7 @@ use Drupal\block_content\Entity\BlockContentType;
 use Drupal\Core\Url;
 use Drupal\menu_link_content\Entity\MenuLinkContent;
 use Drupal\node\Entity\Node;
+use Drupal\path_alias\Entity\PathAlias;
 
 class EstimateConfiguration {
 
@@ -49,19 +50,22 @@ class EstimateConfiguration {
                     </div>
                 </div>   
         ';
-        $body1[] = [
+
+        $nodeGetSupportPage = Node::create(['type' => 'page']);
+        $nodeGetSupportPage->set('title', 'Get Support');
+        $nodeGetSupportPage->set('body', [
             'value' => $bodyHtmlGetSupport,
             'format' => 'full_html',
-        ];
-
-        $nodeGetSupportPage = Node::create([
-            'type'                 => 'page',
-            'title'                => 'Get Support',
-            'body'                 => $body1,
         ]);
-        $nodeGetSupportPage->set('path', '/get-support');
+        $nodeGetSupportPage->set('langcode', 'en');
         $nodeGetSupportPage->save();
 
+        // set new alias /get-support
+        $path_alias = PathAlias::create([
+            'path' => '/node/' . $nodeGetSupportPage->id(),
+            'alias' => '/get-support',
+        ]);
+        $path_alias->save();
         // Create home page
         // Create URL to page
         $url_contact_form_get_a_demo = new Url('entity.contact_form.canonical', ['contact_form' => "get_a_demo"]);
@@ -87,18 +91,22 @@ class EstimateConfiguration {
             <div class="region_button"><a class="estimate-button" href="'.$contact_form_get_a_demo_url.'">GET A DEMO</a>&nbsp;</div>
             </div>
             ';
-        $body2[] = [
+
+        $nodeHomePage = Node::create(['type' => 'page']);
+        $nodeHomePage->set('title', 'Home Page');
+        $nodeHomePage->set('body', [
             'value' => $bodyHtmlHomePage,
             'format' => 'full_html',
-        ];
-
-        $nodeHomePage = Node::create([
-            'type'                 => 'page',
-            'title'                => 'Home Page',
-            'body'                 => $body2,
         ]);
-        $nodeHomePage->set('path', '/home-page');
+        $nodeHomePage->set('langcode', 'en');
         $nodeHomePage->save();
+
+        // set alias /home-page
+        $path_alias = PathAlias::create([
+            'path' => '/node/' . $nodeHomePage->id(),
+            'alias' => '/home-page',
+        ]);
+        $path_alias->save();
 
         // To change the front page
         \Drupal::configFactory()->getEditable('system.site')->set('page.front', '/home-page')->save();

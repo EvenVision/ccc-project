@@ -1,0 +1,52 @@
+<?php
+
+use Drupal\estimate\EstimateConfiguration;
+use Drupal\field\Entity\FieldConfig;
+use Drupal\field\Entity\FieldStorageConfig;
+
+function estimate_update_91001() {
+
+    ini_set('max_execution_time', '900');
+
+    FieldStorageConfig::create(array(
+               'field_name' => 'field_start_date',
+               'entity_type' => 'user',
+               'type' => 'datetime',
+               'cardinality' => 1,
+               'module' => 'datetime',
+               'translatable' => true,
+               'persist_with_no_fields' => false,
+               'custom_storage' => false,
+               'settings' => ['datetime_type' => 'date']
+           ))->save();
+
+    FieldConfig::create([
+               'field_name' => 'field_start_date',
+               'entity_type' => 'user',
+               'bundle' => 'user', // content type
+               'label' => 'Start Date',
+               'translatable' => false,
+               'default_value_callback' => false,
+               'default_value' => [
+                   ['default_date_type' => 'now',
+                   'default_date' => 'now']
+               ],
+               'field_type' => 'datetime',
+           ])->save();
+
+    // Manage form display
+    $form_display = \Drupal::service('entity_display.repository')->getFormDisplay('user', 'user' );
+    $form_display = $form_display->setComponent(
+        'field_start_date', [
+            'type' => 'datetime_default',
+            'weight' => 8,
+            'region' => 'content',
+            ]
+    );
+    $form_display->save();
+    // removing old contents
+    EstimateConfiguration::removeContentType();
+    // installing updated contents
+    EstimateConfiguration::createPages();
+
+}

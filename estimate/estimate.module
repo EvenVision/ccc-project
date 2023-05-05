@@ -95,6 +95,7 @@ const METRICS = array(
 const CUSTOM_USER_FIELDS = array(
     'field_com_name_us',
     'field_estimator_id',
+    'field_start_date',
 
     'field_throughput_low',
     'field_throughput_high',
@@ -550,9 +551,12 @@ function _calcResultUserView($view){
     $time_period = $view->exposed_data['field_pickup_dt_value'];
     $holidays = array();
     $countDays = 0;
+
+    $fields = getUserFields();
+    $start_date =  $fields['field_start_date'] == null ? "2000-01-01" : $fields['field_start_date'];
     switch ($time_period) {
         case 'All':
-            $countDays = countDays("2000-01-01", date("Y-m-d"), $holidays);
+            $countDays = countDays($start_date, date("Y-m-d"), $holidays);
             break;
         case '+1 day':
             $countDays = 1;
@@ -561,10 +565,10 @@ function _calcResultUserView($view){
             $countDays = 5;
             break;
         case '+1 month':
-            $countDays = countDaysMounth(date("Y"), date("m"), array(0, 6)); ;
+            $countDays = countDaysMounth($start_date, date("m"), array(0, 6)); ;
             break;
         case '+1 year':
-            $countDays = countDays(date("Y").'-01-01', date("Y").'-12-31', $holidays);
+            $countDays = countDays($start_date, date("Y").'-12-31', $holidays);
             break;
     }
 
@@ -783,8 +787,6 @@ function _calcResultUserView($view){
         $view->result[4] = clone $resultRow;
     }
 
-    $fields = getUserFields();
-
     // add rows with min and max value
     foreach ($view->result as $key => $resultRow) {
         if ($key !== 2) {
@@ -857,9 +859,13 @@ function _calcResultAdminView($view){
     $time_period = $view->exposed_data['field_pickup_dt_value'];
     $holidays = array();
     $countDays = 0;
+
+    $fields = getUserFields();
+    $start_date =  $fields['field_start_date'] == null ? "2000-01-01" : $fields['field_start_date'];
+
     switch ($time_period) {
         case 'All':
-            $countDays = countDays("2000-01-01", date("Y-m-d"), $holidays);
+            $countDays = countDays($start_date, date("Y-m-d"), $holidays);
             break;
         case '+1 day':
             $countDays = 1;
@@ -1061,8 +1067,6 @@ function _calcResultAdminView($view){
         $view->result[4] = clone $resultRow;
     }
 
-    $fields = getUserFields();
-
     // add rows with min and max value
     foreach ($view->result as $key => $resultRow) {
         if ($key !== 2) {
@@ -1225,7 +1229,7 @@ function setValueFields() {
     $definitions = \Drupal::service('entity_field.manager')->getFieldDefinitions('user', 'user');
 
     foreach (\CUSTOM_USER_FIELDS as $field) {
-        if ($field !== 'field_estimator_id' && $field !== 'field_com_name_us') {
+        if ($field !== 'field_estimator_id' && $field !== 'field_com_name_us' && $field !== 'field_start_date') {
             if (isset($definitions[$field])) {
                 $result = $definitions[$field]->getDefaultValueLiteral();
                 $account->set($field, $result[0]['value']);
@@ -1277,12 +1281,7 @@ function createHtmlDial ($userFields, $valuesOfCalculations){
         );
     }
 
-    $html = '<div id="allCanvas" class="allCanvas">
-        <div  style="visibility: hidden">
-        <img id="arrow" src="'.$imageArrow.'">
-        </div>                  
-        
-        <div class="popup__bg"> 
+    $html = '<div class="popup__bg"> 
             <div class="popup">
              <img class="close-popup" src="'.$imageClose.'">
                 <div>
@@ -1292,7 +1291,12 @@ function createHtmlDial ($userFields, $valuesOfCalculations){
                     <p id="descriptionPopup"></p>
                 </div>
             </div>
-        </div>  
+        </div>  ';
+
+    $html .= '<div id="allCanvas" class="allCanvas">
+        <div  style="visibility: hidden">
+        <img id="arrow" src="'.$imageArrow.'">
+        </div>                  
     
         <div class="canvasBlock">
             <div class="infoBlock">

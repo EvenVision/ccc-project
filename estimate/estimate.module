@@ -7,6 +7,7 @@ use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\Entity\EntityFormMode;
 use Drupal\Core\Form\FormStateInterface;
 
+use Drupal\Core\Url;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
 
@@ -94,6 +95,7 @@ const METRICS = array(
 const CUSTOM_USER_FIELDS = array(
     'field_com_name_us',
     'field_estimator_id',
+    'field_start_date',
 
     'field_throughput_low',
     'field_throughput_high',
@@ -549,9 +551,12 @@ function _calcResultUserView($view){
     $time_period = $view->exposed_data['field_pickup_dt_value'];
     $holidays = array();
     $countDays = 0;
+
+    $fields = getUserFields();
+    $start_date =  $fields['field_start_date'] == null ? "2000-01-01" : $fields['field_start_date'];
     switch ($time_period) {
         case 'All':
-            $countDays = countDays("2000-01-01", date("Y-m-d"), $holidays);
+            $countDays = countDays($start_date, date("Y-m-d"), $holidays);
             break;
         case '+1 day':
             $countDays = 1;
@@ -560,10 +565,10 @@ function _calcResultUserView($view){
             $countDays = 5;
             break;
         case '+1 month':
-            $countDays = countDaysMounth(date("Y"), date("m"), array(0, 6)); ;
+            $countDays = countDaysMounth($start_date, date("m"), array(0, 6)); ;
             break;
         case '+1 year':
-            $countDays = countDays(date("Y").'-01-01', date("Y").'-12-31', $holidays);
+            $countDays = countDays($start_date, date("Y").'-12-31', $holidays);
             break;
     }
 
@@ -782,8 +787,6 @@ function _calcResultUserView($view){
         $view->result[4] = clone $resultRow;
     }
 
-    $fields = getUserFields();
-
     // add rows with min and max value
     foreach ($view->result as $key => $resultRow) {
         if ($key !== 2) {
@@ -856,9 +859,13 @@ function _calcResultAdminView($view){
     $time_period = $view->exposed_data['field_pickup_dt_value'];
     $holidays = array();
     $countDays = 0;
+
+    $fields = getUserFields();
+    $start_date =  $fields['field_start_date'] == null ? "2000-01-01" : $fields['field_start_date'];
+
     switch ($time_period) {
         case 'All':
-            $countDays = countDays("2000-01-01", date("Y-m-d"), $holidays);
+            $countDays = countDays($start_date, date("Y-m-d"), $holidays);
             break;
         case '+1 day':
             $countDays = 1;
@@ -1060,8 +1067,6 @@ function _calcResultAdminView($view){
         $view->result[4] = clone $resultRow;
     }
 
-    $fields = getUserFields();
-
     // add rows with min and max value
     foreach ($view->result as $key => $resultRow) {
         if ($key !== 2) {
@@ -1224,7 +1229,7 @@ function setValueFields() {
     $definitions = \Drupal::service('entity_field.manager')->getFieldDefinitions('user', 'user');
 
     foreach (\CUSTOM_USER_FIELDS as $field) {
-        if ($field !== 'field_estimator_id' && $field !== 'field_com_name_us') {
+        if ($field !== 'field_estimator_id' && $field !== 'field_com_name_us' && $field !== 'field_start_date') {
             if (isset($definitions[$field])) {
                 $result = $definitions[$field]->getDefaultValueLiteral();
                 $account->set($field, $result[0]['value']);
@@ -1269,21 +1274,14 @@ function createHtmlDial ($userFields, $valuesOfCalculations){
     $entities = $storage_handler->loadByProperties(["type" => "metric"]);
     $nodes = [];
     foreach ($entities as $entity) {
-        $node = Node::load($entity->id());
-        $field_title = $node->getTitle();
-
-        $nodes[$field_title] = array(
-            'title' => $node->getTitle(),
-            'description' => $node->get('field_description')->getValue()
+        $path = Url::fromRoute('entity.node.canonical', ['node' => $entity->id()], ['absolute' => False, 'language' => $entity->language()])->toString();
+        $nodes[$path] = array(
+            'title' => $entity->getTitle(),
+            'description' => $entity->get('field_description')->getValue()
         );
     }
 
-    $html = '<div id="allCanvas" class="allCanvas">
-        <div  style="visibility: hidden">
-        <img id="arrow" src="'.$imageArrow.'">
-        </div>                  
-        
-        <div class="popup__bg"> 
+    $html = '<div class="popup__bg"> 
             <div class="popup">
              <img class="close-popup" src="'.$imageClose.'">
                 <div>
@@ -1293,7 +1291,12 @@ function createHtmlDial ($userFields, $valuesOfCalculations){
                     <p id="descriptionPopup"></p>
                 </div>
             </div>
-        </div>  
+        </div>  ';
+
+    $html .= '<div id="allCanvas" class="allCanvas">
+        <div  style="visibility: hidden">
+        <img id="arrow" src="'.$imageArrow.'">
+        </div>                  
     
         <div class="canvasBlock">
             <div class="infoBlock">
@@ -1312,8 +1315,8 @@ function createHtmlDial ($userFields, $valuesOfCalculations){
             <span id="canvas-1-low" class="canvasSpan">'.$userFields['field_cycle_time_low'].'</span>
             <span id="canvas-1-high" class="canvasSpan">'.$userFields['field_cycle_time_high'].'</span>
             <span id="canvas-1-value" class="canvasSpan">'.$valuesOfCalculations['field_cycle_time'].'</span>
-            <span id="canvas-1-title" class="canvasSpan">'.$nodes['Cycle Time']['title'].'</span>
-            <span id="canvas-1-description" class="canvasSpan">'.$nodes['Cycle Time']['description'][0]['value'].'</span>
+            <span id="canvas-1-title" class="canvasSpan">'.$nodes['/cycle-time']['title'].'</span>
+            <span id="canvas-1-description" class="canvasSpan">'.$nodes['/cycle-time']['description'][0]['value'].'</span>
         <div class="canvasBlock">
             <div class="infoBlock">
                 <a href="#" class="open-popup">
@@ -1331,8 +1334,8 @@ function createHtmlDial ($userFields, $valuesOfCalculations){
             <span id="canvas-2-low" class="canvasSpan">'.$userFields['field_throughput_low'].'</span>
             <span id="canvas-2-high" class="canvasSpan">'.$userFields['field_throughput_high'].'</span>
             <span id="canvas-2-value" class="canvasSpan">'.$valuesOfCalculations['field_throughput'].'</span>
-            <span id="canvas-2-title" class="canvasSpan">'.$nodes['Throughput']['title'].'</span>
-            <span id="canvas-2-description" class="canvasSpan">'.$nodes['Throughput']['description'][0]['value'].'</span>
+            <span id="canvas-2-title" class="canvasSpan">'.$nodes['/throughput']['title'].'</span>
+            <span id="canvas-2-description" class="canvasSpan">'.$nodes['/throughput']['description'][0]['value'].'</span>
         <div class="canvasBlock">
             <div class="infoBlock">
                 <a href="#" class="open-popup">
@@ -1350,8 +1353,8 @@ function createHtmlDial ($userFields, $valuesOfCalculations){
             <span id="canvas-3-low" class="canvasSpan">'.$userFields['field_sq_foot_low'].'</span>
             <span id="canvas-3-high" class="canvasSpan">'.$userFields['field_sq_foot_high'].'</span>
             <span id="canvas-3-value" class="canvasSpan">'.$valuesOfCalculations['field_sq_foot'].'</span>
-            <span id="canvas-3-title" class="canvasSpan">'.$nodes['Square Foot Efficiency']['title'].'</span>
-            <span id="canvas-3-description" class="canvasSpan">'.$nodes['Square Foot Efficiency']['description'][0]['value'].'</span>
+            <span id="canvas-3-title" class="canvasSpan">'.$nodes['/square-foot-efficiency']['title'].'</span>
+            <span id="canvas-3-description" class="canvasSpan">'.$nodes['/square-foot-efficiency']['description'][0]['value'].'</span>
         <div class="canvasBlock">
             <div class="infoBlock">
                 <a href="#" class="open-popup">
@@ -1368,8 +1371,8 @@ function createHtmlDial ($userFields, $valuesOfCalculations){
             <span id="canvas-4-min" class="canvasSpan">'.$userFields['field_severity_min'].'</span>
             <span id="canvas-4-max" class="canvasSpan">'.$userFields['field_severity_max'].'</span>
             <span id="canvas-4-value" class="canvasSpan">'.$valuesOfCalculations['field_severity'].'</span>
-            <span id="canvas-4-title" class="canvasSpan">'.$nodes['Severenity']['title'].'</span>
-            <span id="canvas-4-description" class="canvasSpan">'.$nodes['Severenity']['description'][0]['value'].'</span>
+            <span id="canvas-4-title" class="canvasSpan">'.$nodes['/severenity']['title'].'</span>
+            <span id="canvas-4-description" class="canvasSpan">'.$nodes['/severenity']['description'][0]['value'].'</span>
         <div class="canvasBlock">
             <div class="infoBlock">
                 <a href="#" class="open-popup">
@@ -1386,8 +1389,8 @@ function createHtmlDial ($userFields, $valuesOfCalculations){
             <span id="canvas-5-min" class="canvasSpan">'.$userFields['field_labor_ratio_min'].'</span>
             <span id="canvas-5-max" class="canvasSpan">'.$userFields['field_labor_ratio_max'].'</span>
             <span id="canvas-5-value" class="canvasSpan">'.$valuesOfCalculations['field_labor_ratio'].'</span>
-            <span id="canvas-5-title" class="canvasSpan">'.$nodes['Labor Ratio']['title'].'</span>
-            <span id="canvas-5-description" class="canvasSpan">'.$nodes['Labor Ratio']['description'][0]['value'].'</span>
+            <span id="canvas-5-title" class="canvasSpan">'.$nodes['/labor-ratio']['title'].'</span>
+            <span id="canvas-5-description" class="canvasSpan">'.$nodes['/labor-ratio']['description'][0]['value'].'</span>
         <div class="canvasBlock">
             <div class="infoBlock">
                 <a href="#" class="open-popup">
@@ -1404,8 +1407,8 @@ function createHtmlDial ($userFields, $valuesOfCalculations){
             <span id="canvas-6-low" class="canvasSpan">'.$userFields['field_parts_ratio_low'].'</span>
             <span id="canvas-6-high" class="canvasSpan">'.$userFields['field_parts_ratio_high'].'</span>
             <span id="canvas-6-value" class="canvasSpan">'.$valuesOfCalculations['field_parts_ratio'].'</span>
-            <span id="canvas-6-title" class="canvasSpan">'.$nodes['Parts Ratio']['title'].'</span>
-            <span id="canvas-6-description" class="canvasSpan">'.$nodes['Parts Ratio']['description'][0]['value'].'</span>
+            <span id="canvas-6-title" class="canvasSpan">'.$nodes['/parts-ratio']['title'].'</span>
+            <span id="canvas-6-description" class="canvasSpan">'.$nodes['/parts-ratio']['description'][0]['value'].'</span>
         <div class="canvasBlock">
             <div class="infoBlock">
                 <a href="#" class="open-popup">
@@ -1422,8 +1425,8 @@ function createHtmlDial ($userFields, $valuesOfCalculations){
             <span id="canvas-7-min" class="canvasSpan">'.$userFields['field_sratio_min'].'</span>
             <span id="canvas-7-max" class="canvasSpan">'.$userFields['field_sratio_max'].'</span>
             <span id="canvas-7-value" class="canvasSpan">'.$valuesOfCalculations['field_sratio'].'</span>
-            <span id="canvas-7-title" class="canvasSpan">'.$nodes['Sublet Ratio']['title'].'</span>
-            <span id="canvas-7-description" class="canvasSpan">'.$nodes['Sublet Ratio']['description'][0]['value'].'</span>
+            <span id="canvas-7-title" class="canvasSpan">'.$nodes['/sublet-ratio']['title'].'</span>
+            <span id="canvas-7-description" class="canvasSpan">'.$nodes['/sublet-ratio']['description'][0]['value'].'</span>
         <div class="canvasBlock">
             <div class="infoBlock">
                 <a href="#" class="open-popup">
@@ -1440,8 +1443,8 @@ function createHtmlDial ($userFields, $valuesOfCalculations){
             <span id="canvas-8-low" class="canvasSpan">'.$userFields['field_new_low'].'</span>
             <span id="canvas-8-high" class="canvasSpan">'.$userFields['field_new_high'].'</span>
             <span id="canvas-8-value" class="canvasSpan">'.$valuesOfCalculations['new'].'</span>
-            <span id="canvas-8-title" class="canvasSpan">'.$nodes['New Ratio']['title'].'</span>
-            <span id="canvas-8-description" class="canvasSpan">'.$nodes['New Ratio']['description'][0]['value'].'</span>
+            <span id="canvas-8-title" class="canvasSpan">'.$nodes['/new-ratio']['title'].'</span>
+            <span id="canvas-8-description" class="canvasSpan">'.$nodes['/new-ratio']['description'][0]['value'].'</span>
          <div class="canvasBlock">
             <div class="infoBlock">
                 <a href="#" class="open-popup">
@@ -1458,8 +1461,8 @@ function createHtmlDial ($userFields, $valuesOfCalculations){
             <span id="canvas-9-low" class="canvasSpan">'.$userFields['field_used_low'].'</span>
             <span id="canvas-9-high" class="canvasSpan">'.$userFields['field_used_high'].'</span>
             <span id="canvas-9-value" class="canvasSpan">'.$valuesOfCalculations['used'].'</span>
-            <span id="canvas-9-title" class="canvasSpan">'.$nodes['Used Ratio']['title'].'</span>
-            <span id="canvas-9-description" class="canvasSpan">'.$nodes['Used Ratio']['description'][0]['value'].'</span>
+            <span id="canvas-9-title" class="canvasSpan">'.$nodes['/used-ratio']['title'].'</span>
+            <span id="canvas-9-description" class="canvasSpan">'.$nodes['/used-ratio']['description'][0]['value'].'</span>
          <div class="canvasBlock">
             <div class="infoBlock">
                 <a href="#" class="open-popup">
@@ -1476,8 +1479,8 @@ function createHtmlDial ($userFields, $valuesOfCalculations){
             <span id="canvas-10-low" class="canvasSpan">'.$userFields['field_lkq_low'].'</span>
             <span id="canvas-10-high" class="canvasSpan">'.$userFields['field_lkq_high'].'</span>
             <span id="canvas-10-value" class="canvasSpan">'.$valuesOfCalculations['lkq'].'</span> 
-            <span id="canvas-10-title" class="canvasSpan">'.$nodes['LKQ Ratio']['title'].'</span>
-            <span id="canvas-10-description" class="canvasSpan">'.$nodes['LKQ Ratio']['description'][0]['value'].'</span>   
+            <span id="canvas-10-title" class="canvasSpan">'.$nodes['/lkq-ratio']['title'].'</span>
+            <span id="canvas-10-description" class="canvasSpan">'.$nodes['/lkq-ratio']['description'][0]['value'].'</span>   
         <div class="canvasBlock">
             <div class="infoBlock">
                 <a href="#" class="open-popup">
@@ -1494,8 +1497,8 @@ function createHtmlDial ($userFields, $valuesOfCalculations){
             <span id="canvas-11-low" class="canvasSpan">'.$userFields['field_rrratio_low'].'</span>
             <span id="canvas-11-high" class="canvasSpan">'.$userFields['field_rrratio_high'].'</span>
             <span id="canvas-11-value" class="canvasSpan">'.$valuesOfCalculations['field_rrratio'].'</span>
-            <span id="canvas-11-title" class="canvasSpan">'.$nodes['Repair Ratio']['title'].'</span>
-            <span id="canvas-11-description" class="canvasSpan">'.$nodes['Repair Ratio']['description'][0]['value'].'</span>
+            <span id="canvas-11-title" class="canvasSpan">'.$nodes['/repair-ratio']['title'].'</span>
+            <span id="canvas-11-description" class="canvasSpan">'.$nodes['/repair-ratio']['description'][0]['value'].'</span>
         <div class="canvasBlock">
             <div class="infoBlock">
                 <a href="#" class="open-popup">
@@ -1512,8 +1515,8 @@ function createHtmlDial ($userFields, $valuesOfCalculations){
             <span id="canvas-12-low" class="canvasSpan">'.$userFields['field_repratio_low'].'</span>
             <span id="canvas-12-high" class="canvasSpan">'.$userFields['field_repratio_high'].'</span>
             <span id="canvas-12-value" class="canvasSpan">'.$valuesOfCalculations['field_repratio'].'</span>
-            <span id="canvas-12-title" class="canvasSpan">'.$nodes['Replace Ratio']['title'].'</span>
-            <span id="canvas-12-description" class="canvasSpan">'.$nodes['Replace Ratio']['description'][0]['value'].'</span>
+            <span id="canvas-12-title" class="canvasSpan">'.$nodes['/replace-ratio']['title'].'</span>
+            <span id="canvas-12-description" class="canvasSpan">'.$nodes['/replace-ratio']['description'][0]['value'].'</span>
         <div class="canvasBlock">
             <div class="infoBlock">
                 <a href="#" class="open-popup">
@@ -1530,8 +1533,8 @@ function createHtmlDial ($userFields, $valuesOfCalculations){
             <span id="canvas-13-high" class="canvasSpan">'.$userFields['field_lhro_high'].'</span>
             <span id="canvas-13-low" class="canvasSpan">'.$userFields['field_lhro_low'].'</span>
             <span id="canvas-13-value" class="canvasSpan">'.$valuesOfCalculations['field_lhro'].'</span>
-            <span id="canvas-13-title" class="canvasSpan">'.$nodes['Labor Hours / RO']['title'].'</span>
-            <span id="canvas-13-description" class="canvasSpan">'.$nodes['Labor Hours / RO']['description'][0]['value'].'</span>
+            <span id="canvas-13-title" class="canvasSpan">'.$nodes['/labor-hours-ro']['title'].'</span>
+            <span id="canvas-13-description" class="canvasSpan">'.$nodes['/labor-hours-ro']['description'][0]['value'].'</span>
         <div class="canvasBlock">
             <div class="infoBlock">
                 <a href="#" class="open-popup">
@@ -1548,8 +1551,8 @@ function createHtmlDial ($userFields, $valuesOfCalculations){
             <span id="canvas-14-high" class="canvasSpan">'.$userFields['field_phro_high'].'</span>
             <span id="canvas-14-low" class="canvasSpan">'.$userFields['field_phro_low'].'</span>
             <span id="canvas-14-value" class="canvasSpan">'.$valuesOfCalculations['field_phro'].'</span>
-            <span id="canvas-14-title" class="canvasSpan">'.$nodes['Paint Hours / RO']['title'].'</span>
-            <span id="canvas-14-description" class="canvasSpan">'.$nodes['Paint Hours / RO']['description'][0]['value'].'</span>
+            <span id="canvas-14-title" class="canvasSpan">'.$nodes['/paint-hours-ro']['title'].'</span>
+            <span id="canvas-14-description" class="canvasSpan">'.$nodes['/paint-hours-ro']['description'][0]['value'].'</span>
         <div class="canvasBlock">
             <div class="infoBlock">
                 <a href="#" class="open-popup">
@@ -1566,8 +1569,8 @@ function createHtmlDial ($userFields, $valuesOfCalculations){
             <span id="canvas-15-min" class="canvasSpan">'.$userFields['field_bhro_min'].'</span>
             <span id="canvas-15-max" class="canvasSpan">'.$userFields['field_bhro_max'].'</span>
             <span id="canvas-15-value" class="canvasSpan">'.$valuesOfCalculations['field_bhro'].'</span>
-            <span id="canvas-15-title" class="canvasSpan">'.$nodes['Body Hours / RO']['title'].'</span>
-            <span id="canvas-15-description" class="canvasSpan">'.$nodes['Body Hours / RO']['description'][0]['value'].'</span>
+            <span id="canvas-15-title" class="canvasSpan">'.$nodes['/body-hours-ro']['title'].'</span>
+            <span id="canvas-15-description" class="canvasSpan">'.$nodes['/body-hours-ro']['description'][0]['value'].'</span>
     </div>';
 
     return $html;
